@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="5.0" method="upgrade">
-    <name>com_crm_joomla</name>
+    <name>crm_joomla</name>
     <creationDate>2024-07-29</creationDate>
     <author>Jules</author>
     <authorEmail>jules@example.com</authorEmail>
