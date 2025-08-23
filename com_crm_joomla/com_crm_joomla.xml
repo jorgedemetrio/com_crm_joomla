@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="5.0" method="upgrade">
+    <name>com_crm_joomla</name>
+    <creationDate>2024-07-29</creationDate>
+    <author>Jules</author>
+    <authorEmail>jules@example.com</authorEmail>
+    <authorUrl>https://example.com</authorUrl>
+    <copyright>Copyright (C) 2024. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <version>1.0.0</version>
+    <description>COM_CRM_JOOMLA_DESCRIPTION</description>
+    <namespace>Com_Crm_Joomla</namespace>
+
+    <!-- Site part -->
+    <files folder="site">
+        <folder>controllers</folder>
+        <folder>language</folder>
+        <folder>models</folder>
+        <folder>views</folder>
+        <filename>index.html</filename>
+    </files>
+
+    <!-- Media files -->
+    <media destination="com_crm_joomla" folder="media">
+        <folder>css</folder>
+        <folder>images</folder>
+        <folder>js</folder>
+        <filename>index.html</filename>
+    </media>
+
+    <!-- Administrator part -->
+    <administration>
+        <!-- Menu entry -->
+        <menu link="index.php?option=com_crm_joomla">COM_CRM_JOOMLA_MENU</menu>
+        <submenu>
+             <menu link="index.php?option=com_crm_joomla&amp;view=grupos"
+                  view="grupos"
+                  img="class:users-group"
+                  alt="CRM Joomla/Grupos de Lead">COM_CRM_JOOMLA_SUBMENU_GRUPOS</menu>
+        </submenu>
+
+        <files folder="administrator">
+            <filename>access.xml</filename>
+            <filename>config.xml</filename>
+            <filename>index.html</filename>
+            <filename>com_crm_joomla.php</filename>
+            <folder>config</folder>
+            <folder>controllers</folder>
+            <folder>helpers</folder>
+            <folder>language</folder>
+            <folder>models</folder>
+            <folder>services</folder>
+            <folder>sql</folder>
+            <folder>tables</folder>
+            <folder>views</folder>
+        </files>
+
+        <languages folder="administrator/language">
+            <language tag="en-GB">en-GB/com_crm_joomla.ini</language>
+            <language tag="en-GB">en-GB/com_crm_joomla.sys.ini</language>
+            <language tag="pt-BR">pt-BR/com_crm_joomla.ini</language>
+            <language tag="pt-BR">pt-BR/com_crm_joomla.sys.ini</language>
+        </languages>
+
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.sql</file>
+            <!-- <file driver="mysql" charset="utf8" type="uninstall">sql/uninstall.sql</file> -->
+        </sql>
+    </administration>
+
+</extension>
