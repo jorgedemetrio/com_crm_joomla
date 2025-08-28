@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fields name="filter">
+        <field
+            name="search"
+            type="text"
+            label="COM_CRM_FILTER_SEARCH_LABEL"
+            description="COM_CRM_FILTER_SEARCH_DESC"
+            hint="JSEARCH_FILTER"
+        />
+        <field
+            name="state"
+            type="status"
+            label="JSTATUS"
+            description="JSTATUS_DESC"
+            onchange="this.form.submit();"
+            >
+            <option value="">JOPTION_SELECT_PUBLISHED</option>
+        </field>
+        <field
+            name="origem"
+            type="list"
+            label="COM_CRM_LEADS_FILTER_ORIGEM_LABEL"
+            onchange="this.form.submit();"
+            >
+            <option value="">COM_CRM_LEADS_FILTER_ORIGEM_OPTION_ALL</option>
+            <option value="CSV">COM_CRM_LEAD_ORIGEM_CSV</option>
+            <option value="Google">COM_CRM_LEAD_ORIGEM_GOOGLE</option>
+            <option value="LinkedIn">COM_CRM_LEAD_ORIGEM_LINKEDIN</option>
+            <option value="Instagram">COM_CRM_LEAD_ORIGEM_INSTAGRAM</option>
+            <option value="Facebook">COM_CRM_LEAD_ORIGEM_FACEBOOK</option>
+            <option value="Manual">COM_CRM_LEAD_ORIGEM_MANUAL</option>
+        </field>
+        <field
+            name="status"
+            type="list"
+            label="COM_CRM_LEADS_FILTER_STATUS_LABEL"
+            onchange="this.form.submit();"
+            >
+            <option value="">COM_CRM_LEADS_FILTER_STATUS_OPTION_ALL</option>
+            <option value="NOVO">COM_CRM_LEAD_STATUS_NOVO</option>
+            <option value="VALIDADO">COM_CRM_LEAD_STATUS_VALIDADO</option>
+            <option value="REPROVADO">COM_CRM_LEAD_STATUS_REPROVADO</option>
+            <option value="MIGRADO">COM_CRM_LEAD_STATUS_MIGRADO</option>
+        </field>
+    </fields>
+</form>

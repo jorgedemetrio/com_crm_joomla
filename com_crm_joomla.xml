@@ -23,11 +23,13 @@
         <menu>COM_CRM_MENU_TITLE</menu>
         <submenu>
             <menu view="leadgroups" img="class:joomla-picture-in-picture">COM_CRM_SUBMENU_LEADGROUPS</menu>
+            <menu view="leads" img="class:users">COM_CRM_SUBMENU_LEADS</menu>
         </submenu>
         <files folder="administrator">
             <folder>controllers</folder>
             <folder>forms</folder>
             <folder>models</folder>
+            <folder>models/forms</folder>
             <folder>sql</folder>
             <folder>tables</folder>
             <folder>views</folder>
