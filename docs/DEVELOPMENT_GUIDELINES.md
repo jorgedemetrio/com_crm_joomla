@@ -56,6 +56,8 @@
 - **Views**: `views/leads` (list) e `views/lead` (form)
 - **Nomenclatura de Classes (regra específica)**: Para garantir consistência, as classes de Controller e View devem seguir o padrão `NomeDoProjetoControllerNomeDoNegocio` e `NomeDoProjetoViewNomeDoNegocio`. Por exemplo, a classe para um controller de "Leads" no projeto `com_crm_joomla` seria `ComCrmJoomlaControllerLeads`.
 
+> **Nota de Implementação**: Para as classes do núcleo MVC (Controllers, Models, Views, Tables), a convenção de nomenclatura padrão do Joomla 5 (ex: `LeadsController`, `HtmlView`) é mantida para garantir a compatibilidade com o dispatcher do framework. A regra de nomenclatura `NomeDoProjeto...` pode ser aplicada em outras classes de serviço ou helpers.
+
 ---
 
 ## 4) Padrão de colunas (auditoria/observabilidade)
