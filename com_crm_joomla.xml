@@ -24,6 +24,7 @@
         <submenu>
             <menu view="leadgroups" img="class:joomla-picture-in-picture">COM_CRM_SUBMENU_LEADGROUPS</menu>
             <menu view="leads" img="class:users">COM_CRM_SUBMENU_LEADS</menu>
+            <menu view="campanhas" img="class:megaphone">COM_CRM_SUBMENU_CAMPANHAS</menu>
         </submenu>
         <files folder="administrator">
             <folder>controllers</folder>
