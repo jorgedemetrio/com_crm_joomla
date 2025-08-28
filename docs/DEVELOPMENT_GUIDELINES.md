@@ -53,7 +53,8 @@
 - **Models**: `Administrator\Model\LeadsModel`  
 - **Tables**: `Administrator\Table\LeadTable` → `tables/lead.php`  
 - **Controllers**: `Administrator\Controller\LeadsController`  
-- **Views**: `views/leads` (list) e `views/lead` (form)  
+- **Views**: `views/leads` (list) e `views/lead` (form)
+- **Nomenclatura de Classes (regra específica)**: Para garantir consistência, as classes de Controller e View devem seguir o padrão `NomeDoProjetoControllerNomeDoNegocio` e `NomeDoProjetoViewNomeDoNegocio`. Por exemplo, a classe para um controller de "Leads" no projeto `com_crm_joomla` seria `ComCrmJoomlaControllerLeads`.
 
 ---
 
@@ -92,7 +93,7 @@
 
 - Tabela: `#__crm_leads`  
 - PK: `id` (UUID)  
-- Campos principais: `razao_social`, `nome_fantasia`, `site` (obrig.), `email` (obrig.), `descricao` (meta description)  
+- Campos principais: `razao_social`, `nome_fantasia`, `site`, `email`, `descricao` (meta description)
 - Campos auxiliares: endereço, telefones, `email_norm`, `telefone_norm`  
 - Índices: `idx_site`, `idx_email_norm`, `idx_tel_norm`  
 - Auditoria: conforme padrão acima  
