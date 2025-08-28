@@ -113,7 +113,7 @@
 
 ## 2) Diagrama ER (ASCII simplificado)
 
-"""
+```
 [LEADS] --------------------< [EMAIL_ENVIO] >-------------------- [CAMPANHAS]
    |                               |                                  |
    |                               v                                  v
@@ -126,7 +126,7 @@
 
 [INTEGRACOES] (config)
 [EXPORT_PROFILES] --< [EXPORT_SCRIPTS] --< [EXPORT_RUNS]
-"""
+```
 
 ---
 
