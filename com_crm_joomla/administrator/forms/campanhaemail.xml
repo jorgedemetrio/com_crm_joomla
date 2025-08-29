@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fieldset>
+        <field
+            name="id"
+            type="text"
+            label="JGLOBAL_FIELD_ID_LABEL"
+            default="0"
+            readonly="true"
+            class="readonly"
+        />
+        <field
+            name="titulo"
+            type="text"
+            label="COM_CRM_CAMPANHAEMAIL_FIELD_TITULO_LABEL"
+            required="true"
+            size="40"
+        />
+        <field
+            name="campanha_id"
+            type="sql"
+            label="COM_CRM_CAMPANHAEMAIL_FIELD_CAMPANHA_ID_LABEL"
+            query="SELECT id, nome FROM #__crm_campanhas WHERE state = 1 ORDER BY nome"
+            key_field="id"
+            value_field="nome"
+            required="true"
+            >
+            <option value="">COM_CRM_CAMPANHAEMAIL_SELECT_CAMPANHA</option>
+        </field>
+        <field
+            name="state"
+            type="list"
+            label="JSTATUS"
+            default="1"
+            class="custom-select"
+            >
+            <option value="1">JPUBLISHED</option>
+            <option value="0">JUNPUBLISHED</option>
+            <option value="2">JARCHIVED</option>
+            <option value="-2">JTRASHED</option>
+        </field>
+    </fieldset>
+    <fieldset name="editor" label="COM_CRM_CAMPANHAEMAIL_HTML_LABEL">
+        <field
+            name="html"
+            type="editor"
+            label="COM_CRM_CAMPANHAEMAIL_FIELD_HTML_LABEL"
+            filter="safehtml"
+            buttons="true"
+            hide="false"
+            width="100%"
+            height="400"
+        />
+    </fieldset>
+</form>
