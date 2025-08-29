@@ -21,6 +21,7 @@ use Joomla\CMS\Factory;
  */
 class HtmlView extends BaseHtmlView
 {
+
     protected $items;
     protected $pagination;
     protected $state;
@@ -35,6 +36,7 @@ class HtmlView extends BaseHtmlView
         $this->filterForm    = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
 
+
         if (count($errors = $this->get('Errors'))) {
             Factory::getApplication()->enqueueMessage(implode("\n", $errors), 'error');
             return;
@@ -48,12 +50,19 @@ class HtmlView extends BaseHtmlView
     protected function addToolbar()
     {
         ToolbarHelper::title(Text::_('COM_CRM_LEADGROUPS_TITLE'));
+
+
         ToolbarHelper::addNew('leadgroup.add');
         ToolbarHelper::editList('leadgroup.edit');
         ToolbarHelper::publish('leadgroups.publish', 'JTOOLBAR_PUBLISH', true);
         ToolbarHelper::unpublish('leadgroups.unpublish', 'JTOOLBAR_UNPUBLISH', true);
         ToolbarHelper::archive('leadgroups.archive', 'JTOOLBAR_ARCHIVE', true);
         ToolbarHelper::deleteList(Text::_('COM_CRM_LEADGROUPS_CONFIRM_DELETE'), 'leadgroups.delete', 'JTOOLBAR_DELETE');
+
+        if ($this->get('State')->get('filter.state') == -2) {
+            ToolbarHelper::deleteList(Text::_('COM_CRM_LEADGROUPS_CONFIRM_DELETE'), 'leadgroups.delete', 'JTOOLBAR_EMPTY_TRASH');
+        }
+
         ToolbarHelper::preferences('com_crm');
     }
 }

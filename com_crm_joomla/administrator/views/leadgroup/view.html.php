@@ -24,6 +24,13 @@ class HtmlView extends BaseHtmlView
     protected $form;
     protected $item;
 
+    /**
+     * Display the view
+     *
+     * @param   string  $tpl  The name of the template file to parse.
+     *
+     * @return  void
+     */
     public function display($tpl = null)
     {
         $this->form = $this->get('Form');
@@ -35,9 +42,17 @@ class HtmlView extends BaseHtmlView
         }
 
         $this->addToolbar();
+
         parent::display($tpl);
     }
 
+
+    /**
+     * Add the page title and toolbar.
+     *
+     * @return  void
+     * @since   1.0.0
+     */
     protected function addToolbar()
     {
         Factory::getApplication()->input->set('hidemainmenu', true);
