@@ -2,11 +2,16 @@
 <extension type="component" version="4.0" method="upgrade">
     <name>com_crm</name>
     <creationDate>2024-08-29</creationDate>
-    <author>Jules</author>
-    <authorEmail>jules@example.com</authorEmail>
-    <authorUrl>https://example.com</authorUrl>
-    <copyright>Copyright (C) 2024. All rights reserved.</copyright>
+    <author>Jorge Demetrio</author>
+    <authorEmail>jorgedemetrio@gmail.com</authorEmail>
+    <authorUrl>https://www.sobieskiproducoes.com.br/</authorUrl>
+    <copyright>Copyright (C) 2024 Sobieski Produções. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+
+    <updateservers>
+        <server type="extension" priority="1" name="CRM Update Server">https://apps.sobieskiproducoes.com.br/com_crm_joomla/atualizacao.xml</server>
+    </updateservers>
+
     <version>1.0.1</version>
     <description>COM_CRM_XML_DESCRIPTION</description>
     <namespace>Joomla\Component\Crm</namespace>
@@ -21,6 +26,11 @@
             <schemapath type="mysql">sql/updates/mysql</schemapath>
         </schemas>
     </update>
+
+    <!-- Site files -->
+    <files folder="site">
+        <folder>src</folder>
+    </files>
 
     <administration>
         <menu>
