@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="4.0" method="upgrade">
+    <name>com_crm</name>
+    <creationDate>2025-08-29</creationDate>
+    <author>Jorge Demetrio</author>
+    <authorEmail>jorgedemetrio@gmail.com</authorEmail>
+    <authorUrl>https://www.sobieskiproducoes.com.br/</authorUrl>
+    <copyright>Copyright (C) 2024 Sobieski Produções. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <version>1.0.0</version>
+    <description>COM_CRM_XML_DESCRIPTION</description>
+    <namespace>Joomla\Component\Crm</namespace>
+
+    <updateservers>
+        <server type="extension" priority="1" name="CRM Update Server">https://apps.sobieskiproducoes.com.br/com_crm_joomla/atualizacao.xml</server>
+    </updateservers>
+
+    <install>
+        <sql>
+            <file driver="mysql" charset="utf8">administrator/sql/install.sql</file>
+        </sql>
+    </install>
+    <update>
+        <schemas>
+            <schemapath type="mysql">administrator/sql/updates/mysql</schemapath>
+        </schemas>
+    </update>
+
+    <!-- Site (Frontend) Files -->
+    <files folder="site">
+        <folder>src</folder>
+    </files>
+
+    <!-- Administrator (Backend) Files -->
+    <administration>
+        <menu>
+            <menu link="option=com_crm">COM_CRM</menu>
+        </menu>
+        <files folder="administrator">
+            <!-- We will add forms, language, etc., as we create them -->
+            <folder>sql</folder>
+            <folder>src</folder>
+        </files>
+        <languages folder="administrator/language">
+             <!-- We will add language files as we create them -->
+        </languages>
+    </administration>
+
+</extension>
