@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fieldset>
+        <field
+            name="id"
+            type="hidden"
+        />
+        <field
+            name="nome"
+            type="text"
+            label="COM_CRM_FIELD_NOME_LABEL"
+            description="COM_CRM_FIELD_NOME_DESC"
+            required="true"
+            size="40"
+            class="inputbox"
+        />
+        <field
+            name="arquivo_path"
+            type="file"
+            label="COM_CRM_FIELD_ARQUIVO_LABEL"
+            description="COM_CRM_FIELD_ARQUIVO_DESC"
+            required="true"
+            accept=".csv"
+        />
+    </fieldset>
+</form>

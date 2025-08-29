@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="4.0" method="upgrade">
+    <name>com_crm</name>
+    <creationDate>2024-08-29</creationDate>
+    <author>Jules</author>
+    <authorEmail>jules@example.com</authorEmail>
+    <authorUrl>https://example.com</authorUrl>
+    <copyright>Copyright (C) 2024. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <version>1.0.1</version>
+    <description>COM_CRM_XML_DESCRIPTION</description>
+    <namespace>Joomla\Component\Crm</namespace>
+
+    <install>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.sql</file>
+        </sql>
+    </install>
+    <update>
+        <schemas>
+            <schemapath type="mysql">sql/updates/mysql</schemapath>
+        </schemas>
+    </update>
+
+    <administration>
+        <menu>
+            <menu link="option=com_crm">COM_CRM</menu>
+            <submenu>
+                <menu link="option=com_crm&amp;view=leads">COM_CRM_LEADS</menu>
+                <menu link="option=com_crm&amp;view=gruposleads">COM_CRM_LEAD_GROUPS</menu>
+                <menu link="option=com_crm&amp;view=campanhas">COM_CRM_CAMPAIGNS</menu>
+                <menu link="option=com_crm&amp;view=importarquivos">COM_CRM_IMPORTS_ARQUIVO</menu>
+                <menu link="option=com_crm&amp;view=importexecucoes">COM_CRM_IMPORTS_EXECUCOES</menu>
+            </submenu>
+        </menu>
+
+        <files folder="administrator">
+            <folder>forms</folder>
+            <folder>sql</folder>
+            <folder>src</folder>
+        </files>
+
+        <languages folder="language/en-GB">
+            <language tag="en-GB">en-GB.com_crm.ini</language>
+            <language tag="en-GB">en-GB.com_crm.sys.ini</language>
+        </languages>
+        <languages folder="language/pt-BR">
+            <language tag="pt-BR">pt-BR.com_crm.ini</language>
+            <language tag="pt-BR">pt-BR.com_crm.sys.ini</language>
+        </languages>
+    </administration>
+</extension>
