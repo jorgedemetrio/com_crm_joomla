@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Joomla\Component\Crm\Administrator\View\Leadgroups;
+namespace Joomla\Component\Crm\Administrator\View\CampanhaSmses;
 
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
@@ -15,7 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 
 /**
- * View for the Leadgroups list.
+ * View for the CampanhaSmses list.
  *
  * @since  1.0.0
  */
@@ -47,13 +47,13 @@ class HtmlView extends BaseHtmlView
 
     protected function addToolbar()
     {
-        ToolbarHelper::title(Text::_('COM_CRM_LEADGROUPS_TITLE'));
-        ToolbarHelper::addNew('leadgroup.add');
-        ToolbarHelper::editList('leadgroup.edit');
-        ToolbarHelper::publish('leadgroups.publish', 'JTOOLBAR_PUBLISH', true);
-        ToolbarHelper::unpublish('leadgroups.unpublish', 'JTOOLBAR_UNPUBLISH', true);
-        ToolbarHelper::archive('leadgroups.archive', 'JTOOLBAR_ARCHIVE', true);
-        ToolbarHelper::deleteList(Text::_('COM_CRM_LEADGROUPS_CONFIRM_DELETE'), 'leadgroups.delete', 'JTOOLBAR_DELETE');
+        ToolbarHelper::title(Text::_('COM_CRM_CAMPANHASMSES_TITLE'));
+        ToolbarHelper::addNew('campanhasms.add');
+        ToolbarHelper::editList('campanhasms.edit');
+        ToolbarHelper::publish('campanhasmses.publish', 'JTOOLBAR_PUBLISH', true);
+        ToolbarHelper::unpublish('campanhasmses.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+        ToolbarHelper::archive('campanhasmses.archive', 'JTOOLBAR_ARCHIVE', true);
+        ToolbarHelper::deleteList(Text::_('COM_CRM_CAMPANHASMSES_CONFIRM_DELETE'), 'campanhasmses.delete', 'JTOOLBAR_DELETE');
         ToolbarHelper::preferences('com_crm');
     }
 }

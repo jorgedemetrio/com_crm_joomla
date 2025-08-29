@@ -9,7 +9,7 @@
 - **Leads** (`#__crm_leads`)  
   - Armazena leads capturados/importados.  
   - PK: `id` (UUID).  
-  - Regra de validação principal: um lead deve ter **`email`** ou **`telefone`**.
+  - Campos obrigatórios: **`email`** ou **`telefone`**.
   - Campo `descricao`: meta description da homepage.  
   - Inclui todos os campos vindos do CSV de importação.
   - **Campos (do CSV + adicionais de CRM):**
@@ -37,7 +37,7 @@
     - `pais` (default Brasil)
   
   - **Contato (empresa)**
-    - `email` (normalizado em `email_norm`)
+    - `email` (obrigatório, normalizado em `email_norm`)
     - `telefone1` / `tipo_telefone1`
     - `telefone2` / `tipo_telefone2`
     - (expandível para N contatos em tabelas auxiliares no futuro)
@@ -49,7 +49,7 @@
     - `nome_socio4`, `tipo_socio_id4`, `tipo_socio_desc4`, `telefone1_socio4`, `email1_socio4`, `email2_socio4`
   
   - **Origem e rastreio**
-    - `site` (opcional, origem do lead)
+    - `site` (obrigatório, origem do lead)
     - `url_origem` (quando veio do Google/LinkedIn/etc)
     - `origem` (enum: CSV, Google, LinkedIn, Instagram, Facebook, Manual)
     - `descricao` (meta description da homepage)
@@ -159,7 +159,7 @@
 - **Leads**  
   - PK: `id` (UUID)  
   - Índices: `idx_site`, `idx_email_norm`, `idx_tel_norm`  
-  - Um lead válido requer **`email` ou `telefone`**. A obrigatoriedade de outros campos como `site` pode ser exigida pela aplicação (ex: na importação web, `site` e `email` são obrigatórios).
+  - `email` e `site` são **chaves obrigatórias** para persistir lead.
   - CSV trouxe múltiplos sócios, por ora mantidos como campos repetidos no lead; em fase posterior pode-se normalizar em `#__crm_lead_socios`.  
   - **Deduplicação** na importação:  
   - Se e-mail já existir (`email_norm`), não salva.  

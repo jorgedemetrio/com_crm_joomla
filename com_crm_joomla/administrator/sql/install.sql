@@ -455,7 +455,7 @@ CREATE TABLE IF NOT EXISTS `#__crm_sms_envios` (
 -- 16) INTEGRAÇÕES (tokens/chaves/API params)
 -- ==============================================
 CREATE TABLE IF NOT EXISTS `#__crm_integracoes` (
-  `id` CHAR(36) NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `provider` VARCHAR(50) NOT NULL,     -- google_search, google_images, google_maps, linkedin, instagram, facebook, mailchimp, sugarcrm, shortlink, popimap, zenvia
   `params_json` JSON NOT NULL,
   `ativo` TINYINT(1) NOT NULL DEFAULT 1,
@@ -533,7 +533,7 @@ CREATE TABLE IF NOT EXISTS `#__crm_import_execucoes` (
 -- 20) EXPORTAÇÃO — PROFILES (regras/flags)
 -- ==============================================
 CREATE TABLE IF NOT EXISTS `#__crm_export_profiles` (
-  `id` CHAR(36) NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(150) NOT NULL,
   `descricao` VARCHAR(500) NULL,
   `criar_usuario_core` TINYINT(1) NOT NULL DEFAULT 0,
@@ -553,7 +553,7 @@ CREATE TABLE IF NOT EXISTS `#__crm_export_profiles` (
 -- ==============================================
 CREATE TABLE IF NOT EXISTS `#__crm_export_scripts` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `profile_id` CHAR(36) NOT NULL,
+  `profile_id` INT NOT NULL,
   `nome` VARCHAR(150) NOT NULL,
   `tipo` ENUM('sql','sugarcrm','mailchimp','csv') NOT NULL DEFAULT 'sql',
   `ordem` INT NOT NULL DEFAULT 0,
@@ -571,7 +571,7 @@ CREATE TABLE IF NOT EXISTS `#__crm_export_scripts` (
 -- ==============================================
 CREATE TABLE IF NOT EXISTS `#__crm_export_runs` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `profile_id` CHAR(36) NOT NULL,
+  `profile_id` INT NOT NULL,
   `lead_id` CHAR(36) NOT NULL,
   `status` ENUM('ok','falha') NOT NULL DEFAULT 'ok',
   `started_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

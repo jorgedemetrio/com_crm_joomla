@@ -27,12 +27,14 @@
             <menu view="campanhas" img="class:megaphone">COM_CRM_SUBMENU_CAMPANHAS</menu>
             <menu view="campanhalinks" img="class:link">COM_CRM_SUBMENU_CAMPANHALINKS</menu>
             <menu view="campanhaemails" img="class:envelope">COM_CRM_SUBMENU_CAMPANHAEMAILS</menu>
+            <menu view="campanhasmses" img="class:mobile">COM_CRM_SUBMENU_CAMPANHASMSES</menu>
         </submenu>
         <files folder="administrator">
             <folder>controllers</folder>
             <folder>forms</folder>
-            <folder>models</folder>
+            <folder>language</folder>
             <folder>models/forms</folder>
+            <folder>models</folder>
             <folder>sql</folder>
             <folder>tables</folder>
             <folder>views</folder>
