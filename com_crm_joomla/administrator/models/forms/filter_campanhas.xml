@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fields name="filter">
+        <field
+            name="search"
+            type="text"
+            label="COM_CRM_FILTER_SEARCH_LABEL"
+            hint="JSEARCH_FILTER"
+        />
+        <field
+            name="state"
+            type="status"
+            label="JSTATUS"
+            onchange="this.form.submit();"
+            >
+            <option value="">JOPTION_SELECT_PUBLISHED</option>
+        </field>
+        <field
+            name="status"
+            type="list"
+            label="COM_CRM_CAMPANHA_FIELD_STATUS_LABEL"
+            onchange="this.form.submit();"
+            >
+            <option value="">COM_CRM_CAMPANHAS_FILTER_STATUS_OPTION_ALL</option>
+            <option value="rascunho">COM_CRM_CAMPANHA_STATUS_RASCUNHO</option>
+            <option value="aprovada">COM_CRM_CAMPANHA_STATUS_APROVADA</option>
+            <option value="em_envio">COM_CRM_CAMPANHA_STATUS_EM_ENVIO</option>
+            <option value="finalizada">COM_CRM_CAMPANHA_STATUS_FINALIZADA</option>
+            <option value="pausada">COM_CRM_CAMPANHA_STATUS_PAUSADA</option>
+        </field>
+    </fields>
+</form>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fieldset name="default" label="COM_CRM_LEAD_DETAILS_LABEL">
+        <field name="id" type="text" readonly="true" class="readonly" default="0" label="JGLOBAL_FIELD_ID_LABEL" />
+        <field name="razao_social" type="text" label="COM_CRM_LEAD_FIELD_RAZAO_SOCIAL_LABEL" size="40" />
+        <field name="nome_fantasia" type="text" label="COM_CRM_LEAD_FIELD_NOME_FANTASIA_LABEL" size="40" />
+        <field name="cnpj" type="text" label="COM_CRM_LEAD_FIELD_CNPJ_LABEL" size="20" />
+        <field name="status" type="list" label="COM_CRM_LEAD_FIELD_STATUS_LABEL" default="NOVO">
+            <option value="NOVO">COM_CRM_LEAD_STATUS_NOVO</option>
+            <option value="VALIDADO">COM_CRM_LEAD_STATUS_VALIDADO</option>
+            <option value="REPROVADO">COM_CRM_LEAD_STATUS_REPROVADO</option>
+            <option value="MIGRADO">COM_CRM_LEAD_STATUS_MIGRADO</option>
+        </field>
+        <field name="site" type="url" label="COM_CRM_LEAD_FIELD_SITE_LABEL" size="40" />
+        <field name="email" type="email" label="COM_CRM_LEAD_FIELD_EMAIL_LABEL" required="true" size="40" validate="email" />
+        <field name="telefone1" type="text" label="COM_CRM_LEAD_FIELD_TELEFONE1_LABEL" size="20" />
+        <field name="tipo_telefone1" type="list" label="COM_CRM_LEAD_FIELD_TIPO_TELEFONE1_LABEL">
+            <option value="">JNONE</option>
+            <option value="celular">COM_CRM_LEAD_TIPO_TEL_CELULAR</option>
+            <option value="fixo">COM_CRM_LEAD_TIPO_TEL_FIXO</option>
+            <option value="whatsapp">COM_CRM_LEAD_TIPO_TEL_WHATSAPP</option>
+            <option value="sms">COM_CRM_LEAD_TIPO_TEL_SMS</option>
+        </field>
+        <field name="telefone2" type="text" label="COM_CRM_LEAD_FIELD_TELEFONE2_LABEL" size="20" />
+        <field name="tipo_telefone2" type="list" label="COM_CRM_LEAD_FIELD_TIPO_TELEFONE2_LABEL">
+            <option value="">JNONE</option>
+            <option value="celular">COM_CRM_LEAD_TIPO_TEL_CELULAR</option>
+            <option value="fixo">COM_CRM_LEAD_TIPO_TEL_FIXO</option>
+            <option value="whatsapp">COM_CRM_LEAD_TIPO_TEL_WHATSAPP</option>
+            <option value="sms">COM_CRM_LEAD_TIPO_TEL_SMS</option>
+        </field>
+    </fieldset>
+
+    <fieldset name="address" label="COM_CRM_LEAD_ADDRESS_LABEL">
+        <field name="cep" type="text" label="COM_CRM_LEAD_FIELD_CEP_LABEL" size="10" />
+        <field name="logradouro" type="text" label="COM_CRM_LEAD_FIELD_LOGRADOURO_LABEL" size="50" />
+        <field name="numero" type="text" label="COM_CRM_LEAD_FIELD_NUMERO_LABEL" size="10" />
+        <field name="complemento" type="text" label="COM_CRM_LEAD_FIELD_COMPLEMENTO_LABEL" size="30" />
+        <field name="bairro" type="text" label="COM_CRM_LEAD_FIELD_BAIRRO_LABEL" size="30" />
+        <field name="cidade" type="text" label="COM_CRM_LEAD_FIELD_CIDADE_LABEL" size="30" />
+        <field name="estado" type="text" label="COM_CRM_LEAD_FIELD_ESTADO_LABEL" size="2" />
+        <field name="pais" type="text" label="COM_CRM_LEAD_FIELD_PAIS_LABEL" size="30" default="Brasil" />
+    </fieldset>
+
+    <fieldset name="details" label="COM_CRM_LEAD_EXTRA_DETAILS_LABEL">
+        <field name="matriz_filial" type="text" label="COM_CRM_LEAD_FIELD_MATRIZ_FILIAL_LABEL" />
+        <field name="situacao" type="text" label="COM_CRM_LEAD_FIELD_SITUACAO_LABEL" />
+        <field name="porte" type="text" label="COM_CRM_LEAD_FIELD_PORTE_LABEL" />
+        <field name="capital_social" type="text" label="COM_CRM_LEAD_FIELD_CAPITAL_SOCIAL_LABEL" />
+        <field name="natureza_desc" type="text" label="COM_CRM_LEAD_FIELD_NATUREZA_DESC_LABEL" />
+        <field name="qualificacao_responsavel_desc" type="text" label="COM_CRM_LEAD_FIELD_QUALIFICACAO_RESPONSAVEL_DESC_LABEL" />
+    </fieldset>
+
+    <fieldset name="partners" label="COM_CRM_LEAD_PARTNERS_LABEL">
+        <field type="note" label="" description="COM_CRM_LEAD_PARTNERS_NOTE_DESC" />
+        <field name="nome_socio1" type="text" label="COM_CRM_LEAD_FIELD_NOME_SOCIO1_LABEL" />
+        <field name="email1_socio1" type="email" label="COM_CRM_LEAD_FIELD_EMAIL1_SOCIO1_LABEL" validate="email" />
+        <field name="nome_socio2" type="text" label="COM_CRM_LEAD_FIELD_NOME_SOCIO2_LABEL" />
+        <field name="email1_socio2" type="email" label="COM_CRM_LEAD_FIELD_EMAIL1_SOCIO2_LABEL" validate="email" />
+        <field name="nome_socio3" type="text" label="COM_CRM_LEAD_FIELD_NOME_SOCIO3_LABEL" />
+        <field name="email1_socio3" type="email" label="COM_CRM_LEAD_FIELD_EMAIL1_SOCIO3_LABEL" validate="email" />
+        <field name="nome_socio4" type="text" label="COM_CRM_LEAD_FIELD_NOME_SOCIO4_LABEL" />
+        <field name="email1_socio4" type="email" label="COM_CRM_LEAD_FIELD_EMAIL1_SOCIO4_LABEL" validate="email" />
+    </fieldset>
+
+    <fieldset name="origin" label="COM_CRM_LEAD_ORIGIN_LABEL">
+        <field name="origem" type="list" label="COM_CRM_LEAD_FIELD_ORIGEM_LABEL" default="Manual">
+            <option value="CSV">COM_CRM_LEAD_ORIGEM_CSV</option>
+            <option value="Google">COM_CRM_LEAD_ORIGEM_GOOGLE</option>
+            <option value="LinkedIn">COM_CRM_LEAD_ORIGEM_LINKEDIN</option>
+            <option value="Instagram">COM_CRM_LEAD_ORIGEM_INSTAGRAM</option>
+            <option value="Facebook">COM_CRM_LEAD_ORIGEM_FACEBOOK</option>
+            <option value="Manual">COM_CRM_LEAD_ORIGEM_MANUAL</option>
+        </field>
+        <field name="url_origem" type="url" label="COM_CRM_LEAD_FIELD_URL_ORIGEM_LABEL" size="50" />
+        <field name="descricao" type="textarea" label="COM_CRM_LEAD_FIELD_DESCRICAO_LABEL" rows="5" />
+        <field name="observacoes" type="textarea" label="COM_CRM_LEAD_FIELD_OBSERVACOES_LABEL" rows="5" />
+    </fieldset>
+
+    <fieldset name="groups" label="COM_CRM_LEAD_GROUPS_LABEL">
+        <field
+            name="groups"
+            type="sql"
+            label="COM_CRM_LEAD_FIELD_GROUPS_LABEL"
+            multiple="true"
+            query="SELECT id, nome FROM #__crm_lead_groups WHERE state = 1 ORDER BY nome"
+            key_field="id"
+            value_field="nome"
+        >
+            <option value="">JNONE</option>
+        </field>
+    </fieldset>
+
+    <fieldset name="publishing" label="JGLOBAL_FIELDSET_PUBLISHING">
+		<field name="state" type="list" label="JSTATUS" default="1" class="custom-select">
+			<option value="1">JPUBLISHED</option>
+			<option value="0">JUNPUBLISHED</option>
+			<option value="2">JARCHIVED</option>
+			<option value="-2">JTRASHED</option>
+		</field>
+        <field name="created" type="calendar" readonly="true" format="%Y-%m-%d %H:%M:%S" filter="user_utc" />
+        <field name="created_by" type="user" readonly="true" />
+        <field name="modified" type="calendar" readonly="true" format="%Y-%m-%d %H:%M:%S" filter="user_utc" />
+        <field name="modified_by" type="user" readonly="true" />
+    </fieldset>
+</form>

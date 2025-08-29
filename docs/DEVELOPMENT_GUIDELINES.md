@@ -47,7 +47,12 @@
 
 ---
 
-## 3) Convenções de nomes
+## 3) Padrões de Desenvolvimento
+
+
+Para detalhes sobre a arquitetura MVC, convenções de nomenclatura, e exemplos de código para este projeto, por favor, consulte o nosso guia de desenvolvimento completo:
+
+**➡️ [Guia de Desenvolvimento Joomla 5 para o Componente CRM](./JOOMLA5_DEVELOPMENT_GUIDE.md)**
 
 - **Tabelas**: `#__crm_*` (ex.: `#__crm_leads`, `#__crm_campanhas`)  
 - **Models**: `Administrator\Model\LeadsModel`  
@@ -146,11 +151,6 @@
 
 ## 8) Segurança, LGPD e Qualidade
 
-- **Admin-only**: ACL por tarefa  
-- **CSRF** em todos os forms  
-- **Transações** em exportações SQL  
-- **Fila/Jobs** para processos longos (crawling, validação, disparos)  
-- **LGPD**: armazenar hashes (opt-out), evitar PII em logs, retenção configurável  
-- **CI/CD**: PHPStan, PHPUnit, SonarCloud, Composer PSR-4, code style  
+Este documento consolidado contém todas as informações necessárias para desenvolver novas funcionalidades, módulos e plugins de forma consistente e alinhada com as melhores práticas do Joomla 5.
 
 ---

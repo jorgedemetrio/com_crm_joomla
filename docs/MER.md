@@ -9,6 +9,7 @@
 - **Leads** (`#__crm_leads`)  
   - Armazena leads capturados/importados.  
   - PK: `id` (UUID).  
+  - Campos obrigatórios: **`email`** ou **`telefone`**.
   - Regra de validação principal: um lead deve ter **`email`** ou **`telefone`**.
   - Campo `descricao`: meta description da homepage.  
   - Inclui todos os campos vindos do CSV de importação.
@@ -159,7 +160,7 @@
 - **Leads**  
   - PK: `id` (UUID)  
   - Índices: `idx_site`, `idx_email_norm`, `idx_tel_norm`  
-  - Um lead válido requer **`email` ou `telefone`**. A obrigatoriedade de outros campos como `site` pode ser exigida pela aplicação (ex: na importação web, `site` e `email` são obrigatórios).
+  - `email` e `site` são **chaves obrigatórias** para persistir lead.
   - CSV trouxe múltiplos sócios, por ora mantidos como campos repetidos no lead; em fase posterior pode-se normalizar em `#__crm_lead_socios`.  
   - **Deduplicação** na importação:  
   - Se e-mail já existir (`email_norm`), não salva.  

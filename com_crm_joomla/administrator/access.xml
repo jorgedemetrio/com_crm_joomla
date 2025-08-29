@@ -14,4 +14,29 @@
         <action name="core.edit" title="JACTION_EDIT" description="COM_CRM_ACCESS_EDIT_DESC" />
         <action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_CRM_ACCESS_EDITSTATE_DESC" />
     </section>
+    <section name="lead">
+        <action name="core.delete" title="JACTION_DELETE" description="COM_CRM_ACCESS_DELETE_DESC" />
+        <action name="core.edit" title="JACTION_EDIT" description="COM_CRM_ACCESS_EDIT_DESC" />
+        <action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_CRM_ACCESS_EDITSTATE_DESC" />
+    </section>
+    <section name="campanha">
+        <action name="core.delete" title="JACTION_DELETE" description="COM_CRM_ACCESS_DELETE_DESC" />
+        <action name="core.edit" title="JACTION_EDIT" description="COM_CRM_ACCESS_EDIT_DESC" />
+        <action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_CRM_ACCESS_EDITSTATE_DESC" />
+    </section>
+    <section name="campanhalink">
+        <action name="core.delete" title="JACTION_DELETE" description="COM_CRM_ACCESS_DELETE_DESC" />
+        <action name="core.edit" title="JACTION_EDIT" description="COM_CRM_ACCESS_EDIT_DESC" />
+        <action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_CRM_ACCESS_EDITSTATE_DESC" />
+    </section>
+    <section name="campanhaemail">
+        <action name="core.delete" title="JACTION_DELETE" description="COM_CRM_ACCESS_DELETE_DESC" />
+        <action name="core.edit" title="JACTION_EDIT" description="COM_CRM_ACCESS_EDIT_DESC" />
+        <action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_CRM_ACCESS_EDITSTATE_DESC" />
+    </section>
+    <section name="campanhasms">
+        <action name="core.delete" title="JACTION_DELETE" description="COM_CRM_ACCESS_DELETE_DESC" />
+        <action name="core.edit" title="JACTION_EDIT" description="COM_CRM_ACCESS_EDIT_DESC" />
+        <action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_CRM_ACCESS_EDITSTATE_DESC" />
+    </section>
 </access>
