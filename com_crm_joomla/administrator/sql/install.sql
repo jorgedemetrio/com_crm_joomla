@@ -497,7 +497,6 @@ CREATE TABLE IF NOT EXISTS `#__crm_import_arquivo` (
   `id` CHAR(36) NOT NULL,
   `nome` VARCHAR(150) NOT NULL,
   `arquivo_path` VARCHAR(500) NOT NULL,
-  `status` ENUM('pendente','processando','processado','falha') NOT NULL DEFAULT 'pendente',
 
   -- Auditoria padrão
   `state` TINYINT(3) NOT NULL DEFAULT 1,
