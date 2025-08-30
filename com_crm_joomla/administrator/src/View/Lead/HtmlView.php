@@ -12,7 +12,6 @@ namespace Joomla\Component\Crm\Administrator\View\Lead;
 use Joomla\CMS\MVC\View\AdminView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Factory;
 
 /**
  * Lead View
@@ -31,7 +30,7 @@ class HtmlView extends AdminView
         $this->item = $this->get('Item');
 
         if (count($errors = $this->get('Errors'))) {
-            Factory::getApplication()->enqueueMessage(implode("\n", $errors), 'error');
+            $this->getApplication()->enqueueMessage(implode("\n", $errors), 'error');
             return false;
         }
 
@@ -45,12 +44,30 @@ class HtmlView extends AdminView
      */
     protected function addToolbar()
     {
+        $user  = $this->getApplication()->getIdentity();
         $isNew = ($this->item->id == 0);
+
+        // Set the title
         $title = $isNew ? Text::_('COM_CRM_LEAD_VIEW_NEW_TITLE') : Text::_('COM_CRM_LEAD_VIEW_EDIT_TITLE');
         ToolbarHelper::title($title);
-        ToolbarHelper::apply('lead.apply');
-        ToolbarHelper::save('lead.save');
-        ToolbarHelper::save2new('lead.save2new');
-        ToolbarHelper::cancel('lead.cancel');
+
+        // Check if the user can edit this item.
+        $canDo = $isNew ? $user->authorise('core.create', 'com_crm') : $user->authorise('core.edit', 'com_crm');
+
+        if ($canDo) {
+            ToolbarHelper::apply('lead.apply');
+            ToolbarHelper::save('lead.save');
+
+            if ($user->authorise('core.create', 'com_crm')) {
+                ToolbarHelper::save2new('lead.save2new');
+            }
+        }
+
+        // For new records, check the create permission.
+        if ($isNew && ($user->authorise('core.create', 'com_crm'))) {
+             ToolbarHelper::cancel('lead.cancel', 'JTOOLBAR_CANCEL');
+        } else {
+             ToolbarHelper::cancel('lead.cancel', 'JTOOLBAR_CLOSE');
+        }
     }
 }
