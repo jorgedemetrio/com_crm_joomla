@@ -142,11 +142,11 @@ A estrutura do projeto segue o padrão moderno do Joomla 5, que é baseado em na
 
 ## 8) Segurança, LGPD e Qualidade
 
-- **Admin-only**: ACL por tarefa  
-- **CSRF** em todos os forms  
-- **Transações** em exportações SQL  
-- **Fila/Jobs** para processos longos (crawling, validação, disparos)  
-- **LGPD**: armazenar hashes (opt-out), evitar PII em logs, retenção configurável  
-- **CI/CD**: PHPStan, PHPUnit, SonarCloud, Composer PSR-4, code style  
+- **Admin-only**: ACL por tarefa
+- **CSRF** em todos os forms
+- **Transações** em exportações SQL
+- **Fila/Jobs** para processos longos (crawling, validação, disparos)
+- **LGPD**: armazenar hashes (opt-out), evitar PII em logs, retenção configurável
+- **CI/CD**: PHPStan, PHPUnit, SonarCloud, Composer PSR-4, code style
 
 ---

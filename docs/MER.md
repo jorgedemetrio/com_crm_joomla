@@ -9,7 +9,7 @@
 - **Leads** (`#__crm_leads`)  
   - Armazena leads capturados/importados.  
   - PK: `id` (UUID).  
-  - Campos obrigatórios: **`email`** ou **`telefone`**.  
+  - Campos obrigatórios: **`email`** ou **`telefone`**.
   - Campo `descricao`: meta description da homepage.  
   - Inclui todos os campos vindos do CSV de importação.
   - **Campos (do CSV + adicionais de CRM):**
