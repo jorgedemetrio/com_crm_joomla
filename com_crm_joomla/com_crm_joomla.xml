@@ -38,6 +38,7 @@
             <menu link="option=com_crm&view=leads">COM_CRM_LEADS</menu>
             <menu link="option=com_crm&view=gruposlead">COM_CRM_LEAD_GROUPS</menu>
             <menu link="option=com_crm&view=campanhas">COM_CRM_CAMPAIGNS</menu>
+            <menu link="option=com_crm&view=linkscampanha">COM_CRM_LINKSCAMPANHA</menu>
         </submenu>
         <files folder="administrator">
             <folder>forms</folder>
