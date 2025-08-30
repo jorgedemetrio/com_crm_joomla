@@ -12,6 +12,7 @@ namespace Joomla\Component\Crm\Administrator\View\LinkCampanha;
 use Joomla\CMS\MVC\View\AdminView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Factory;
 
 /**
  * LinkCampanha View
@@ -30,7 +31,7 @@ class HtmlView extends AdminView
         $this->item = $this->get('Item');
 
         if (count($errors = $this->get('Errors'))) {
-            $this->getApplication()->enqueueMessage(implode("\n", $errors), 'error');
+            Factory::getApplication()->enqueueMessage(implode("\n", $errors), 'error');
             return false;
         }
 
@@ -44,30 +45,12 @@ class HtmlView extends AdminView
      */
     protected function addToolbar()
     {
-        $user  = $this->getApplication()->getIdentity();
         $isNew = ($this->item->id == 0);
-
-        // Set the title
         $title = $isNew ? Text::_('COM_CRM_LINKCAMPANHA_VIEW_NEW_TITLE') : Text::_('COM_CRM_LINKCAMPANHA_VIEW_EDIT_TITLE');
         ToolbarHelper::title($title);
-
-        // Check if the user can edit this item.
-        $canDo = $isNew ? $user->authorise('core.create', 'com_crm.linkcampanha') : $user->authorise('core.edit', 'com_crm.linkcampanha.' . $this->item->id);
-
-        if ($canDo) {
-            ToolbarHelper::apply('linkcampanha.apply');
-            ToolbarHelper::save('linkcampanha.save');
-
-            if ($user->authorise('core.create', 'com_crm.linkcampanha')) {
-                ToolbarHelper::save2new('linkcampanha.save2new');
-            }
-        }
-
-        // For new records, check the create permission.
-        if ($isNew && ($user->authorise('core.create', 'com_crm.linkcampanha'))) {
-             ToolbarHelper::cancel('linkcampanha.cancel', 'JTOOLBAR_CANCEL');
-        } else {
-             ToolbarHelper::cancel('linkcampanha.cancel', 'JTOOLBAR_CLOSE');
-        }
+        ToolbarHelper::apply('linkcampanha.apply');
+        ToolbarHelper::save('linkcampanha.save');
+        ToolbarHelper::save2new('linkcampanha.save2new');
+        ToolbarHelper::cancel('linkcampanha.cancel');
     }
 }

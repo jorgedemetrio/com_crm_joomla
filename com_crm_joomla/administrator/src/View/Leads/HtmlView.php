@@ -12,6 +12,7 @@ namespace Joomla\Component\Crm\Administrator\View\Leads;
 use Joomla\CMS\MVC\View\ListView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Factory;
 
 /**
  * Leads View
@@ -30,7 +31,7 @@ class HtmlView extends ListView
         $this->activeFilters = $this->get('ActiveFilters');
 
         if (count($errors = $this->get('Errors'))) {
-            $this->getApplication()->enqueueMessage(implode("\n", $errors), 'error');
+            Factory::getApplication()->enqueueMessage(implode("\n", $errors), 'error');
             return;
         }
 
@@ -45,24 +46,10 @@ class HtmlView extends ListView
     protected function addToolbar()
     {
         ToolbarHelper::title(Text::_('COM_CRM_LEADS_VIEW_DEFAULT_TITLE'));
-
-        $user = $this->getApplication()->getIdentity();
-
-        if ($user->authorise('core.create', 'com_crm.lead')) {
-            ToolbarHelper::addNew('lead.add');
-        }
-
-        if ($user->authorise('core.edit', 'com_crm.lead')) {
-            ToolbarHelper::editList('lead.edit');
-        }
-
-        if ($user->authorise('core.delete', 'com_crm.lead')) {
-            ToolbarHelper::deleteList(Text::_('COM_CRM_CONFIRM_DELETE'), 'leads.delete');
-        }
-
-        if ($user->authorise('core.edit.state', 'com_crm.lead')) {
-            ToolbarHelper::publish('leads.publish', 'JTOOLBAR_PUBLISH', true);
-            ToolbarHelper::unpublish('leads.unpublish', 'JTOOLBAR_UNPUBLISH', true);
-        }
+        ToolbarHelper::addNew('lead.add');
+        ToolbarHelper::editList('lead.edit');
+        ToolbarHelper::deleteList(Text::_('COM_CRM_CONFIRM_DELETE'), 'leads.delete');
+        ToolbarHelper::publish('leads.publish', 'JTOOLBAR_PUBLISH', true);
+        ToolbarHelper::unpublish('leads.unpublish', 'JTOOLBAR_UNPUBLISH', true);
     }
 }

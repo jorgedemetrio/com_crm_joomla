@@ -27,8 +27,9 @@ class TrackingController extends BaseController
         // TODO: Implement open tracking logic
 
         // Output a 1x1 transparent GIF
-        $this->app->setHeader('Content-Type', 'image/gif');
+        $app = \Joomla\CMS\Factory::getApplication();
+        $app->setHeader('Content-Type', 'image/gif');
         echo base64_decode('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
-        $this->app->close();
+        $app->close();
     }
 }

@@ -12,6 +12,7 @@ namespace Joomla\Component\Crm\Administrator\View\Campanhas;
 use Joomla\CMS\MVC\View\ListView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Factory;
 
 /**
  * Campanhas View
@@ -30,7 +31,7 @@ class HtmlView extends ListView
         $this->activeFilters = $this->get('ActiveFilters');
 
         if (count($errors = $this->get('Errors'))) {
-            $this->getApplication()->enqueueMessage(implode("\n", $errors), 'error');
+            Factory::getApplication()->enqueueMessage(implode("\n", $errors), 'error');
             return;
         }
 
@@ -45,24 +46,10 @@ class HtmlView extends ListView
     protected function addToolbar()
     {
         ToolbarHelper::title(Text::_('COM_CRM_CAMPANHAS_VIEW_DEFAULT_TITLE'));
-
-        $user = $this->getApplication()->getIdentity();
-
-        if ($user->authorise('core.create', 'com_crm.campanha')) {
-            ToolbarHelper::addNew('campanha.add');
-        }
-
-        if ($user->authorise('core.edit', 'com_crm.campanha')) {
-            ToolbarHelper::editList('campanha.edit');
-        }
-
-        if ($user->authorise('core.delete', 'com_crm.campanha')) {
-            ToolbarHelper::deleteList(Text::_('COM_CRM_CONFIRM_DELETE'), 'campanhas.delete');
-        }
-
-        if ($user->authorise('core.edit.state', 'com_crm.campanha')) {
-            ToolbarHelper::publish('campanhas.publish', 'JTOOLBAR_PUBLISH', true);
-            ToolbarHelper::unpublish('campanhas.unpublish', 'JTOOLBAR_UNPUBLISH', true);
-        }
+        ToolbarHelper::addNew('campanha.add');
+        ToolbarHelper::editList('campanha.edit');
+        ToolbarHelper::deleteList(Text::_('COM_CRM_CONFIRM_DELETE'), 'campanhas.delete');
+        ToolbarHelper::publish('campanhas.publish', 'JTOOLBAR_PUBLISH', true);
+        ToolbarHelper::unpublish('campanhas.unpublish', 'JTOOLBAR_UNPUBLISH', true);
     }
 }

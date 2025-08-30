@@ -10,6 +10,7 @@
 namespace Joomla\Component\Crm\Administrator\Model;
 
 use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Factory;
 
 /**
  * Leads Model
@@ -18,11 +19,6 @@ class LeadsModel extends ListModel
 {
     /**
      * Constructor.
-     *
-     * @param   array  $config  An optional associative array of configuration settings.
-     *
-     * @see     \Joomla\CMS\MVC\Model\BaseDatabaseModel
-     * @since   1.0.0
      */
     public function __construct($config = [])
     {
@@ -46,15 +42,11 @@ class LeadsModel extends ListModel
 
     /**
      * Method to build an SQL query to load the list data.
-     *
-     * @return  \Joomla\Database\Query
-     *
-     * @since   1.0.0
      */
     protected function getListQuery()
     {
-        $dbDriver = $this->getDbo();
-        $query    = $dbDriver->getQuery(true);
+        $db    = Factory::getDbo();
+        $query = $db->getQuery(true);
 
         $query->select(
             $this->getState(
@@ -62,19 +54,19 @@ class LeadsModel extends ListModel
                 'a.id, a.razao_social, a.nome_fantasia, a.email, a.telefone1, a.cidade, a.estado, a.status, a.state AS published'
             )
         );
-        $query->from($dbDriver->quoteName('#__crm_leads', 'a'));
+        $query->from($db->quoteName('#__crm_leads', 'a'));
 
         // Filter by search in name or email
         $search = $this->getState('filter.search');
         if (!empty($search)) {
-            $like = $dbDriver->quote('%' . $search . '%');
+            $like = $db->quote('%' . $search . '%');
             $query->where('a.razao_social LIKE ' . $like . ' OR a.nome_fantasia LIKE ' . $like . ' OR a.email LIKE ' . $like);
         }
 
         // Filter by status
         $status = $this->getState('filter.status');
         if (!empty($status)) {
-            $query->where('a.status = ' . $dbDriver->quote($status));
+            $query->where('a.status = ' . $db->quote($status));
         }
 
         // Filter by state (published)
@@ -88,7 +80,7 @@ class LeadsModel extends ListModel
         // Add the list ordering clause.
         $orderCol  = $this->state->get('list.ordering', 'a.razao_social');
         $orderDirn = $this->state->get('list.direction', 'asc');
-        $query->order($dbDriver->escape($orderCol) . ' ' . $dbDriver->escape($orderDirn));
+        $query->order($db->escape($orderCol) . ' ' . $db->escape($orderDirn));
 
         return $query;
     }

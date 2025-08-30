@@ -18,18 +18,6 @@
         <action name="core.edit" title="JACTION_EDIT" description="COM_CRM_ACCESS_EDIT_DESC" />
         <action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_CRM_ACCESS_EDITSTATE_DESC" />
     </section>
-    <section name="grupolead">
-        <action name="core.create" title="JACTION_CREATE" description="COM_CRM_ACCESS_CREATE_DESC" />
-        <action name="core.delete" title="JACTION_DELETE" description="COM_CRM_ACCESS_DELETE_DESC" />
-        <action name="core.edit" title="JACTION_EDIT" description="COM_CRM_ACCESS_EDIT_DESC" />
-        <action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_CRM_ACCESS_EDITSTATE_DESC" />
-    </section>
-    <section name="linkcampanha">
-        <action name="core.create" title="JACTION_CREATE" description="COM_CRM_ACCESS_CREATE_DESC" />
-        <action name="core.delete" title="JACTION_DELETE" description="COM_CRM_ACCESS_DELETE_DESC" />
-        <action name="core.edit" title="JACTION_EDIT" description="COM_CRM_ACCESS_EDIT_DESC" />
-        <action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_CRM_ACCESS_EDITSTATE_DESC" />
-    </section>
     <section name="importacao">
         <action name="core.create" title="JACTION_CREATE" description="COM_CRM_ACCESS_CREATE_DESC" />
         <action name="core.delete" title="JACTION_DELETE" description="COM_CRM_ACCESS_DELETE_DESC" />

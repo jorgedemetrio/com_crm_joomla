@@ -10,7 +10,7 @@
 namespace Joomla\Component\Crm\Administrator\Model;
 
 use Joomla\CMS\MVC\Model\AdminModel;
-use Joomla\CMS\Language\Text;
+use Joomla\CMS\Factory;
 
 /**
  * Lead Model
@@ -19,16 +19,9 @@ class LeadModel extends AdminModel
 {
     /**
      * Method to get the record form.
-     *
-     * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
-     *
-     * @return  \Joomla\CMS\Form\Form|false  A Form object on success, false on failure.
-     *
-     * @since   1.0.0
      */
-    public function getForm($loadData = true)
+    public function getForm($data = [], $loadData = true)
     {
-        // Get the form.
         $form = $this->loadForm(
             'com_crm.lead',
             'lead',
@@ -44,15 +37,10 @@ class LeadModel extends AdminModel
 
     /**
      * Method to get the data that should be injected into the form.
-     *
-     * @return  mixed  The data for the form.
-     *
-     * @since   1.0.0
      */
     protected function loadFormData()
     {
-        // Check the session for previously entered form data.
-        $data = $this->getApplication()->getUserState(
+        $data = Factory::getApplication()->getUserState(
             'com_crm.edit.lead.data',
             []
         );
@@ -63,47 +51,24 @@ class LeadModel extends AdminModel
 
         // Load the associated groups for an existing lead.
         if (!empty($data->id)) {
-            $dbDriver = $this->getDbo();
-            $query = $dbDriver->getQuery(true)
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
                 ->select('group_id')
-                ->from($dbDriver->quoteName('#__crm_lead_group_map'))
-                ->where($dbDriver->quoteName('lead_id') . ' = ' . $dbDriver->quote($data->id));
-            $dbDriver->setQuery($query);
-            $data->groups = $dbDriver->loadColumn();
+                ->from('#__crm_lead_group_map')
+                ->where('lead_id = ' . $db->quote($data->id));
+            $db->setQuery($query);
+            $data->groups = $db->loadColumn();
         }
 
         return $data;
     }
 
     /**
-     * Override the save method to handle the many-to-many relationship.
-     *
-     * @param   array  $data  An array of form data.
-     *
-     * @return  boolean  True on success, false on failure.
-     *
-     * @since   1.0.0
+     * Override the save method to handle the many-to-many relationship
      */
     public function save($data)
     {
-        $user = $this->getApplication()->getIdentity();
-        $isNew = empty($data['id']);
-
-        if ($isNew) {
-            // Check for create permission
-            if (!$user->authorise('core.create', 'com_crm.lead')) {
-                $this->setError(Text::_('JLIB_APPLICATION_ERROR_CREATE_NOT_PERMITTED'));
-                return false;
-            }
-        } else {
-            // Check for edit permission
-            if (!$user->authorise('core.edit', 'com_crm.lead.' . $data['id'])) {
-                $this->setError(Text::_('JLIB_APPLICATION_ERROR_EDIT_NOT_PERMITTED'));
-                return false;
-            }
-        }
-
-        $dbDriver = $this->getDbo();
+        $db = Factory::getDbo();
         $groups = $data['groups'] ?? [];
 
         // Unset groups from data array so it doesn't interfere with parent::save
@@ -119,34 +84,28 @@ class LeadModel extends AdminModel
 
         // Now, handle the groups
         // 1. Delete existing relationships for this lead
-        $query = $dbDriver->getQuery(true)
-            ->delete($dbDriver->quoteName('#__crm_lead_group_map'))
-            ->where($dbDriver->quoteName('lead_id') . ' = ' . $dbDriver->quote($leadId));
-        $dbDriver->setQuery($query);
-
-        try {
-            $dbDriver->execute();
-        } catch (\Exception $e) {
-            $this->setError($e->getMessage());
-            return false;
-        }
+        $query = $db->getQuery(true)
+            ->delete($db->quoteName('#__crm_lead_group_map'))
+            ->where($db->quoteName('lead_id') . ' = ' . $db->quote($leadId));
+        $db->setQuery($query);
+        $db->execute();
 
         // 2. Insert new relationships if any were selected
         if (!empty($groups)) {
-            $query = $dbDriver->getQuery(true)
-                ->insert($dbDriver->quoteName('#__crm_lead_group_map'))
-                ->columns([$dbDriver->quoteName('lead_id'), $dbDriver->quoteName('group_id')]);
+            $query = $db->getQuery(true)
+                ->insert($db->quoteName('#__crm_lead_group_map'))
+                ->columns([$db->quoteName('lead_id'), $db->quoteName('group_id')]);
 
             foreach ($groups as $groupId) {
-                if (!empty($groupId)) {
-                    $query->values($dbDriver->quote($leadId) . ', ' . $dbDriver->quote($groupId));
+                if(!empty($groupId)) {
+                    $query->values($db->quote($leadId) . ', ' . $db->quote($groupId));
                 }
             }
 
-            $dbDriver->setQuery($query);
+            $db->setQuery($query);
 
             try {
-                $dbDriver->execute();
+                $db->execute();
             } catch (\Exception $e) {
                 $this->setError($e->getMessage());
                 return false;

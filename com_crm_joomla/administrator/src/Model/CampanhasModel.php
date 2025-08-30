@@ -10,6 +10,7 @@
 namespace Joomla\Component\Crm\Administrator\Model;
 
 use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Factory;
 
 /**
  * Campanhas Model
@@ -18,11 +19,6 @@ class CampanhasModel extends ListModel
 {
     /**
      * Constructor.
-     *
-     * @param   array  $config  An optional associative array of configuration settings.
-     *
-     * @see     \Joomla\CMS\MVC\Model\BaseDatabaseModel
-     * @since   1.0.0
      */
     public function __construct($config = [])
     {
@@ -40,15 +36,11 @@ class CampanhasModel extends ListModel
 
     /**
      * Method to build an SQL query to load the list data.
-     *
-     * @return  \Joomla\Database\Query
-     *
-     * @since   1.0.0
      */
     protected function getListQuery()
     {
-        $dbDriver = $this->getDbo();
-        $query    = $dbDriver->getQuery(true);
+        $db    = Factory::getDbo();
+        $query = $db->getQuery(true);
 
         $query->select(
             $this->getState(
@@ -56,25 +48,25 @@ class CampanhasModel extends ListModel
                 'a.id, a.nome, a.status, a.state AS published'
             )
         );
-        $query->from($dbDriver->quoteName('#__crm_campanhas', 'a'));
+        $query->from($db->quoteName('#__crm_campanhas', 'a'));
 
         // Filter by search in name
         $search = $this->getState('filter.search');
         if (!empty($search)) {
-            $like = $dbDriver->quote('%' . $search . '%');
+            $like = $db->quote('%' . $search . '%');
             $query->where('a.nome LIKE ' . $like);
         }
 
         // Filter by status
         $status = $this->getState('filter.status');
         if (!empty($status)) {
-            $query->where('a.status = ' . $dbDriver->quote($status));
+            $query->where('a.status = ' . $db->quote($status));
         }
 
         // Add the list ordering clause.
         $orderCol  = $this->state->get('list.ordering', 'a.nome');
         $orderDirn = $this->state->get('list.direction', 'asc');
-        $query->order($dbDriver->escape($orderCol) . ' ' . $dbDriver->escape($orderDirn));
+        $query->order($db->escape($orderCol) . ' ' . $db->escape($orderDirn));
 
         return $query;
     }
