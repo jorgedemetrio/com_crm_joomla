@@ -1,54 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="4.0" method="upgrade">
-    <name>com_crm_joomla</name>
-    <creationDate>2024-07-29</creationDate>
-    <author>Jules</author>
-    <authorEmail>jules@example.com</authorEmail>
+    <name>com_crm</name>
+    <creationDate>2025-08-29</creationDate>
+    <author>Jorge Demetrio</author>
+    <authorEmail>jorgedemetrio@gmail.com</authorEmail>
+    <authorUrl>https://www.sobieskiproducoes.com.br/</authorUrl>
+    <copyright>Copyright (C) 2024 Sobieski Produções. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <version>1.0.0</version>
     <description>COM_CRM_XML_DESCRIPTION</description>
     <namespace>Joomla\Component\Crm</namespace>
 
+    <updateservers>
+        <server type="extension" priority="1" name="CRM Update Server">https://apps.sobieskiproducoes.com.br/com_crm_joomla/atualizacao.xml</server>
+    </updateservers>
+
     <install>
         <sql>
-            <file driver="mysql" charset="utf8mb4">administrator/sql/install.sql</file>
+            <file driver="mysql" charset="utf8">administrator/sql/install.sql</file>
         </sql>
     </install>
-    <uninstall>
-        <sql>
-            <!-- Here would be the uninstall SQL file if needed -->
-        </sql>
-    </uninstall>
+    <update>
+        <schemas>
+            <schemapath type="mysql">administrator/sql/updates/mysql</schemapath>
+        </schemas>
+    </update>
 
+    <!-- Site (Frontend) Files -->
+    <files folder="site">
+        <folder>src</folder>
+    </files>
+
+    <!-- Administrator (Backend) Files -->
     <administration>
-        <menu>COM_CRM_MENU_TITLE</menu>
+        <menu link="option=com_crm">COM_CRM</menu>
         <submenu>
-            <menu view="leadgroups" img="class:joomla-picture-in-picture">COM_CRM_SUBMENU_LEADGROUPS</menu>
-            <menu view="leads" img="class:users">COM_CRM_SUBMENU_LEADS</menu>
-            <menu view="campanhas" img="class:megaphone">COM_CRM_SUBMENU_CAMPANHAS</menu>
-            <menu view="campanhalinks" img="class:link">COM_CRM_SUBMENU_CAMPANHALINKS</menu>
-            <menu view="campanhaemails" img="class:envelope">COM_CRM_SUBMENU_CAMPANHAEMAILS</menu>
-            <menu view="campanhasmses" img="class:mobile">COM_CRM_SUBMENU_CAMPANHASMSES</menu>
+            <menu link="option=com_crm&view=leads">COM_CRM_LEADS</menu>
+            <menu link="option=com_crm&view=gruposlead">COM_CRM_LEAD_GROUPS</menu>
+            <menu link="option=com_crm&view=campanhas">COM_CRM_CAMPAIGNS</menu>
         </submenu>
         <files folder="administrator">
-            <folder>controllers</folder>
             <folder>forms</folder>
-            <folder>language</folder>
-            <folder>models/forms</folder>
-            <folder>models</folder>
             <folder>sql</folder>
-            <folder>tables</folder>
-            <folder>views</folder>
-            <filename>access.xml</filename>
+            <folder>src</folder>
         </files>
         <languages folder="administrator/language">
-            <language tag="en-GB">en-GB/en-GB.com_crm_joomla.ini</language>
-            <language tag="pt-BR">pt-BR/pt-BR.com_crm_joomla.ini</language>
-            <language tag="es-ES">es-ES/es-ES.com_crm_joomla.ini</language>
-            <language tag="fr-FR">fr-FR/fr-FR.com_crm_joomla.ini</language>
-            <language tag="de-DE">de-DE/de-DE.com_crm_joomla.ini</language>
-            <language tag="it-IT">it-IT/it-IT.com_crm_joomla.ini</language>
-            <language tag="ja-JP">ja-JP/ja-JP.com_crm_joomla.ini</language>
-            <language tag="zh-CN">zh-CN/zh-CN.com_crm_joomla.ini</language>
+            <language tag="en-GB">en-GB/en-GB.com_crm.ini</language>
+            <language tag="en-GB">en-GB/en-GB.com_crm.sys.ini</language>
+            <language tag="pt-BR">pt-BR/pt-BR.com_crm.ini</language>
+            <language tag="pt-BR">pt-BR/pt-BR.com_crm.sys.ini</language>
+            <language tag="es-ES">es-ES/es-ES.com_crm.ini</language>
+            <language tag="es-ES">es-ES/es-ES.com_crm.sys.ini</language>
+            <language tag="fr-FR">fr-FR/fr-FR.com_crm.ini</language>
+            <language tag="fr-FR">fr-FR/fr-FR.com_crm.sys.ini</language>
+            <language tag="de-DE">de-DE/de-DE.com_crm.ini</language>
+            <language tag="de-DE">de-DE/de-DE.com_crm.sys.ini</language>
+            <language tag="it-IT">it-IT/it-IT.com_crm.ini</language>
+            <language tag="it-IT">it-IT/it-IT.com_crm.sys.ini</language>
+            <language tag="ja-JP">ja-JP/ja-JP.com_crm.ini</language>
+            <language tag="ja-JP">ja-JP/ja-JP.com_crm.sys.ini</language>
+            <language tag="zh-CN">zh-CN/zh-CN.com_crm.ini</language>
+            <language tag="zh-CN">zh-CN/zh-CN.com_crm.sys.ini</language>
         </languages>
     </administration>
+
 </extension>

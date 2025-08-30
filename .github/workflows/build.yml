@@ -1,4 +1,5 @@
-name: Build
+name: Build and Code Analysis
+
 on:
   push:
     branches:
@@ -9,27 +10,34 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  code-quality:
-    name: Code Quality
+  code_analysis:
+    name: Code Analysis
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+
       - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v5
+        uses: SonarSource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} # Usually stored as a secret
 
-      - uses: shivammathur/setup-php@v2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
           coverage: none
+
       - name: Install dependencies
         run: |
           composer global require phpmd/phpmd
           composer global require phpstan/phpstan
-      - name: PHPMD
+
+      - name: Run PHPMD
         run: ~/.composer/vendor/bin/phpmd com_crm_joomla text cleancode,codesize,unusedcode
-      - name: PHPStan
-        run: ~/.composer/vendor/bin/phpstan analyse com_crm_joomla  --no-progress
+
+      - name: Run PHPStan
+        run: ~/.composer/vendor/bin/phpstan analyse com_crm_joomla --level=5 --no-progress

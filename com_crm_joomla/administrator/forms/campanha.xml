@@ -3,23 +3,22 @@
     <fieldset>
         <field
             name="id"
-            type="text"
-            label="JGLOBAL_FIELD_ID_LABEL"
-            default="0"
-            readonly="true"
-            class="readonly"
+            type="hidden"
         />
         <field
             name="nome"
             type="text"
-            label="COM_CRM_CAMPANHA_FIELD_NOME_LABEL"
+            label="COM_CRM_CAMPANHA_NOME_LABEL"
+            description="COM_CRM_CAMPANHA_NOME_DESC"
             required="true"
             size="40"
+            class="inputbox"
         />
         <field
             name="status"
             type="list"
-            label="COM_CRM_CAMPANHA_FIELD_STATUS_LABEL"
+            label="COM_CRM_CAMPANHA_STATUS_LABEL"
+            description="COM_CRM_CAMPANHA_STATUS_DESC"
             default="rascunho"
             >
             <option value="rascunho">COM_CRM_CAMPANHA_STATUS_RASCUNHO</option>
@@ -32,26 +31,26 @@
             name="state"
             type="list"
             label="JSTATUS"
-            default="1"
-            class="custom-select"
-            >
+            description="JFIELD_PUBLISHED_DESC"
+            class="chzn-color-state"
+            size="1"
+            default="1">
             <option value="1">JPUBLISHED</option>
             <option value="0">JUNPUBLISHED</option>
             <option value="2">JARCHIVED</option>
             <option value="-2">JTRASHED</option>
         </field>
-    </fieldset>
-    <fieldset name="groups" label="COM_CRM_CAMPANHA_GROUPS_LABEL">
         <field
             name="groups"
             type="sql"
-            label="COM_CRM_CAMPANHA_FIELD_GROUPS_LABEL"
-            description="COM_CRM_CAMPANHA_FIELD_GROUPS_DESC"
+            label="COM_CRM_LEAD_GROUPS_LABEL"
+            description="COM_CRM_CAMPANHA_GROUPS_DESC"
             multiple="true"
             query="SELECT id, nome FROM #__crm_lead_groups WHERE state = 1 ORDER BY nome"
             key_field="id"
             value_field="nome"
             required="true"
-        />
+            >
+        </field>
     </fieldset>
 </form>
