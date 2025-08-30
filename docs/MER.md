@@ -49,7 +49,7 @@
     - `nome_socio4`, `tipo_socio_id4`, `tipo_socio_desc4`, `telefone1_socio4`, `email1_socio4`, `email2_socio4`
   
   - **Origem e rastreio**
-    - `site` (obrigatório, origem do lead)
+    - `site` (opcional, origem do lead)
     - `url_origem` (quando veio do Google/LinkedIn/etc)
     - `origem` (enum: CSV, Google, LinkedIn, Instagram, Facebook, Manual)
     - `descricao` (meta description da homepage)
@@ -159,7 +159,7 @@
 - **Leads**  
   - PK: `id` (UUID)  
   - Índices: `idx_site`, `idx_email_norm`, `idx_tel_norm`  
-  - `email` e `site` são **chaves obrigatórias** para persistir lead.  
+  - `email` ou `telefone1` são **chaves obrigatórias** para persistir um lead. O campo `site` é opcional.
   - CSV trouxe múltiplos sócios, por ora mantidos como campos repetidos no lead; em fase posterior pode-se normalizar em `#__crm_lead_socios`.  
   - **Deduplicação** na importação:  
   - Se e-mail já existir (`email_norm`), não salva.  

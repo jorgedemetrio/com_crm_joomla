@@ -1,59 +1,56 @@
-# 📘 Documento Técnico — Padrões (Admin-only) para `com_crm_joomla`
+# 📘 Documento Técnico — Padrões e Diretrizes para `com_crm_joomla`
 
-> Este documento consolida somente o que usaremos neste projeto (admin-only). **Antes de codar**, alinhe o time com o `DEVELOPMENT_GUIDELINES.md`.
-
----
-
-## 1) Escopo do componente
-
-- **Joomla 5**  
-- **Somente Administrador** (`administrator/`)  
-- **Site/** terá apenas controladores mínimos para:
-  - `link.acesso` (redirect + tracking de clique)  
-  - `tracking.open` (pixel 1×1 de abertura)  
-  - `optout.unsubscribe` (descadastro)  
+> [!IMPORTANT]
+> **Este documento é um resumo de alto nível.** Para uma explicação técnica detalhada sobre a estrutura de pastas, namespaces e o fluxo MVC do Joomla 5, **consulte o novo [Guia de Desenvolvimento Joomla 5](./dev/JOOMLA5_DEVELOPMENT_GUIDE.md)**.
 
 ---
 
-## 2) Estrutura de pastas
+## 1. Escopo do Componente
+
+- **Joomla 5**
+- **Foco no Backend (`administrator/`)**: A maior parte da lógica reside no backend.
+- **Frontend Mínimo (`site/`)**: O frontend terá apenas controladores específicos para tarefas de tracking e opt-out, sem views complexas.
+  - `link.acesso` (redirecionamento e rastreamento de cliques)
+  - `tracking.open` (pixel de abertura de e-mail)
+  - `optout.unsubscribe` (descadastro de e-mail)
+
+---
+
+## 2. Estrutura de Pastas (Padrão Joomla 5 com `src`)
+
+A estrutura do projeto segue o padrão moderno do Joomla 5, que é baseado em namespaces e no diretório `src`. A estrutura legada (com pastas `controllers`, `models`, etc., soltas) **não deve ser usada**.
 
 ```
 /com_crm_joomla/
-├─ administrator/
-│  ├─ config/                     # params, esquemas, presets
-│  ├─ controllers/                # ex.: LeadsController, CampanhasController
-│  ├─ models/                     # Table*, Form*, ModelList, ModelItem
-│  ├─ services/                   # integrações (Google, Mailchimp, etc.)
-│  │  ├─ import/
-│  │  ├─ validate/
-│  │  ├─ export/
-│  │  └─ shortlinks/
-│  ├─ views/                      # MVC Admin (grids, forms)
-│  ├─ sql/
-│  │  ├─ install.sql              # criação de tabelas
-│  │  └─ updates/mysql/           # scripts de migração
-│  ├─ helpers/                    # Slug, MetaFetcher, EmailValidator...
-│  ├─ language/                   # pt-BR, en-GB
-│  ├─ access.xml                  # regras de ACL
-│  ├─ config.xml                  # parâmetros do componente
-│  └─ com_crm_joomla.php          # entrypoint Admin
-├─ site/
-│  ├─ controllers/                # link.acesso, tracking.open, optout.unsubscribe
-│  └─ router.php                  # rotas dessas ações
-├─ media/com_crm_joomla/          # assets Admin (js, css, imgs)
-├─ com_crm_joomla.xml             # manifest (instalação)
-└─ index.html
+├── administrator/
+│   ├── forms/              # Definições de formulário em XML
+│   ├── language/           # Arquivos de idioma (ex: en-GB/en-GB.com_crm_joomla.ini)
+│   ├── sql/                # Scripts de banco de dados
+│   └── src/                # ---> Código-fonte principal do backend
+│       ├── Component/
+│       ├── Controller/
+│       ├── Model/
+│       ├── Table/
+│       └── View/
+├── site/
+│   └── src/                # ---> Código-fonte principal do frontend
+└── com_crm_joomla.xml      # Arquivo de manifesto
 ```
+
+> Para detalhes sobre o que vai em cada pasta do `src`, consulte o guia de desenvolvimento.
 
 ---
 
-## 3) Convenções de nomes
+## 3. Convenções de Nomes (com Namespaces)
 
-- **Tabelas**: `#__crm_*` (ex.: `#__crm_leads`, `#__crm_campanhas`)  
-- **Models**: `Administrator\Model\LeadsModel`  
-- **Tables**: `Administrator\Table\LeadTable` → `tables/lead.php`  
-- **Controllers**: `Administrator\Controller\LeadsController`  
-- **Views**: `views/leads` (list) e `views/lead` (form)  
+- **Tabelas**: `#__crm_*` (ex: `#__crm_leads`).
+- **Classes**: Seguem o padrão PSR-4, correspondendo à estrutura de pastas.
+  - **Models**: `Joomla\Component\Crm\Administrator\Model\LeadsModel`
+  - **Tables**: `Joomla\Component\Crm\Administrator\Table\LeadTable`
+  - **Controllers**: `Joomla\Component\Crm\Administrator\Controller\LeadsController`
+- **Views**: A nomenclatura de views para listas (plural) e formulários (singular) é mantida.
+  - **Lista**: `View/Leads/`
+  - **Formulário**: `View/Lead/`
 
 ---
 
@@ -90,10 +87,12 @@
 
 ### 5.1 Leads
 
-- Tabela: `#__crm_leads`  
-- PK: `id` (UUID)  
-- Campos principais: `razao_social`, `nome_fantasia`, `site` (obrig.), `email` (obrig.), `descricao` (meta description)  
-- Campos auxiliares: endereço, telefones, `email_norm`, `telefone_norm`  
+- Tabela: `#__crm_leads`
+- PK: `id` (UUID)
+- **Regra de Validade**: Um lead é considerado válido se possuir um `email` VÁLIDO **OU** um `telefone` VÁLIDO.
+- **Campos de Contato Obrigatórios**: `email` ou `telefone1`. O campo `site` é opcional.
+- Campos principais: `razao_social`, `nome_fantasia`, `site`, `email`, `descricao` (meta description)
+- Campos auxiliares: endereço, telefones, `email_norm`, `telefone_norm`
 - Índices: `idx_site`, `idx_email_norm`, `idx_tel_norm`  
 - Auditoria: conforme padrão acima  
 
