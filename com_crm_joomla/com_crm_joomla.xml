@@ -11,10 +11,6 @@
     <description>COM_CRM_XML_DESCRIPTION</description>
     <namespace>Joomla\Component\Crm</namespace>
 
-
-    <files folder="site">
-        <folder>src</folder>
-    </files>
     <updateservers>
         <server type="extension" priority="1" name="CRM Update Server">https://apps.sobieskiproducoes.com.br/com_crm_joomla/atualizacao.xml</server>
     </updateservers>
@@ -30,45 +26,24 @@
         </schemas>
     </update>
 
+    <!-- Site (Frontend) Files -->
+    <files folder="site">
+        <folder>src</folder>
+    </files>
 
+    <!-- Administrator (Backend) Files -->
     <administration>
-        
         <menu>
             <menu link="option=com_crm">COM_CRM</menu>
         </menu>
-      
-        <submenu>
-            <menu view="leadgroups" img="class:joomla-picture-in-picture">COM_CRM_SUBMENU_LEADGROUPS</menu>
-            <menu view="leads" img="class:users">COM_CRM_SUBMENU_LEADS</menu>
-            <menu view="campanhas" img="class:megaphone">COM_CRM_SUBMENU_CAMPANHAS</menu>
-            <menu view="campanhalinks" img="class:link">COM_CRM_SUBMENU_CAMPANHALINKS</menu>
-            <menu view="campanhaemails" img="class:envelope">COM_CRM_SUBMENU_CAMPANHAEMAILS</menu>
-            <menu view="campanhasmses" img="class:mobile">COM_CRM_SUBMENU_CAMPANHASMSES</menu>
-        </submenu>
         <files folder="administrator">
-
+            <!-- We will add forms, language, etc., as we create them -->
             <folder>sql</folder>
             <folder>src</folder>
-
-            <folder>controllers</folder>
-            <folder>forms</folder>
-            <folder>language</folder>
-            <folder>models/forms</folder>
-            <folder>models</folder>
-            <folder>sql</folder>
-            <folder>tables</folder>
-            <folder>views</folder>
-            <filename>access.xml</filename>
         </files>
         <languages folder="administrator/language">
-            <language tag="en-GB">en-GB/en-GB.com_crm_joomla.ini</language>
-            <language tag="pt-BR">pt-BR/pt-BR.com_crm_joomla.ini</language>
-            <language tag="es-ES">es-ES/es-ES.com_crm_joomla.ini</language>
-            <language tag="fr-FR">fr-FR/fr-FR.com_crm_joomla.ini</language>
-            <language tag="de-DE">de-DE/de-DE.com_crm_joomla.ini</language>
-            <language tag="it-IT">it-IT/it-IT.com_crm_joomla.ini</language>
-            <language tag="ja-JP">ja-JP/ja-JP.com_crm_joomla.ini</language>
-            <language tag="zh-CN">zh-CN/zh-CN.com_crm_joomla.ini</language>
+             <!-- We will add language files as we create them -->
         </languages>
     </administration>
+
 </extension>

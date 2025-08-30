@@ -14,36 +14,12 @@
     </section>
     <section name="campanha">
         <action name="core.create" title="JACTION_CREATE" description="COM_CRM_ACCESS_CREATE_DESC" />
-        <action name="core.create" title="JACTION_CREATE" description="JACTION_CREATE_COMPONENT_DESC" />
-        <action name="core.delete" title="JACTION_DELETE" description="JACTION_DELETE_COMPONENT_DESC" />
-        <action name="core.edit" title="JACTION_EDIT" description="JACTION_EDIT_COMPONENT_DESC" />
-        <action name="core.edit.state" title="JACTION_EDITSTATE" description="JACTION_EDITSTATE_COMPONENT_DESC" />
-        <action name="core.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC" />
-    </section>
-    <section name="leadgroup">
         <action name="core.delete" title="JACTION_DELETE" description="COM_CRM_ACCESS_DELETE_DESC" />
         <action name="core.edit" title="JACTION_EDIT" description="COM_CRM_ACCESS_EDIT_DESC" />
         <action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_CRM_ACCESS_EDITSTATE_DESC" />
     </section>
-
     <section name="importacao">
         <action name="core.create" title="JACTION_CREATE" description="COM_CRM_ACCESS_CREATE_DESC" />
         <action name="core.delete" title="JACTION_DELETE" description="COM_CRM_ACCESS_DELETE_DESC" />
-    </section>
-    <section name="campanhalink">
-        <action name="core.delete" title="JACTION_DELETE" description="COM_CRM_ACCESS_DELETE_DESC" />
-        <action name="core.edit" title="JACTION_EDIT" description="COM_CRM_ACCESS_EDIT_DESC" />
-        <action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_CRM_ACCESS_EDITSTATE_DESC" />
-    </section>
-    <section name="campanhaemail">
-        <action name="core.delete" title="JACTION_DELETE" description="COM_CRM_ACCESS_DELETE_DESC" />
-        <action name="core.edit" title="JACTION_EDIT" description="COM_CRM_ACCESS_EDIT_DESC" />
-        <action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_CRM_ACCESS_EDITSTATE_DESC" />
-    </section>
-    <section name="campanhasms">
-        <action name="core.delete" title="JACTION_DELETE" description="COM_CRM_ACCESS_DELETE_DESC" />
-        <action name="core.edit" title="JACTION_EDIT" description="COM_CRM_ACCESS_EDIT_DESC" />
-        <action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_CRM_ACCESS_EDITSTATE_DESC" />
-
     </section>
 </access>

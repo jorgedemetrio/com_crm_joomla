@@ -10,7 +10,6 @@
   - Armazena leads capturados/importados.  
   - PK: `id` (UUID).  
   - Campos obrigatórios: **`email`** ou **`telefone`**.
-  - Regra de validação principal: um lead deve ter **`email`** ou **`telefone`**.
   - Campo `descricao`: meta description da homepage.  
   - Inclui todos os campos vindos do CSV de importação.
   - **Campos (do CSV + adicionais de CRM):**
@@ -38,7 +37,7 @@
     - `pais` (default Brasil)
   
   - **Contato (empresa)**
-    - `email` (normalizado em `email_norm`)
+    - `email` (obrigatório, normalizado em `email_norm`)
     - `telefone1` / `tipo_telefone1`
     - `telefone2` / `tipo_telefone2`
     - (expandível para N contatos em tabelas auxiliares no futuro)
@@ -114,7 +113,7 @@
 
 ## 2) Diagrama ER (ASCII simplificado)
 
-```
+"""
 [LEADS] --------------------< [EMAIL_ENVIO] >-------------------- [CAMPANHAS]
    |                               |                                  |
    |                               v                                  v
@@ -127,7 +126,7 @@
 
 [INTEGRACOES] (config)
 [EXPORT_PROFILES] --< [EXPORT_SCRIPTS] --< [EXPORT_RUNS]
-```
+"""
 
 ---
 

@@ -41,7 +41,6 @@ A estrutura do projeto segue o padrão moderno do Joomla 5, que é baseado em na
 
 ---
 
-
 ## 3. Convenções de Nomes (com Namespaces)
 
 - **Tabelas**: `#__crm_*` (ex: `#__crm_leads`).
@@ -52,7 +51,6 @@ A estrutura do projeto segue o padrão moderno do Joomla 5, que é baseado em na
 - **Views**: A nomenclatura de views para listas (plural) e formulários (singular) é mantida.
   - **Lista**: `View/Leads/`
   - **Formulário**: `View/Lead/`
-
 
 ---
 
@@ -89,14 +87,12 @@ A estrutura do projeto segue o padrão moderno do Joomla 5, que é baseado em na
 
 ### 5.1 Leads
 
-
 - Tabela: `#__crm_leads`
 - PK: `id` (UUID)
 - **Regra de Validade**: Um lead é considerado válido se possuir um `email` VÁLIDO **OU** um `telefone` VÁLIDO.
 - **Campos de Contato Obrigatórios**: `email` ou `telefone1`. O campo `site` é opcional.
 - Campos principais: `razao_social`, `nome_fantasia`, `site`, `email`, `descricao` (meta description)
 - Campos auxiliares: endereço, telefones, `email_norm`, `telefone_norm`
-
 - Índices: `idx_site`, `idx_email_norm`, `idx_tel_norm`  
 - Auditoria: conforme padrão acima  
 
@@ -146,6 +142,11 @@ A estrutura do projeto segue o padrão moderno do Joomla 5, que é baseado em na
 
 ## 8) Segurança, LGPD e Qualidade
 
-Este documento consolidado contém todas as informações necessárias para desenvolver novas funcionalidades, módulos e plugins de forma consistente e alinhada com as melhores práticas do Joomla 5.
+- **Admin-only**: ACL por tarefa
+- **CSRF** em todos os forms
+- **Transações** em exportações SQL
+- **Fila/Jobs** para processos longos (crawling, validação, disparos)
+- **LGPD**: armazenar hashes (opt-out), evitar PII em logs, retenção configurável
+- **CI/CD**: PHPStan, PHPUnit, SonarCloud, Composer PSR-4, code style
 
 ---

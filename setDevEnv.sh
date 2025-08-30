@@ -1,61 +1,43 @@
 #!/bin/bash
 
+# --- Configuração ---
+# Edite esta variável para apontar para a raiz da sua instalação Joomla.
+JOOMLA_PATH="/var/www/html/joomla"
 
-if [ -z "$1" ]; then
-  echo "Deve infomar a pasta de instalação do Joomla."
+# Nome da pasta do componente no repositório.
+COMPONENT_FOLDER="com_crm_joomla"
+
+# --- Validação ---
+if [ ! -d "$JOOMLA_PATH" ]; then
+  echo "Erro: O diretório do Joomla especificado não foi encontrado: $JOOMLA_PATH"
+  echo "Por favor, edite a variável JOOMLA_PATH no script."
   exit 1
 fi
-if [ "$EUID" -ne 0 ]; then
-  echo "Este script precisa ser executado como root ou com sudo."
-  exit 1
-fi
 
+# Caminhos de destino dentro da instalação do Joomla
+ADMIN_DEST_PATH="$JOOMLA_PATH/administrator/components/$COMPONENT_FOLDER"
+SITE_DEST_PATH="$JOOMLA_PATH/components/$COMPONENT_FOLDER"
 
+# Caminhos de origem no repositório
+ADMIN_SOURCE_PATH="$(pwd)/$COMPONENT_FOLDER/administrator"
+SITE_SOURCE_PATH="$(pwd)/$COMPONENT_FOLDER/site"
 
-PATH_JOOMLA=$1
-# Ex: "/var/www/html/hoteis"
-LOCAL=$(pwd)
-LOCAL_COMPONENTE="${LOCAL}/com_crm_joomla"
+echo "Configurando o ambiente de desenvolvimento..."
 
-rm -Rf "${PATH_JOOMLA}/media/com_crm_joomla"
-ln -s "${LOCAL_COMPONENTE}/media/com_crm_joomla" "${PATH_JOOMLA}/media/com_crm_joomla"
-chown -Rf www-data:www-data "${PATH_JOOMLA}/media/com_crm_joomla"
-chmod -Rf a+wrx "${PATH_JOOMLA}/media/com_crm_joomla"
+# --- Criação dos Links Simbólicos ---
 
+# 1. Backend (Administrator)
+echo "Removendo o diretório de administrador existente (se houver)..."
+rm -rf "$ADMIN_DEST_PATH"
+echo "Criando link simbólico para o backend em: $ADMIN_DEST_PATH"
+ln -s "$ADMIN_SOURCE_PATH" "$ADMIN_DEST_PATH"
 
+# 2. Frontend (Site)
+echo "Removendo o diretório de frontend existente (se houver)..."
+rm -rf "$SITE_DEST_PATH"
+echo "Criando link simbólico para o frontend em: $SITE_DEST_PATH"
+ln -s "$SITE_SOURCE_PATH" "$SITE_DEST_PATH"
 
-rm -Rf "${PATH_JOOMLA}/administrator/components/com_crm_joomla"
-ln -s "${LOCAL_COMPONENTE}/administrator" "${PATH_JOOMLA}/administrator/components/com_crm_joomla"
-chown -Rf www-data:www-data "${PATH_JOOMLA}/administrator/components/com_crm_joomla"
-chmod -Rf a+wrx "${PATH_JOOMLA}/administrator/components/com_crm_joomla"
-
-
-
-rm -Rf "${PATH_JOOMLA}/components/com_crm_joomla"
-ln -s "${LOCAL_COMPONENTE}/site" "${PATH_JOOMLA}/components/com_crm_joomla"
-chown -Rf www-data:www-data "${PATH_JOOMLA}/components/com_crm_joomla"
-chmod -Rf a+wrx "${PATH_JOOMLA}/components/com_crm_joomla"
-
-
-
-for LANG in en-GB pt-BR es-ES de-DE fr-FR zh-CN it-IT ja-JP; do
-  mkdir -p "${PATH_JOOMLA}/language/${LANG}"
-  rm -Rf "${PATH_JOOMLA}/language/${LANG}/${LANG}.com_crm_joomla.ini"
-  ln -s "${LOCAL_COMPONENTE}/language/${LANG}/${LANG}.com_crm_joomla.ini" "${PATH_JOOMLA}/language/${LANG}/${LANG}.com_crm_joomla.ini"
-  chown -Rf www-data:www-data "${PATH_JOOMLA}/language/${LANG}/${LANG}.com_crm_joomla.ini"
-  chmod -Rf a+wrx "${PATH_JOOMLA}/language/${LANG}/${LANG}.com_crm_joomla.ini"
-done
-
-
-for LANG in en-GB pt-BR es-ES de-DE fr-FR zh-CN it-IT ja-JP; do
-  mkdir -p "${PATH_JOOMLA}/administrator/language/${LANG}"
-  rm -Rf "${PATH_JOOMLA}/administrator/language/${LANG}/${LANG}.com_crm_joomla.ini"
-  rm -Rf "${PATH_JOOMLA}/administrator/language/${LANG}/${LANG}.com_crm_joomla.sys.ini"
-  ln -s "${LOCAL_COMPONENTE}/administrator/language/${LANG}/${LANG}.com_crm_joomla.ini" "${PATH_JOOMLA}/administrator/language/${LANG}/${LANG}.com_crm_joomla.ini"
-  ln -s "${LOCAL_COMPONENTE}/administrator/language/${LANG}/${LANG}.com_crm_joomla.sys.ini" "${PATH_JOOMLA}/administrator/language/${LANG}/${LANG}.com_crm_joomla.sys.ini"
-  chown -Rf www-data:www-data "${PATH_JOOMLA}/administrator/language/${LANG}/${LANG}.com_crm_joomla.ini"
-  chmod -Rf a+wrx "${PATH_JOOMLA}/administrator/language/${LANG}/${LANG}.com_crm_joomla.ini"
-  chown -Rf www-data:www-data "${PATH_JOOMLA}/administrator/language/${LANG}/${LANG}.com_crm_joomla.sys.ini"
-  chmod -Rf a+wrx "${PATH_JOOMLA}/administrator/language/${LANG}/${LANG}.com_crm_joomla.sys.ini"
-done
-
+echo ""
+echo "Ambiente de desenvolvimento configurado com sucesso!"
+echo "Lembre-se de usar a função 'Descobrir' no instalador do Joomla para instalar o componente."
