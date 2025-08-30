@@ -31,7 +31,7 @@ class GrupoLeadTable extends Table
     public function save($src, $orderingFilter = '', $ignore = '')
     {
         if (empty($this->id)) {
-            $this->id = \Joomla\CMS\Uid\Uid::create();
+            $this->id = $this->_db->newId();
         }
 
         return parent::save($src, $orderingFilter, $ignore);

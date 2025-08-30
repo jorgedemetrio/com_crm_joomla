@@ -25,8 +25,7 @@ class OptoutController extends BaseController
     public function unsubscribe()
     {
         // TODO: Implement unsubscribe logic
-        $app = \Joomla\CMS\Factory::getApplication();
-        $app->enqueueMessage('Unsubscribe feature not implemented yet.', 'notice');
-        $app->redirect('index.php');
+        $this->app->enqueueMessage('Unsubscribe feature not implemented yet.', 'notice');
+        $this->app->redirect('index.php');
     }
 }

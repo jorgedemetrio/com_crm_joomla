@@ -12,7 +12,6 @@ namespace Joomla\Component\Crm\Administrator\View\GrupoLead;
 use Joomla\CMS\MVC\View\AdminView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Factory;
 
 /**
  * GrupoLead View
@@ -31,7 +30,7 @@ class HtmlView extends AdminView
         $this->item = $this->get('Item');
 
         if (count($errors = $this->get('Errors'))) {
-            Factory::getApplication()->enqueueMessage(implode("\n", $errors), 'error');
+            $this->getApplication()->enqueueMessage(implode("\n", $errors), 'error');
             return false;
         }
 

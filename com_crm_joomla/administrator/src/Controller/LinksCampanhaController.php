@@ -20,5 +20,5 @@ class LinksCampanhaController extends BaseController
      *
      * @var string
      */
-    protected $default_view = 'linkscampanha';
+    protected $defaultView = 'linkscampanha';
 }

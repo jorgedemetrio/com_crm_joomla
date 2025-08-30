@@ -20,5 +20,5 @@ class LeadsController extends BaseController
      *
      * @var string
      */
-    protected $default_view = 'leads';
+    protected $defaultView = 'leads';
 }

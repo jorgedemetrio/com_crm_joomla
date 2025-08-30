@@ -10,7 +10,6 @@
 namespace Joomla\Component\Crm\Administrator\Model;
 
 use Joomla\CMS\MVC\Model\AdminModel;
-use Joomla\CMS\Factory;
 
 /**
  * Campanha Model
@@ -19,9 +18,16 @@ class CampanhaModel extends AdminModel
 {
     /**
      * Method to get the record form.
+     *
+     * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
+     *
+     * @return  \Joomla\CMS\Form\Form|false  A Form object on success, false on failure.
+     *
+     * @since   1.0.0
      */
-    public function getForm($data = [], $loadData = true)
+    public function getForm($loadData = true)
     {
+        // Get the form.
         $form = $this->loadForm(
             'com_crm.campanha',
             'campanha',
@@ -37,10 +43,15 @@ class CampanhaModel extends AdminModel
 
     /**
      * Method to get the data that should be injected into the form.
+     *
+     * @return  mixed  The data for the form.
+     *
+     * @since   1.0.0
      */
     protected function loadFormData()
     {
-        $data = Factory::getApplication()->getUserState(
+        // Check the session for previously entered form data.
+        $data = $this->getApplication()->getUserState(
             'com_crm.edit.campanha.data',
             []
         );
@@ -51,24 +62,30 @@ class CampanhaModel extends AdminModel
 
         // Load the associated groups for an existing campaign.
         if (!empty($data->id)) {
-            $db = Factory::getDbo();
-            $query = $db->getQuery(true)
+            $dbDriver = $this->getDbo();
+            $query = $dbDriver->getQuery(true)
                 ->select('group_id')
-                ->from('#__crm_campanha_group_map')
-                ->where('campanha_id = ' . $db->quote($data->id));
-            $db->setQuery($query);
-            $data->groups = $db->loadColumn();
+                ->from($dbDriver->quoteName('#__crm_campanha_group_map'))
+                ->where($dbDriver->quoteName('campanha_id') . ' = ' . $dbDriver->quote($data->id));
+            $dbDriver->setQuery($query);
+            $data->groups = $dbDriver->loadColumn();
         }
 
         return $data;
     }
 
     /**
-     * Override the save method to handle the many-to-many relationship
+     * Override the save method to handle the many-to-many relationship.
+     *
+     * @param   array  $data  An array of form data.
+     *
+     * @return  boolean  True on success, false on failure.
+     *
+     * @since   1.0.0
      */
     public function save($data)
     {
-        $db = Factory::getDbo();
+        $dbDriver = $this->getDbo();
         $groups = $data['groups'] ?? [];
 
         // Unset groups from data array so it doesn't interfere with parent::save
@@ -84,28 +101,34 @@ class CampanhaModel extends AdminModel
 
         // Now, handle the groups
         // 1. Delete existing relationships for this campaign
-        $query = $db->getQuery(true)
-            ->delete($db->quoteName('#__crm_campanha_group_map'))
-            ->where($db->quoteName('campanha_id') . ' = ' . $db->quote($campanhaId));
-        $db->setQuery($query);
-        $db->execute();
+        $query = $dbDriver->getQuery(true)
+            ->delete($dbDriver->quoteName('#__crm_campanha_group_map'))
+            ->where($dbDriver->quoteName('campanha_id') . ' = ' . $dbDriver->quote($campanhaId));
+        $dbDriver->setQuery($query);
+
+        try {
+            $dbDriver->execute();
+        } catch (\Exception $e) {
+            $this->setError($e->getMessage());
+            return false;
+        }
 
         // 2. Insert new relationships if any were selected
         if (!empty($groups)) {
-            $query = $db->getQuery(true)
-                ->insert($db->quoteName('#__crm_campanha_group_map'))
-                ->columns([$db->quoteName('campanha_id'), $db->quoteName('group_id')]);
+            $query = $dbDriver->getQuery(true)
+                ->insert($dbDriver->quoteName('#__crm_campanha_group_map'))
+                ->columns([$dbDriver->quoteName('campanha_id'), $dbDriver->quoteName('group_id')]);
 
             foreach ($groups as $groupId) {
                  if(!empty($groupId)) {
-                    $query->values($db->quote($campanhaId) . ', ' . $db->quote($groupId));
+                    $query->values($dbDriver->quote($campanhaId) . ', ' . $dbDriver->quote($groupId));
                 }
             }
 
-            $db->setQuery($query);
+            $dbDriver->setQuery($query);
 
             try {
-                $db->execute();
+                $dbDriver->execute();
             } catch (\Exception $e) {
                 $this->setError($e->getMessage());
                 return false;

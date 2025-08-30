@@ -12,7 +12,6 @@ namespace Joomla\Component\Crm\Administrator\View\GruposLead;
 use Joomla\CMS\MVC\View\ListView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Factory;
 
 /**
  * GruposLead View
@@ -31,7 +30,7 @@ class HtmlView extends ListView
         $this->activeFilters = $this->get('ActiveFilters');
 
         if (count($errors = $this->get('Errors'))) {
-            Factory::getApplication()->enqueueMessage(implode("\n", $errors), 'error');
+            $this->getApplication()->enqueueMessage(implode("\n", $errors), 'error');
             return;
         }
 

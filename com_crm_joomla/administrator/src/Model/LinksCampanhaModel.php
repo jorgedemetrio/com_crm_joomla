@@ -10,7 +10,6 @@
 namespace Joomla\Component\Crm\Administrator\Model;
 
 use Joomla\CMS\MVC\Model\ListModel;
-use Joomla\CMS\Factory;
 
 /**
  * LinksCampanha Model
@@ -19,6 +18,11 @@ class LinksCampanhaModel extends ListModel
 {
     /**
      * Constructor.
+     *
+     * @param   array  $config  An optional associative array of configuration settings.
+     *
+     * @see     \Joomla\CMS\MVC\Model\BaseDatabaseModel
+     * @since   1.0.0
      */
     public function __construct($config = [])
     {
@@ -36,11 +40,15 @@ class LinksCampanhaModel extends ListModel
 
     /**
      * Method to build an SQL query to load the list data.
+     *
+     * @return  \Joomla\Database\Query
+     *
+     * @since   1.0.0
      */
     protected function getListQuery()
     {
-        $db    = Factory::getDbo();
-        $query = $db->getQuery(true);
+        $dbDriver = $this->getDbo();
+        $query    = $dbDriver->getQuery(true);
 
         $query->select(
             $this->getState(
@@ -48,23 +56,23 @@ class LinksCampanhaModel extends ListModel
                 'a.id, a.nome, a.url_destino, a.clicks_total, a.state AS published, c.nome AS campanha_nome'
             )
         );
-        $query->from($db->quoteName('#__crm_campanha_links', 'a'));
+        $query->from($dbDriver->quoteName('#__crm_campanha_links', 'a'));
 
         // Join over for campaign name
-        $query->join('LEFT', $db->quoteName('#__crm_campanhas', 'c') . ' ON (' . $db->quoteName('c.id') . ' = ' . $db->quoteName('a.campanha_id') . ')');
+        $query->join('LEFT', $dbDriver->quoteName('#__crm_campanhas', 'c') . ' ON (' . $dbDriver->quoteName('c.id') . ' = ' . $dbDriver->quoteName('a.campanha_id') . ')');
 
 
         // Filter by search in name
         $search = $this->getState('filter.search');
         if (!empty($search)) {
-            $like = $db->quote('%' . $search . '%');
+            $like = $dbDriver->quote('%' . $search . '%');
             $query->where('a.nome LIKE ' . $like);
         }
 
         // Add the list ordering clause.
         $orderCol  = $this->state->get('list.ordering', 'a.nome');
         $orderDirn = $this->state->get('list.direction', 'asc');
-        $query->order($db->escape($orderCol) . ' ' . $db->escape($orderDirn));
+        $query->order($dbDriver->escape($orderCol) . ' ' . $dbDriver->escape($orderDirn));
 
         return $query;
     }

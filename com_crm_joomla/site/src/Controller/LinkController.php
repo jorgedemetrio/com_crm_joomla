@@ -25,8 +25,7 @@ class LinkController extends BaseController
     public function acesso()
     {
         // TODO: Implement click tracking logic
-        $app = \Joomla\CMS\Factory::getApplication();
-        $app->enqueueMessage('Link access tracking not implemented yet.', 'notice');
-        $app->redirect('index.php');
+        $this->app->enqueueMessage('Link access tracking not implemented yet.', 'notice');
+        $this->app->redirect('index.php');
     }
 }
