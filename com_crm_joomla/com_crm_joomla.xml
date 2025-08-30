@@ -35,6 +35,7 @@
     <administration>
         <menu link="option=com_crm">COM_CRM</menu>
         <submenu>
+            <menu link="option=com_crm&view=leads">COM_CRM_LEADS</menu>
             <menu link="option=com_crm&view=gruposlead">COM_CRM_LEAD_GROUPS</menu>
         </submenu>
         <files folder="administrator">
