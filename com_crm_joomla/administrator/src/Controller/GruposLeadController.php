@@ -8,17 +8,27 @@
  */
 namespace Joomla\Component\Crm\Administrator\Controller;
 
-use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\MVC\Controller\AdminController;
 
 /**
  * GruposLead Controller
  */
-class GruposLeadController extends BaseController
+class GruposLeadController extends AdminController
 {
     /**
      * The default view for the display task.
      *
      * @var string
      */
-    protected $default_view = 'gruposlead';
+    protected $defaultView = 'gruposlead';
+
+    /**
+     * Get the prefix for the model.
+     *
+     * @return  string  The prefix for the model.
+     */
+    protected function getModelPrefix()
+    {
+        return 'GrupoLead';
+    }
 }

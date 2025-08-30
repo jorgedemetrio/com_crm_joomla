@@ -12,7 +12,6 @@ namespace Joomla\Component\Crm\Administrator\View\LinksCampanha;
 use Joomla\CMS\MVC\View\ListView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Factory;
 
 /**
  * LinksCampanha View
@@ -31,7 +30,7 @@ class HtmlView extends ListView
         $this->activeFilters = $this->get('ActiveFilters');
 
         if (count($errors = $this->get('Errors'))) {
-            Factory::getApplication()->enqueueMessage(implode("\n", $errors), 'error');
+            $this->getApplication()->enqueueMessage(implode("\n", $errors), 'error');
             return;
         }
 
@@ -46,10 +45,24 @@ class HtmlView extends ListView
     protected function addToolbar()
     {
         ToolbarHelper::title(Text::_('COM_CRM_LINKSCAMPANHA_VIEW_DEFAULT_TITLE'));
-        ToolbarHelper::addNew('linkcampanha.add');
-        ToolbarHelper::editList('linkcampanha.edit');
-        ToolbarHelper::deleteList(Text::_('COM_CRM_CONFIRM_DELETE'), 'linkscampanha.delete');
-        ToolbarHelper::publish('linkscampanha.publish', 'JTOOLBAR_PUBLISH', true);
-        ToolbarHelper::unpublish('linkscampanha.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+
+        $user = $this->getApplication()->getIdentity();
+
+        if ($user->authorise('core.create', 'com_crm')) {
+            ToolbarHelper::addNew('linkcampanha.add');
+        }
+
+        if ($user->authorise('core.edit', 'com_crm')) {
+            ToolbarHelper::editList('linkcampanha.edit');
+        }
+
+        if ($user->authorise('core.delete', 'com_crm')) {
+            ToolbarHelper::deleteList(Text::_('COM_CRM_CONFIRM_DELETE'), 'linkscampanha.delete');
+        }
+
+        if ($user->authorise('core.edit.state', 'com_crm')) {
+            ToolbarHelper::publish('linkscampanha.publish', 'JTOOLBAR_PUBLISH', true);
+            ToolbarHelper::unpublish('linkscampanha.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+        }
     }
 }
