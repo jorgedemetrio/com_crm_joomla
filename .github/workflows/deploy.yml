@@ -1,0 +1,23 @@
+name: Deploy Component
+
+on:
+  push:
+    tags:
+      - 'v*' # Trigger on tags like v1.0.0, v1.2.3, etc.
+
+jobs:
+  deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run Deploy Script
+        env:
+          FTP_URL: ${{ secrets.FTP_URL }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          chmod +x .github/scripts/deploy.sh
+          ./.github/scripts/deploy.sh ${{ github.ref_name }} com_crm_joomla

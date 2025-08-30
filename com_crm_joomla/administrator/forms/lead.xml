@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fieldset name="details" label="COM_CRM_LEAD_DETAILS_LABEL">
+        <field name="id" type="hidden" />
+        <field name="razao_social" type="text" label="COM_CRM_LEAD_RAZAO_SOCIAL_LABEL" size="40" />
+        <field name="nome_fantasia" type="text" label="COM_CRM_LEAD_NOME_FANTASIA_LABEL" size="40" />
+        <field name="cnpj" type="text" label="COM_CRM_LEAD_CNPJ_LABEL" size="20" />
+        <field name="email" type="email" label="COM_CRM_LEAD_EMAIL_LABEL" required="true" size="40" />
+        <field name="telefone1" type="text" label="COM_CRM_LEAD_TELEFONE1_LABEL" size="20" />
+        <field name="site" type="url" label="COM_CRM_LEAD_SITE_LABEL" size="40" />
+        <field name="state" type="list" label="JSTATUS" default="1">
+            <option value="1">JPUBLISHED</option>
+            <option value="0">JUNPUBLISHED</option>
+            <option value="2">JARCHIVED</option>
+            <option value="-2">JTRASHED</option>
+        </field>
+        <field name="status" type="list" label="COM_CRM_LEAD_STATUS_LABEL" default="NOVO">
+            <option value="NOVO">COM_CRM_LEAD_STATUS_NOVO</option>
+            <option value="VALIDADO">COM_CRM_LEAD_STATUS_VALIDADO</option>
+            <option value="REPROVADO">COM_CRM_LEAD_STATUS_REPROVADO</option>
+            <option value="MIGRADO">COM_CRM_LEAD_STATUS_MIGRADO</option>
+        </field>
+        <field
+            name="groups"
+            type="sql"
+            label="COM_CRM_LEAD_GROUPS_LABEL"
+            description="COM_CRM_LEAD_GROUPS_DESC"
+            multiple="true"
+            query="SELECT id, nome FROM #__crm_lead_groups WHERE state = 1 ORDER BY nome"
+            key_field="id"
+            value_field="nome"
+            >
+        </field>
+    </fieldset>
+
+    <fieldset name="address" label="COM_CRM_LEAD_ADDRESS_LABEL">
+        <field name="logradouro" type="text" label="COM_CRM_LEAD_LOGRADOURO_LABEL" size="50" />
+        <field name="numero" type="text" label="COM_CRM_LEAD_NUMERO_LABEL" size="10" />
+        <field name="complemento" type="text" label="COM_CRM_LEAD_COMPLEMENTO_LABEL" size="30" />
+        <field name="bairro" type="text" label="COM_CRM_LEAD_BAIRRO_LABEL" size="40" />
+        <field name="cidade" type="text" label="COM_CRM_LEAD_CIDADE_LABEL" size="40" />
+        <field name="estado" type="text" label="COM_CRM_LEAD_ESTADO_LABEL" size="2" />
+        <field name="cep" type="text" label="COM_CRM_LEAD_CEP_LABEL" size="10" />
+        <field name="pais" type="text" label="COM_CRM_LEAD_PAIS_LABEL" size="30" default="Brasil" />
+    </fieldset>
+
+    <fieldset name="extra" label="COM_CRM_LEAD_EXTRA_INFO_LABEL">
+         <field name="origem" type="list" label="COM_CRM_LEAD_ORIGEM_LABEL" default="Manual">
+            <option value="CSV">CSV</option>
+            <option value="Google">Google</option>
+            <option value="LinkedIn">LinkedIn</option>
+            <option value="Instagram">Instagram</option>
+            <option value="Facebook">Facebook</option>
+            <option value="Manual">Manual</option>
+        </field>
+        <field name="descricao" type="textarea" label="COM_CRM_LEAD_DESCRICAO_LABEL" rows="5" cols="40" />
+        <field name="observacoes" type="textarea" label="COM_CRM_LEAD_OBSERVACOES_LABEL" rows="5" cols="40" />
+    </fieldset>
+</form>

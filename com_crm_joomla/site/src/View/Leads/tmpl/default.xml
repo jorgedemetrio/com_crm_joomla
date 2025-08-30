@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <layout title="COM_CRM_LEADS_VIEW_DEFAULT_TITLE" option="COM_CRM_LEADS_VIEW_DEFAULT_OPTION">
+        <help
+            key="Menu_Item:_CRM_Leads_List"
+        />
+        <message>
+            <![CDATA[COM_CRM_LEADS_VIEW_DEFAULT_DESC]]>
+        </message>
+    </layout>
+
+    <!-- This section is required to tell Joomla what view to load -->
+    <fields name="request">
+        <fieldset name="request">
+            <field
+                name="option"
+                type="hidden"
+                default="com_crm"
+            />
+            <field
+                name="view"
+                type="hidden"
+                default="leads"
+            />
+        </fieldset>
+    </fields>
+
+    <!-- This section allows for view-specific parameters -->
+    <fields name="params">
+        <fieldset name="basic" label="JGLOBAL_OPTIONS">
+            <field
+                name="show_filter_bar"
+                type="radio"
+                label="COM_CRM_SHOW_FILTER_BAR_LABEL"
+                description="COM_CRM_SHOW_FILTER_BAR_DESC"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                >
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+
+            <field
+                name="items_per_page"
+                type="number"
+                label="COM_CRM_ITEMS_PER_PAGE_LABEL"
+                description="COM_CRM_ITEMS_PER_PAGE_DESC"
+                default="10"
+            />
+        </fieldset>
+    </fields>
+</metadata>
