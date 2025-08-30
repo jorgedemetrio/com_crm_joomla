@@ -45,10 +45,24 @@ class HtmlView extends ListView
     protected function addToolbar()
     {
         ToolbarHelper::title(Text::_('COM_CRM_LINKSCAMPANHA_VIEW_DEFAULT_TITLE'));
-        ToolbarHelper::addNew('linkcampanha.add');
-        ToolbarHelper::editList('linkcampanha.edit');
-        ToolbarHelper::deleteList(Text::_('COM_CRM_CONFIRM_DELETE'), 'linkscampanha.delete');
-        ToolbarHelper::publish('linkscampanha.publish', 'JTOOLBAR_PUBLISH', true);
-        ToolbarHelper::unpublish('linkscampanha.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+
+        $user = $this->getApplication()->getIdentity();
+
+        if ($user->authorise('core.create', 'com_crm.linkcampanha')) {
+            ToolbarHelper::addNew('linkcampanha.add');
+        }
+
+        if ($user->authorise('core.edit', 'com_crm.linkcampanha')) {
+            ToolbarHelper::editList('linkcampanha.edit');
+        }
+
+        if ($user->authorise('core.delete', 'com_crm.linkcampanha')) {
+            ToolbarHelper::deleteList(Text::_('COM_CRM_CONFIRM_DELETE'), 'linkscampanha.delete');
+        }
+
+        if ($user->authorise('core.edit.state', 'com_crm.linkcampanha')) {
+            ToolbarHelper::publish('linkscampanha.publish', 'JTOOLBAR_PUBLISH', true);
+            ToolbarHelper::unpublish('linkscampanha.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+        }
     }
 }

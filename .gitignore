@@ -1,26 +1,15 @@
-
-composer.json
+# Composer
+/vendor/
 composer.lock
-vendor/autoload.php
-vendor/bin/phpstan
-vendor/bin/phpstan.phar
-vendor/composer/ClassLoader.php
-vendor/composer/InstalledVersions.php
-vendor/composer/LICENSE
-vendor/composer/autoload_classmap.php
-vendor/composer/autoload_files.php
-vendor/composer/autoload_namespaces.php
-vendor/composer/autoload_psr4.php
-vendor/composer/autoload_real.php
-vendor/composer/autoload_static.php
-vendor/composer/installed.json
-vendor/composer/installed.php
-vendor/phpstan/phpstan/LICENSE
-vendor/phpstan/phpstan/README.md
-vendor/phpstan/phpstan/UPGRADING.md
-vendor/phpstan/phpstan/bootstrap.php
-vendor/phpstan/phpstan/composer.json
-vendor/phpstan/phpstan/conf/bleedingEdge.neon
-vendor/phpstan/phpstan/phpstan
-vendor/phpstan/phpstan/phpstan.phar
-vendor/phpstan/phpstan/phpstan.phar.asc
+
+# Logs
+*.log
+logs/
+
+# IDE files
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db

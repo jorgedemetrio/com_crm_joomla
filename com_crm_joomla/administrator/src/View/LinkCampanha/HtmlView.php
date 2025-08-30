@@ -44,12 +44,30 @@ class HtmlView extends AdminView
      */
     protected function addToolbar()
     {
+        $user  = $this->getApplication()->getIdentity();
         $isNew = ($this->item->id == 0);
+
+        // Set the title
         $title = $isNew ? Text::_('COM_CRM_LINKCAMPANHA_VIEW_NEW_TITLE') : Text::_('COM_CRM_LINKCAMPANHA_VIEW_EDIT_TITLE');
         ToolbarHelper::title($title);
-        ToolbarHelper::apply('linkcampanha.apply');
-        ToolbarHelper::save('linkcampanha.save');
-        ToolbarHelper::save2new('linkcampanha.save2new');
-        ToolbarHelper::cancel('linkcampanha.cancel');
+
+        // Check if the user can edit this item.
+        $canDo = $isNew ? $user->authorise('core.create', 'com_crm.linkcampanha') : $user->authorise('core.edit', 'com_crm.linkcampanha.' . $this->item->id);
+
+        if ($canDo) {
+            ToolbarHelper::apply('linkcampanha.apply');
+            ToolbarHelper::save('linkcampanha.save');
+
+            if ($user->authorise('core.create', 'com_crm.linkcampanha')) {
+                ToolbarHelper::save2new('linkcampanha.save2new');
+            }
+        }
+
+        // For new records, check the create permission.
+        if ($isNew && ($user->authorise('core.create', 'com_crm.linkcampanha'))) {
+             ToolbarHelper::cancel('linkcampanha.cancel', 'JTOOLBAR_CANCEL');
+        } else {
+             ToolbarHelper::cancel('linkcampanha.cancel', 'JTOOLBAR_CLOSE');
+        }
     }
 }

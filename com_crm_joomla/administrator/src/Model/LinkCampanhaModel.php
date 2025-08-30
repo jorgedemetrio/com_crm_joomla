@@ -10,6 +10,7 @@
 namespace Joomla\Component\Crm\Administrator\Model;
 
 use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\Language\Text;
 
 /**
  * LinkCampanha Model
@@ -61,5 +62,36 @@ class LinkCampanhaModel extends AdminModel
         }
 
         return $data;
+    }
+
+    /**
+     * Method to save the form data.
+     *
+     * @param   array  $data  The form data.
+     *
+     * @return  boolean  True on success.
+     *
+     * @since   1.0.0
+     */
+    public function save($data)
+    {
+        $user = $this->getApplication()->getIdentity();
+        $isNew = empty($data['id']);
+
+        if ($isNew) {
+            // Check for create permission
+            if (!$user->authorise('core.create', 'com_crm.linkcampanha')) {
+                $this->setError(Text::_('JLIB_APPLICATION_ERROR_CREATE_NOT_PERMITTED'));
+                return false;
+            }
+        } else {
+            // Check for edit permission
+            if (!$user->authorise('core.edit', 'com_crm.linkcampanha.' . $data['id'])) {
+                $this->setError(Text::_('JLIB_APPLICATION_ERROR_EDIT_NOT_PERMITTED'));
+                return false;
+            }
+        }
+
+        return parent::save($data);
     }
 }

@@ -31,7 +31,7 @@ class CampanhaTable extends Table
     public function save($src, $orderingFilter = '', $ignore = '')
     {
         if (empty($this->id)) {
-            $this->id = $this->_db->newId();
+            $this->id = \Joomla\CMS\Uid\Uid::create();
         }
 
         return parent::save($src, $orderingFilter, $ignore);

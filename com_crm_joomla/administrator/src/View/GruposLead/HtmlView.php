@@ -45,10 +45,24 @@ class HtmlView extends ListView
     protected function addToolbar()
     {
         ToolbarHelper::title(Text::_('COM_CRM_GRUPOSLEAD_VIEW_DEFAULT_TITLE'));
-        ToolbarHelper::addNew('grupolead.add');
-        ToolbarHelper::editList('grupolead.edit');
-        ToolbarHelper::deleteList(Text::_('COM_CRM_CONFIRM_DELETE'), 'gruposlead.delete');
-        ToolbarHelper::publish('gruposlead.publish', 'JTOOLBAR_PUBLISH', true);
-        ToolbarHelper::unpublish('gruposlead.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+
+        $user = $this->getApplication()->getIdentity();
+
+        if ($user->authorise('core.create', 'com_crm.grupolead')) {
+            ToolbarHelper::addNew('grupolead.add');
+        }
+
+        if ($user->authorise('core.edit', 'com_crm.grupolead')) {
+            ToolbarHelper::editList('grupolead.edit');
+        }
+
+        if ($user->authorise('core.delete', 'com_crm.grupolead')) {
+            ToolbarHelper::deleteList(Text::_('COM_CRM_CONFIRM_DELETE'), 'gruposlead.delete');
+        }
+
+        if ($user->authorise('core.edit.state', 'com_crm.grupolead')) {
+            ToolbarHelper::publish('gruposlead.publish', 'JTOOLBAR_PUBLISH', true);
+            ToolbarHelper::unpublish('gruposlead.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+        }
     }
 }

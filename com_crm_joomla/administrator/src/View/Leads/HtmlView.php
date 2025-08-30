@@ -45,10 +45,24 @@ class HtmlView extends ListView
     protected function addToolbar()
     {
         ToolbarHelper::title(Text::_('COM_CRM_LEADS_VIEW_DEFAULT_TITLE'));
-        ToolbarHelper::addNew('lead.add');
-        ToolbarHelper::editList('lead.edit');
-        ToolbarHelper::deleteList(Text::_('COM_CRM_CONFIRM_DELETE'), 'leads.delete');
-        ToolbarHelper::publish('leads.publish', 'JTOOLBAR_PUBLISH', true);
-        ToolbarHelper::unpublish('leads.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+
+        $user = $this->getApplication()->getIdentity();
+
+        if ($user->authorise('core.create', 'com_crm.lead')) {
+            ToolbarHelper::addNew('lead.add');
+        }
+
+        if ($user->authorise('core.edit', 'com_crm.lead')) {
+            ToolbarHelper::editList('lead.edit');
+        }
+
+        if ($user->authorise('core.delete', 'com_crm.lead')) {
+            ToolbarHelper::deleteList(Text::_('COM_CRM_CONFIRM_DELETE'), 'leads.delete');
+        }
+
+        if ($user->authorise('core.edit.state', 'com_crm.lead')) {
+            ToolbarHelper::publish('leads.publish', 'JTOOLBAR_PUBLISH', true);
+            ToolbarHelper::unpublish('leads.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+        }
     }
 }

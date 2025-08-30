@@ -10,6 +10,7 @@
 namespace Joomla\Component\Crm\Administrator\Model;
 
 use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\Language\Text;
 
 /**
  * Campanha Model
@@ -85,6 +86,23 @@ class CampanhaModel extends AdminModel
      */
     public function save($data)
     {
+        $user = $this->getApplication()->getIdentity();
+        $isNew = empty($data['id']);
+
+        if ($isNew) {
+            // Check for create permission
+            if (!$user->authorise('core.create', 'com_crm.campanha')) {
+                $this->setError(Text::_('JLIB_APPLICATION_ERROR_CREATE_NOT_PERMITTED'));
+                return false;
+            }
+        } else {
+            // Check for edit permission
+            if (!$user->authorise('core.edit', 'com_crm.campanha.' . $data['id'])) {
+                $this->setError(Text::_('JLIB_APPLICATION_ERROR_EDIT_NOT_PERMITTED'));
+                return false;
+            }
+        }
+
         $dbDriver = $this->getDbo();
         $groups = $data['groups'] ?? [];
 

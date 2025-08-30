@@ -44,12 +44,30 @@ class HtmlView extends AdminView
      */
     protected function addToolbar()
     {
+        $user  = $this->getApplication()->getIdentity();
         $isNew = ($this->item->id == 0);
+
+        // Set the title
         $title = $isNew ? Text::_('COM_CRM_LEAD_VIEW_NEW_TITLE') : Text::_('COM_CRM_LEAD_VIEW_EDIT_TITLE');
         ToolbarHelper::title($title);
-        ToolbarHelper::apply('lead.apply');
-        ToolbarHelper::save('lead.save');
-        ToolbarHelper::save2new('lead.save2new');
-        ToolbarHelper::cancel('lead.cancel');
+
+        // Check if the user can edit this item.
+        $canDo = $isNew ? $user->authorise('core.create', 'com_crm.lead') : $user->authorise('core.edit', 'com_crm.lead.' . $this->item->id);
+
+        if ($canDo) {
+            ToolbarHelper::apply('lead.apply');
+            ToolbarHelper::save('lead.save');
+
+            if ($user->authorise('core.create', 'com_crm.lead')) {
+                ToolbarHelper::save2new('lead.save2new');
+            }
+        }
+
+        // For new records, check the create permission.
+        if ($isNew && ($user->authorise('core.create', 'com_crm.lead'))) {
+             ToolbarHelper::cancel('lead.cancel', 'JTOOLBAR_CANCEL');
+        } else {
+             ToolbarHelper::cancel('lead.cancel', 'JTOOLBAR_CLOSE');
+        }
     }
 }
