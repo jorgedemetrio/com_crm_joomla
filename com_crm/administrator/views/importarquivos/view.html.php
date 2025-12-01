@@ -13,8 +13,6 @@ class CrmViewImportArquivos extends JViewLegacy
         $this->addToolbar();
 
 
-        CrmHelper::addSubmenu('importarquivos');
-        $this->sidebar = JHtmlSidebar::render();
 parent::display($tpl);
     }
 

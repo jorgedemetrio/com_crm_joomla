@@ -33,8 +33,6 @@ class CrmViewLeads extends JViewLegacy
         $this->addToolbar();
 
 
-        CrmHelper::addSubmenu('leads');
-        $this->sidebar = JHtmlSidebar::render();
 parent::display($tpl);
     }
 

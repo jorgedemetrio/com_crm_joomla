@@ -42,7 +42,6 @@
             <folder>models</folder>
             <folder>views</folder>
             <folder>tables</folder>
-            <folder>helpers</folder>
             <folder>forms</folder>
             <folder>sql</folder>
             <folder>language</folder>

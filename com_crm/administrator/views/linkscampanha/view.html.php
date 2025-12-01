@@ -33,8 +33,6 @@ class CrmViewLinksCampanha extends JViewLegacy
         $this->addToolbar();
 
 
-        CrmHelper::addSubmenu('linkscampanha');
-        $this->sidebar = JHtmlSidebar::render();
 parent::display($tpl);
     }
 

@@ -33,8 +33,6 @@ class CrmViewGruposLead extends JViewLegacy
         $this->addToolbar();
 
 
-        CrmHelper::addSubmenu('gruposlead');
-        $this->sidebar = JHtmlSidebar::render();
 parent::display($tpl);
     }
 
