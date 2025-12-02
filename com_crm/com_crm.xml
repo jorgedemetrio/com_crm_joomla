@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="3.10" method="upgrade">
+    <name>com_crm</name>
+    <creationDate>2025-08-29</creationDate>
+    <author>Jorge Demetrio</author>
+    <authorEmail>jorgedemetrio@gmail.com</authorEmail>
+    <authorUrl>https://www.sobieskiproducoes.com.br/</authorUrl>
+    <copyright>Copyright (C) 2024 Sobieski Produções. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <version>1.0.0</version>
+    <description>COM_CRM_XML_DESCRIPTION</description>
+
+    <install>
+        <sql>
+            <file driver="mysql" charset="utf8">administrator/sql/install.sql</file>
+        </sql>
+    </install>
+    <update>
+        <schemas>
+            <schemapath type="mysql">administrator/sql/updates/mysql</schemapath>
+        </schemas>
+    </update>
+
+    <files folder="site">
+        <folder>controllers</folder>
+        <folder>views</folder>
+        <file>crm.php</file>
+        <file>controller.php</file>
+    </files>
+
+    <administration>
+        <menu link="option=com_crm">COM_CRM</menu>
+        <submenu>
+            <menu link="option=com_crm&amp;view=leads">COM_CRM_LEADS</menu>
+            <menu link="option=com_crm&amp;view=gruposlead">COM_CRM_LEAD_GROUPS</menu>
+            <menu link="option=com_crm&amp;view=campanhas">COM_CRM_CAMPAIGNS</menu>
+            <menu link="option=com_crm&amp;view=campanhaemails">COM_CRM_CAMPANHA_EMAILS</menu>
+            <menu link="option=com_crm&amp;view=campanhasmslist">COM_CRM_SMS_TEMPLATES</menu>
+            <menu link="option=com_crm&amp;view=linkscampanha">COM_CRM_LINKSCAMPANHA</menu>
+            <menu link="option=com_crm&amp;view=agendamentos">COM_CRM_AGENDAMENTOS</menu>
+            <menu link="option=com_crm&amp;view=importarquivos">COM_CRM_IMPORTARQUIVOS</menu>
+            <menu link="option=com_crm&amp;view=importwebs">COM_CRM_IMPORT_WEB</menu>
+            <menu link="option=com_crm&amp;view=integracoes">COM_CRM_INTEGRACOES</menu>
+            <menu link="option=com_crm&amp;view=exportprofiles">COM_CRM_EXPORT_PROFILES</menu>
+        </submenu>
+        <files folder="administrator">
+            <folder>controllers</folder>
+            <folder>models</folder>
+            <folder>views</folder>
+            <folder>tables</folder>
+            <folder>forms</folder>
+            <folder>sql</folder>
+            <folder>language</folder>
+            <file>crm.php</file>
+            <file>controller.php</file>
+            <file>access.xml</file>
+        </files>
+        <languages folder="administrator/language">
+            <language tag="en-GB">en-GB/en-GB.com_crm.ini</language>
+            <language tag="en-GB">en-GB/en-GB.com_crm.sys.ini</language>
+            <language tag="pt-BR">pt-BR/pt-BR.com_crm.ini</language>
+            <language tag="pt-BR">pt-BR/pt-BR.com_crm.sys.ini</language>
+            <language tag="es-ES">es-ES/es-ES.com_crm.ini</language>
+            <language tag="es-ES">es-ES/es-ES.com_crm.sys.ini</language>
+            <language tag="fr-FR">fr-FR/fr-FR.com_crm.ini</language>
+            <language tag="fr-FR">fr-FR/fr-FR.com_crm.sys.ini</language>
+            <language tag="de-DE">de-DE/de-DE.com_crm.ini</language>
+            <language tag="de-DE">de-DE/de-DE.com_crm.sys.ini</language>
+            <language tag="it-IT">it-IT/it-IT.com_crm.ini</language>
+            <language tag="it-IT">it-IT/it-IT.com_crm.sys.ini</language>
+            <language tag="ja-JP">ja-JP/ja-JP.com_crm.ini</language>
+            <language tag="ja-JP">ja-JP/ja-JP.com_crm.sys.ini</language>
+            <language tag="zh-CN">zh-CN/zh-CN.com_crm.ini</language>
+            <language tag="zh-CN">zh-CN/zh-CN.com_crm.sys.ini</language>
+        </languages>
+    </administration>
+</extension>
