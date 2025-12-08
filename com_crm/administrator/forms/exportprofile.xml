@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fieldset name="details">
+        <field name="id" type="hidden" />
+        <field name="state" type="list" label="JSTATUS" default="1" class="chzn-color-state">
+            <option value="1">JPUBLISHED</option>
+            <option value="0">JUNPUBLISHED</option>
+            <option value="2">JARCHIVED</option>
+            <option value="-2">JTRASHED</option>
+        </field>
+        <field name="nome" type="text" label="COM_CRM_NAME" description="" size="40" />\n<field name="descricao" type="textarea" label="COM_CRM_DESCRIPTION" description="" size="40" />\n
+    </fieldset>
+</form>
