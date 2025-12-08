@@ -9,6 +9,8 @@
 
 defined('_JEXEC') or die;
 
+JLoader::register('CrmHelper', __DIR__ . '/helpers/crm.php');
+
 class CrmController extends JControllerLegacy
 {
     /**
@@ -31,6 +33,8 @@ class CrmController extends JControllerLegacy
         $view   = $this->input->get('view', 'leads');
         $layout = $this->input->get('layout', 'default');
         $id     = $this->input->getInt('id');
+
+        CrmHelper::addSubmenu($view);
 
         // Check for edit form.
         if ($view == 'lead' && $layout == 'edit' && !$this->checkEditId('com_crm.edit.lead', $id))

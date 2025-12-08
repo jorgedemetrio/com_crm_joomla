@@ -9,11 +9,13 @@ class CrmViewImportArquivos extends JViewLegacy
         $this->items = $this->get('Items');
         $this->pagination = $this->get('Pagination');
         $this->state = $this->get('State');
+        JHtmlSidebar::setAction('index.php?option=com_crm&view=importarquivos');
+        $this->sidebar = JHtmlSidebar::render();
 
         $this->addToolbar();
 
 
-parent::display($tpl);
+        parent::display($tpl);
     }
 
     protected function addToolbar()

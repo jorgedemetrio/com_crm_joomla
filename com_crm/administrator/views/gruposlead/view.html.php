@@ -24,6 +24,8 @@ class CrmViewGruposLead extends JViewLegacy
         $this->state = $this->get('State');
         $this->filterForm = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
+        JHtmlSidebar::setAction('index.php?option=com_crm&view=gruposlead');
+        $this->sidebar = JHtmlSidebar::render();
 
         if (count($errors = $this->get('Errors'))) {
             JFactory::getApplication()->enqueueMessage(implode("\n", $errors), 'error');
@@ -33,7 +35,7 @@ class CrmViewGruposLead extends JViewLegacy
         $this->addToolbar();
 
 
-parent::display($tpl);
+        parent::display($tpl);
     }
 
     /**

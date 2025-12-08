@@ -11,12 +11,14 @@ class CrmViewImportwebs extends JViewLegacy
         $this->filterForm = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
 
+        JHtmlSidebar::setAction('index.php?option=com_crm&view=importwebs');
         if (count($errors = $this->get('Errors'))) {
             JFactory::getApplication()->enqueueMessage(implode("\n", $errors), 'error');
             return;
         }
 
         $this->addToolbar();
+        $this->sidebar = JHtmlSidebar::render();
         parent::display($tpl);
     }
 

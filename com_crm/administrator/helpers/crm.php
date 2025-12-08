@@ -39,6 +39,16 @@ class CrmHelper
             $vName == 'campanhas'
         );
         JHtmlSidebar::addEntry(
+            JText::_('COM_CRM_CAMPANHA_EMAILS'),
+            'index.php?option=com_crm&view=campanhaemails',
+            $vName == 'campanhaemails'
+        );
+        JHtmlSidebar::addEntry(
+            JText::_('COM_CRM_SMS_TEMPLATES'),
+            'index.php?option=com_crm&view=campanhasmslist',
+            $vName == 'campanhasmslist'
+        );
+        JHtmlSidebar::addEntry(
             JText::_('COM_CRM_LINKSCAMPANHA'),
             'index.php?option=com_crm&view=linkscampanha',
             $vName == 'linkscampanha'
@@ -47,6 +57,26 @@ class CrmHelper
             JText::_('COM_CRM_IMPORTARQUIVOS'),
             'index.php?option=com_crm&view=importarquivos',
             $vName == 'importarquivos'
+        );
+        JHtmlSidebar::addEntry(
+            JText::_('COM_CRM_IMPORT_WEB'),
+            'index.php?option=com_crm&view=importwebs',
+            $vName == 'importwebs'
+        );
+        JHtmlSidebar::addEntry(
+            JText::_('COM_CRM_INTEGRACOES'),
+            'index.php?option=com_crm&view=integracoes',
+            $vName == 'integracoes'
+        );
+        JHtmlSidebar::addEntry(
+            JText::_('COM_CRM_EXPORT_PROFILES'),
+            'index.php?option=com_crm&view=exportprofiles',
+            $vName == 'exportprofiles'
+        );
+        JHtmlSidebar::addEntry(
+            JText::_('COM_CRM_AGENDAMENTOS'),
+            'index.php?option=com_crm&view=agendamentos',
+            $vName == 'agendamentos'
         );
     }
 

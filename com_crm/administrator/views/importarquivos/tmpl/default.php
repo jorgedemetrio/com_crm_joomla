@@ -4,7 +4,14 @@ defined('_JEXEC') or die;
 
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_crm&view=importarquivos'); ?>" method="post" name="adminForm" id="adminForm">
-    <div id="j-main-container">
+    <?php if (!empty($this->sidebar)) : ?>
+        <div id="j-sidebar-container" class="span2">
+            <?php echo $this->sidebar; ?>
+        </div>
+        <div id="j-main-container" class="span10">
+    <?php else : ?>
+        <div id="j-main-container">
+    <?php endif; ?>
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
