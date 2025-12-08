@@ -10,6 +10,8 @@ class CrmViewCampanhasmslist extends JViewLegacy
         $this->state = $this->get('State');
         $this->filterForm = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
+        JHtmlSidebar::setAction('index.php?option=com_crm&view=campanhasmslist');
+        $this->sidebar = JHtmlSidebar::render();
 
         if (count($errors = $this->get('Errors'))) {
             JFactory::getApplication()->enqueueMessage(implode("\n", $errors), 'error');

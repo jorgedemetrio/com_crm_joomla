@@ -25,6 +25,9 @@ class CrmViewLeads extends JViewLegacy
         $this->filterForm = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
 
+        JHtmlSidebar::setAction('index.php?option=com_crm&view=leads');
+        $this->sidebar = JHtmlSidebar::render();
+
         if (count($errors = $this->get('Errors'))) {
             JFactory::getApplication()->enqueueMessage(implode("\n", $errors), 'error');
             return;
@@ -32,8 +35,7 @@ class CrmViewLeads extends JViewLegacy
 
         $this->addToolbar();
 
-
-parent::display($tpl);
+        parent::display($tpl);
     }
 
     /**
