@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fieldset>
+        <field
+            name="id"
+            type="hidden"
+        />
+        <field
+            name="nome"
+            type="text"
+            label="COM_CRM_IMPORTARQUIVO_NOME_LABEL"
+            description="COM_CRM_IMPORTARQUIVO_NOME_DESC"
+            required="true"
+            size="40"
+            class="inputbox"
+        />
+        <field
+            name="arquivo"
+            type="file"
+            label="COM_CRM_IMPORTARQUIVO_ARQUIVO_LABEL"
+            description="COM_CRM_IMPORTARQUIVO_ARQUIVO_DESC"
+            required="true"
+            accept=".csv"
+        />
+        <field
+            name="grupos_destino"
+            type="sql"
+            label="COM_CRM_IMPORTARQUIVO_GRUPOS_DESTINO_LABEL"
+            description="COM_CRM_IMPORTARQUIVO_GRUPOS_DESTINO_DESC"
+            query="SELECT id, nome FROM #__crm_lead_groups WHERE state = 1 ORDER BY nome"
+            key_field="id"
+            value_field="nome"
+            multiple="true"
+            required="true"
+        />
+    </fieldset>
+</form>
