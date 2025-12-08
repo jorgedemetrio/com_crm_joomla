@@ -34,8 +34,14 @@
             <menu link="option=com_crm&amp;view=leads">COM_CRM_LEADS</menu>
             <menu link="option=com_crm&amp;view=gruposlead">COM_CRM_LEAD_GROUPS</menu>
             <menu link="option=com_crm&amp;view=campanhas">COM_CRM_CAMPAIGNS</menu>
+            <menu link="option=com_crm&amp;view=campanhaemails">COM_CRM_CAMPANHA_EMAILS</menu>
+            <menu link="option=com_crm&amp;view=campanhasmslist">COM_CRM_SMS_TEMPLATES</menu>
             <menu link="option=com_crm&amp;view=linkscampanha">COM_CRM_LINKSCAMPANHA</menu>
+            <menu link="option=com_crm&amp;view=agendamentos">COM_CRM_AGENDAMENTOS</menu>
             <menu link="option=com_crm&amp;view=importarquivos">COM_CRM_IMPORTARQUIVOS</menu>
+            <menu link="option=com_crm&amp;view=importwebs">COM_CRM_IMPORT_WEB</menu>
+            <menu link="option=com_crm&amp;view=integracoes">COM_CRM_INTEGRACOES</menu>
+            <menu link="option=com_crm&amp;view=exportprofiles">COM_CRM_EXPORT_PROFILES</menu>
         </submenu>
         <files folder="administrator">
             <folder>controllers</folder>
