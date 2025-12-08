@@ -9,6 +9,8 @@
 
 defined('_JEXEC') or die;
 
+jimport('joomla.application.component.controller');
+
 /**
  * Tracking Controller
  *
@@ -25,10 +27,16 @@ class CrmControllerTracking extends JControllerLegacy
         $app   = JFactory::getApplication();
         $input = $app->input;
         $db    = JFactory::getDbo();
+        $session = JFactory::getSession();
 
         $envioId    = $input->getInt('eid');
         $campanhaId = $input->getString('cid');
         $now        = $db->quote(JFactory::getDate()->toSql());
+        $tracking   = $input->getString('tracking', $session->get('com_crm.tracking'));
+        $sessionId  = $session->getId();
+        $ip         = $input->server->getString('REMOTE_ADDR');
+        $ipProxy    = $input->server->getString('HTTP_X_FORWARDED_FOR');
+        $userAgent  = $input->server->getString('HTTP_USER_AGENT');
 
         try {
             if ($envioId && empty($campanhaId)) {
@@ -53,16 +61,20 @@ class CrmControllerTracking extends JControllerLegacy
                                 $db->quoteName('opened_at'),
                                 $db->quoteName('ip'),
                                 $db->quoteName('ip_proxy'),
-                                $db->quoteName('user_agent')
+                                $db->quoteName('user_agent'),
+                                $db->quoteName('tracking_id'),
+                                $db->quoteName('session_id')
                             )
                         )
                         ->values(
                             $db->quote($campanhaId) . ', ' .
                             (int) $envioId . ', ' .
                             $now . ', ' .
-                            $db->quote($input->server->getString('REMOTE_ADDR')) . ', ' .
-                            $db->quote($input->server->getString('HTTP_X_FORWARDED_FOR')) . ', ' .
-                            $db->quote($input->server->getString('HTTP_USER_AGENT'))
+                            $db->quote($ip) . ', ' .
+                            $db->quote($ipProxy) . ', ' .
+                            $db->quote($userAgent) . ', ' .
+                            $db->quote($tracking) . ', ' .
+                            $db->quote($sessionId)
                         )
                 )->execute();
 

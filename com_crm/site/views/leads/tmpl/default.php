@@ -11,6 +11,7 @@ JHtml::_('behavior.formvalidator');
 $app    = JFactory::getApplication();
 $itemid = isset($this->itemid) ? (int) $this->itemid : $app->input->getInt('Itemid');
 $action = JRoute::_('index.php?option=com_crm&view=leads&Itemid=' . (int) $itemid);
+$tracking = isset($this->tracking) ? $this->tracking : '';
 ?>
 <div class="com-crm-leads">
     <h1><?php echo JText::_('COM_CRM_LEADS_TITLE'); ?></h1>
@@ -31,6 +32,7 @@ $action = JRoute::_('index.php?option=com_crm&view=leads&Itemid=' . (int) $itemi
         </div>
 
         <input type="hidden" name="Itemid" value="<?php echo (int) $itemid; ?>" />
+        <input type="hidden" name="tracking" value="<?php echo htmlspecialchars($tracking, ENT_QUOTES, 'UTF-8'); ?>" />
         <?php echo JHtml::_('form.token'); ?>
     </form>
 </div>

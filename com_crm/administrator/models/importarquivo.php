@@ -1,5 +1,7 @@
 <?php
 
+defined('_JEXEC') or die;
+
 class CrmModelImportArquivo extends JModelAdmin
 {
     public function getForm($loadData = true)
@@ -93,8 +95,6 @@ class CrmModelImportArquivo extends JModelAdmin
      *
      * @return  object|false  An object with preview data or false on failure.
      */
-
-defined('_JEXEC') or die;
     public function getPreviewData()
     {
         $item = $this->getItem();

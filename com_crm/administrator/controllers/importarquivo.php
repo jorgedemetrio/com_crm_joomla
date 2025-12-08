@@ -1,5 +1,7 @@
 <?php
 
+defined('_JEXEC') or die;
+
 class CrmControllerImportArquivo extends JControllerForm
 {
     /**
@@ -7,8 +9,6 @@ class CrmControllerImportArquivo extends JControllerForm
      *
      * @return  void
      */
-
-defined('_JEXEC') or die;
     public function process()
     {
         // Check for request forgeries
