@@ -64,6 +64,12 @@ class CrmControllerLink extends JControllerLegacy
                 return;
             }
 
+            // Security: Prevent Open Redirect / XSS by ensuring protocol is http or https
+            if (!preg_match('#^https?://#i', $link->url_destino)) {
+                $this->redirectWithMessage(JText::_('COM_CRM_LINK_INVALID_PROTOCOL'), 'error', $itemid);
+                return;
+            }
+
             $now = $db->quote(JFactory::getDate()->toSql());
 
             // Update aggregate link counters
