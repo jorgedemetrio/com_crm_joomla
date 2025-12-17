@@ -187,6 +187,10 @@ class CrmModelImportArquivo extends JModelAdmin
         // Get the Lead model to handle saving, which includes the many-to-many relationship
         $leadModel = $this->getInstance('Lead', 'Joomla\\Component\\Crm\\Administrator\\Model');
 
+        // Filter map to only allow mappable fields to prevent mass assignment
+        $mappableFields = $this->getMappableFields();
+        $map = array_intersect($map, $mappableFields);
+
         $db = $this->getDbo();
         $successCount = 0;
         $failCount = 0;
