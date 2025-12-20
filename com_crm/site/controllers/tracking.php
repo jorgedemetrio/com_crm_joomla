@@ -39,18 +39,33 @@ class CrmControllerTracking extends JControllerLegacy
         $userAgent  = $input->server->getString('HTTP_USER_AGENT');
 
         try {
-            if ($envioId && empty($campanhaId)) {
+            // Security: Prevent IDOR by requiring validation that envio_id belongs to campanha_id.
+            // If campanha_id is not provided, we DO NOT look it up automatically, to force the attacker to know the UUID.
+            // If campanha_id IS provided, we verify the match.
+
+            // Note: This change effectively requires 'cid' for tracking to work.
+            // Legacy emails without 'cid' will no longer track opens. This is a necessary security trade-off
+            // to prevent mass enumeration of tracking events.
+
+            $isValid = false;
+
+            if ($envioId && $campanhaId) {
+                // Verify that this envio_id actually belongs to the provided campanha_id AND the email is in valid state
                 $query = $db->getQuery(true)
-                    ->select($db->quoteName('campanha_id'))
+                    ->select($db->quoteName('id'))
                     ->from($db->quoteName('#__crm_email_envios'))
                     ->where($db->quoteName('id') . ' = ' . (int) $envioId)
+                    ->where($db->quoteName('campanha_id') . ' = ' . $db->quote($campanhaId))
+                    // Ensure we only track valid/sent emails (state=1)
                     ->where($db->quoteName('state') . ' = 1');
 
                 $db->setQuery($query);
-                $campanhaId = $db->loadResult();
+                if ($db->loadResult()) {
+                    $isValid = true;
+                }
             }
 
-            if ($envioId && $campanhaId) {
+            if ($isValid) {
                 $db->setQuery(
                     $db->getQuery(true)
                         ->insert($db->quoteName('#__crm_email_opens'))
