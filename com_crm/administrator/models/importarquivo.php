@@ -71,6 +71,30 @@ class CrmModelImportArquivo extends JModelAdmin
             return false;
         }
 
+        // Security: Validate MIME type to prevent malicious uploads (e.g. PHP scripts renamed to .csv)
+        if (function_exists('finfo_open')) {
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mimeType = finfo_file($finfo, $file['tmp_name']);
+            finfo_close($finfo);
+
+            $allowedMimes = [
+                'text/csv',
+                'text/plain',
+                'application/csv',
+                'application/x-csv',
+                'text/x-csv',
+                'text/comma-separated-values',
+                'text/x-comma-separated-values',
+                'application/vnd.ms-excel',
+                'application/vnd.msexcel'
+            ];
+
+            if (!in_array($mimeType, $allowedMimes)) {
+                $this->setError(JText::_('COM_CRM_IMPORTARQUIVO_ERROR_INVALID_FILE_TYPE') . ' (Invalid MIME type: ' . $mimeType . ')');
+                return false;
+            }
+        }
+
         // Prepare destination
         $destFolder = JPATH_ROOT . '/media/com_crm/imports';
         JFolder::create($destFolder);
@@ -186,6 +210,10 @@ class CrmModelImportArquivo extends JModelAdmin
 
         // Get the Lead model to handle saving, which includes the many-to-many relationship
         $leadModel = $this->getInstance('Lead', 'Joomla\\Component\\Crm\\Administrator\\Model');
+
+        // Filter map to only allow mappable fields to prevent mass assignment
+        $mappableFields = $this->getMappableFields();
+        $map = array_intersect($map, $mappableFields);
 
         $db = $this->getDbo();
         $successCount = 0;
