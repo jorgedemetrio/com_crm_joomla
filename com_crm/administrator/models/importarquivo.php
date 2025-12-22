@@ -72,27 +72,40 @@ class CrmModelImportArquivo extends JModelAdmin
         }
 
         // Security: Validate MIME type to prevent malicious uploads (e.g. PHP scripts renamed to .csv)
+        // We attempt multiple methods to determine MIME type, but if none are available, we FAIL SECUREly.
+        $mimeType = false;
+
         if (function_exists('finfo_open')) {
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
-            $mimeType = finfo_file($finfo, $file['tmp_name']);
-            finfo_close($finfo);
-
-            $allowedMimes = [
-                'text/csv',
-                'text/plain',
-                'application/csv',
-                'application/x-csv',
-                'text/x-csv',
-                'text/comma-separated-values',
-                'text/x-comma-separated-values',
-                'application/vnd.ms-excel',
-                'application/vnd.msexcel'
-            ];
-
-            if (!in_array($mimeType, $allowedMimes)) {
-                $this->setError(JText::_('COM_CRM_IMPORTARQUIVO_ERROR_INVALID_FILE_TYPE') . ' (Invalid MIME type: ' . $mimeType . ')');
-                return false;
+            if ($finfo !== false) {
+                $mimeType = finfo_file($finfo, $file['tmp_name']);
+                finfo_close($finfo);
             }
+        } elseif (function_exists('mime_content_type')) {
+            $mimeType = mime_content_type($file['tmp_name']);
+        }
+
+        // FAIL SECURE: If we cannot determine the MIME type, we do not allow the upload.
+        if ($mimeType === false) {
+            $this->setError(JText::_('COM_CRM_IMPORTARQUIVO_ERROR_INVALID_FILE_TYPE') . ' - Security check failed: MIME type could not be determined.');
+            return false;
+        }
+
+        $allowedMimes = [
+            'text/csv',
+            'text/plain',
+            'application/csv',
+            'application/x-csv',
+            'text/x-csv',
+            'text/comma-separated-values',
+            'text/x-comma-separated-values',
+            'application/vnd.ms-excel',
+            'application/vnd.msexcel'
+        ];
+
+        if (!in_array($mimeType, $allowedMimes)) {
+            $this->setError(JText::_('COM_CRM_IMPORTARQUIVO_ERROR_INVALID_FILE_TYPE') . ' (Invalid MIME type: ' . $mimeType . ')');
+            return false;
         }
 
         // Prepare destination
