@@ -30,6 +30,22 @@ class CrmControllerOptout extends JControllerLegacy
         $session = JFactory::getSession();
         $method = $input->getMethod();
 
+        // If GET request, show confirmation view (CSRF protection)
+        if ($method === 'GET') {
+            $email = trim($input->getString('email'));
+            $itemid = $input->getInt('Itemid', $this->getDefaultItemid());
+
+            if (empty($email)) {
+                $this->redirectWithMessage(JText::_('COM_CRM_OPTOUT_EMAIL_REQUIRED'), 'error', $itemid);
+                return;
+            }
+
+            $view = $this->getView('optout', 'html');
+            $view->setLayout('default');
+            $view->display();
+            return;
+        }
+
         if ($method === 'POST' && !JSession::checkToken()) {
             jexit(JText::_('JINVALID_TOKEN'));
         }
