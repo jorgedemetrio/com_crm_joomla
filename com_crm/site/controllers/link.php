@@ -31,6 +31,12 @@ class CrmControllerLink extends JControllerLegacy
 
         $linkId = $input->getString('id');
         $leadId = $input->getString('lid');
+
+        // Security: Validate Lead ID format (UUID) to prevent database pollution
+        if (!empty($leadId) && !preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $leadId)) {
+            $leadId = null;
+        }
+
         $itemid = $input->getInt('Itemid', $this->getDefaultItemid());
         $tracking = $input->getString('tracking', $session->get('com_crm.tracking'));
         $sessionId = $session->getId();
