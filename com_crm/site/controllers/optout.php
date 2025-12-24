@@ -40,6 +40,12 @@ class CrmControllerOptout extends JControllerLegacy
                 return;
             }
 
+            // Security: Validate email format
+            if (!JMailHelper::isEmailAddress($email)) {
+                $this->redirectWithMessage(JText::_('COM_CRM_OPTOUT_EMAIL_INVALID'), 'error', $itemid);
+                return;
+            }
+
             $view = $this->getView('optout', 'html');
             $view->setLayout('default');
             $view->display();
@@ -63,6 +69,12 @@ class CrmControllerOptout extends JControllerLegacy
 
         if (empty($email)) {
             $this->redirectWithMessage(JText::_('COM_CRM_OPTOUT_EMAIL_REQUIRED'), 'error', $itemid);
+            return;
+        }
+
+        // Security: Validate email format before processing
+        if (!JMailHelper::isEmailAddress($email)) {
+            $this->redirectWithMessage(JText::_('COM_CRM_OPTOUT_EMAIL_INVALID'), 'error', $itemid);
             return;
         }
 
