@@ -59,12 +59,13 @@ class CrmControllerOptout extends JControllerLegacy
         $email      = trim($input->getString('email'));
         $scope      = $input->getWord('scope', 'global');
         $campanhaId = $input->getString('campanha_id');
-        $reason     = $input->getString('reason');
+        // Security: Truncate to database limits to prevent errors/DoS
+        $reason     = substr($input->getString('reason'), 0, 255);
         $itemid     = $input->getInt('Itemid', $this->getDefaultItemid());
         $tracking   = $input->getString('tracking', $session->get('com_crm.tracking'));
         $sessionId  = $session->getId();
-        $ip         = $input->server->getString('REMOTE_ADDR');
-        $ipProxy    = $input->server->getString('HTTP_X_FORWARDED_FOR');
+        $ip         = substr($input->server->getString('REMOTE_ADDR'), 0, 45);
+        $ipProxy    = substr($input->server->getString('HTTP_X_FORWARDED_FOR'), 0, 45);
         $userId     = (int) JFactory::getUser()->id;
 
         if (empty($email)) {
