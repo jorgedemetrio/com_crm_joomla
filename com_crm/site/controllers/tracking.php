@@ -34,9 +34,10 @@ class CrmControllerTracking extends JControllerLegacy
         $now        = $db->quote(JFactory::getDate()->toSql());
         $tracking   = $input->getString('tracking', $session->get('com_crm.tracking'));
         $sessionId  = $session->getId();
-        $ip         = $input->server->getString('REMOTE_ADDR');
-        $ipProxy    = $input->server->getString('HTTP_X_FORWARDED_FOR');
-        $userAgent  = $input->server->getString('HTTP_USER_AGENT');
+        // Security: Truncate to database limits to prevent errors/DoS
+        $ip         = substr($input->server->getString('REMOTE_ADDR'), 0, 45);
+        $ipProxy    = substr($input->server->getString('HTTP_X_FORWARDED_FOR'), 0, 45);
+        $userAgent  = substr($input->server->getString('HTTP_USER_AGENT'), 0, 255);
 
         try {
             // Security: Prevent IDOR by requiring validation that envio_id belongs to campanha_id.
