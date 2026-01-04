@@ -67,7 +67,7 @@ class CrmControllerOptout extends JControllerLegacy
         // Security: Truncate to database limits to prevent errors/DoS
         $reason     = substr($input->getString('reason'), 0, 255);
         $itemid     = $input->getInt('Itemid', $this->getDefaultItemid());
-        $tracking   = $input->getString('tracking', $session->get('com_crm.tracking'));
+        $tracking   = substr($input->getString('tracking', $session->get('com_crm.tracking')), 0, 36);
         $sessionId  = $session->getId();
         $ip         = substr($input->server->getString('REMOTE_ADDR'), 0, 45);
         $ipProxy    = substr($input->server->getString('HTTP_X_FORWARDED_FOR'), 0, 45);
