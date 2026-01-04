@@ -16,6 +16,7 @@ class CrmTable extends JTable
 {
     /**
      * Generate a UUID v4 using a cryptographically secure random number generator.
+     * Uses random_bytes() for CSPRNG.
      *
      * @return  string
      */

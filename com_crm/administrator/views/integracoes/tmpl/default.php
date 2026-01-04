@@ -54,7 +54,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                     </td>
                     <td><?php echo $this->escape($item->ativo); ?></td>\n<td><?php echo $this->escape($item->params_json); ?></td>
                     <td class="center">
-                        <?php echo $item->id; ?>
+                        <?php echo $this->escape($item->id); ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
