@@ -4,7 +4,7 @@ defined('_JEXEC') or die;
 JHtml::_('behavior.formvalidator');
 JHtml::_('formbehavior.chosen', 'select');
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_crm&layout=edit&id=' . (int) $this->item->id); ?>" method="post" name="adminForm" id="adminForm" class="form-validate">
+<form action="<?php echo JRoute::_('index.php?option=com_crm&layout=edit&id=' . $this->item->id); ?>" method="post" name="adminForm" id="adminForm" class="form-validate">
     <div class="form-horizontal">
         <fieldset class="adminform">
             <legend><?php echo JText::_('JDETAILS'); ?></legend>
