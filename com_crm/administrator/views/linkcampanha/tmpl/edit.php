@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 JHtml::_('behavior.formvalidator');
 ?>
 
-<form action="<?php echo JRoute::_('index.php?option=com_crm&layout=edit&id=' . (int) $this->item->id); ?>"
+<form action="<?php echo JRoute::_('index.php?option=com_crm&layout=edit&id=' . $this->item->id); ?>"
       method="post"
       name="adminForm"
       id="adminForm"

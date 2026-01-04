@@ -14,7 +14,7 @@ JHtml::_('behavior.keepalive');
 JHtml::_('behavior.tabstate');
 ?>
 
-<form action="<?php echo JRoute::_('index.php?option=com_crm&layout=edit&id=' . (int) $this->item->id); ?>"
+<form action="<?php echo JRoute::_('index.php?option=com_crm&layout=edit&id=' . $this->item->id); ?>"
       method="post"
       name="adminForm"
       id="adminForm"
