@@ -32,6 +32,11 @@ class CrmControllerOptout extends JControllerLegacy
 
         // If GET request, show confirmation view (CSRF protection)
         if ($method === 'GET') {
+            // Security Headers to prevent Clickjacking and MIME-sniffing
+            $app->setHeader('X-Frame-Options', 'SAMEORIGIN');
+            $app->setHeader('X-Content-Type-Options', 'nosniff');
+            $app->setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+
             $email = trim($input->getString('email'));
             $itemid = $input->getInt('Itemid', $this->getDefaultItemid());
 
