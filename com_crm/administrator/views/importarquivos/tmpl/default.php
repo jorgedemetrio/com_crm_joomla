@@ -31,7 +31,7 @@ defined('_JEXEC') or die;
                             </a>
                         </td>
                         <td><?php echo JHtml::_('date', $item->created, 'Y-m-d H:i:s'); ?></td>
-                        <td><?php echo $item->id; ?></td>
+                        <td><?php echo $this->escape($item->id); ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
