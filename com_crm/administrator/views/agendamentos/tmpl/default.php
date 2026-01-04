@@ -54,7 +54,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                     </td>
                     <td><?php echo $this->escape($item->tipo); ?></td>\n<td><?php echo $this->escape($item->inicio_em); ?></td>\n<td><?php echo $this->escape($item->status_job); ?></td>
                     <td class="center">
-                        <?php echo $item->id; ?>
+                        <?php echo $this->escape($item->id); ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
