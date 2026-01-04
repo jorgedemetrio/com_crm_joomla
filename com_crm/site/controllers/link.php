@@ -37,6 +37,20 @@ class CrmControllerLink extends JControllerLegacy
             $leadId = null;
         }
 
+        // Security: Abuse Prevention - Check if Lead ID actually exists if provided
+        // This prevents polluting analytics with fake UUIDs
+        if (!empty($leadId)) {
+            $query = $db->getQuery(true)
+                ->select('COUNT(*)')
+                ->from($db->quoteName('#__crm_leads'))
+                ->where($db->quoteName('id') . ' = ' . $db->quote($leadId));
+            $db->setQuery($query);
+            if (!$db->loadResult()) {
+                // Invalid lead ID, treat as anonymous
+                $leadId = null;
+            }
+        }
+
         $itemid = $input->getInt('Itemid', $this->getDefaultItemid());
         $tracking = $input->getString('tracking', $session->get('com_crm.tracking'));
         $sessionId = $session->getId();
