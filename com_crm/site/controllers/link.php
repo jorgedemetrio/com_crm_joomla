@@ -38,9 +38,9 @@ class CrmControllerLink extends JControllerLegacy
         }
 
         $itemid = $input->getInt('Itemid', $this->getDefaultItemid());
-        $tracking = $input->getString('tracking', $session->get('com_crm.tracking'));
-        $sessionId = $session->getId();
         // Security: Truncate to database limits to prevent errors/DoS
+        $tracking = substr($input->getString('tracking', $session->get('com_crm.tracking')), 0, 36);
+        $sessionId = $session->getId();
         $ip = substr($input->server->getString('REMOTE_ADDR'), 0, 45);
         $ipProxy = substr($input->server->getString('HTTP_X_FORWARDED_FOR'), 0, 45);
         $userAgent = substr($input->server->getString('HTTP_USER_AGENT'), 0, 255);
