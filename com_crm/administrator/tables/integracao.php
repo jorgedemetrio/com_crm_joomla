@@ -1,7 +1,9 @@
 <?php
 defined('_JEXEC') or die;
 
-class CrmTableIntegracao extends JTable
+require_once dirname(__FILE__) . '/crm.php';
+
+class CrmTableIntegracao extends CrmTable
 {
     public function __construct(&$db)
     {
@@ -35,15 +37,4 @@ class CrmTableIntegracao extends JTable
         return true;
     }
 
-    protected function generateUuid()
-    {
-        return sprintf(
-            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-            mt_rand(0, 0xffff), mt_rand(0, 0xffff),
-            mt_rand(0, 0xffff),
-            mt_rand(0, 0x0fff) | 0x4000,
-            mt_rand(0, 0x3fff) | 0x8000,
-            mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
-        );
-    }
 }

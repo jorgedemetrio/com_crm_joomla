@@ -9,10 +9,12 @@
 
 defined('_JEXEC') or die;
 
+require_once dirname(__FILE__) . '/crm.php';
+
 /**
  * LinkCampanha Table class.
  */
-class CrmTableLinkCampanha extends JTable
+class CrmTableLinkCampanha extends CrmTable
 {
     /**
      * Constructor
@@ -61,20 +63,4 @@ class CrmTableLinkCampanha extends JTable
         return true;
     }
 
-    /**
-     * Generate a UUID v4.
-     *
-     * @return  string
-     */
-    protected function generateUuid()
-    {
-        return sprintf(
-            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-            mt_rand(0, 0xffff), mt_rand(0, 0xffff),
-            mt_rand(0, 0xffff),
-            mt_rand(0, 0x0fff) | 0x4000,
-            mt_rand(0, 0x3fff) | 0x8000,
-            mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
-        );
-    }
 }
