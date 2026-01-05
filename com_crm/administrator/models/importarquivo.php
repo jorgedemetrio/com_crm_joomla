@@ -110,7 +110,18 @@ class CrmModelImportArquivo extends JModelAdmin
 
         // Prepare destination
         $destFolder = JPATH_ROOT . '/media/com_crm/imports';
-        JFolder::create($destFolder);
+        if (!JFolder::exists($destFolder)) {
+            JFolder::create($destFolder);
+        }
+
+        // Security: Protect the imports directory from direct access
+        if (!file_exists($destFolder . '/index.html')) {
+            JFile::write($destFolder . '/index.html', '<html><body bgcolor="#FFFFFF"></body></html>');
+        }
+
+        if (!file_exists($destFolder . '/.htaccess')) {
+            JFile::write($destFolder . '/.htaccess', "Order Deny,Allow\nDeny from all");
+        }
 
         $safeFileName = time() . '_' . JPath::makeSafe($file['name']);
         $destPath = $destFolder . '/' . $safeFileName;
