@@ -247,7 +247,8 @@ class CrmModelImportArquivo extends JModelAdmin
             $leadData = [];
             foreach ($map as $index => $fieldName) {
                 if (!empty($fieldName) && isset($row[$index])) {
-                    $leadData[$fieldName] = $row[$index];
+                    // Security: Sanitize against CSV Injection
+                    $leadData[$fieldName] = $this->sanitizeForCsvInjection($row[$index]);
                 }
             }
 
@@ -289,5 +290,39 @@ class CrmModelImportArquivo extends JModelAdmin
         $result->fail = $failCount;
 
         return $result;
+    }
+
+    /**
+     * Sanitize value to prevent CSV Injection (Formula Injection).
+     *
+     * @param   string  $value  The value to sanitize.
+     *
+     * @return  string
+     */
+    protected function sanitizeForCsvInjection($value)
+    {
+        $value = (string) $value;
+        if ($value === '') {
+            return $value;
+        }
+
+        $dangerousChars = ['=', '@', "\t", "\r"];
+        $firstChar = $value[0];
+
+        if (in_array($firstChar, $dangerousChars)) {
+            return "'" . $value;
+        }
+
+        // Handle + and - specially to preserve phone numbers while preventing formula injection
+        if ($firstChar === '+' || $firstChar === '-') {
+            // Allow only characters common in phone numbers.
+            // If it contains anything else (like letters, |, !, etc), it might be a command.
+            // We allow digits, spaces, parentheses, dots, and hyphens.
+            if (!preg_match('/^[+\-0-9\s\(\)\.]+$/', $value)) {
+                 return "'" . $value;
+            }
+        }
+
+        return $value;
     }
 }
