@@ -102,37 +102,11 @@ class CrmViewLeads extends JViewLegacy
      */
     private function createUuid()
     {
-        $data = $this->getRandomBytes(16);
+        $data = random_bytes(16);
 
         $data[6] = chr((ord($data[6]) & 0x0f) | 0x40);
         $data[8] = chr((ord($data[8]) & 0x3f) | 0x80);
 
         return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
-    }
-
-    /**
-     * Retorna bytes aleatórios compatíveis com versões antigas do PHP.
-     *
-     * @param integer $length
-     *
-     * @return string
-     */
-    private function getRandomBytes($length)
-    {
-        if (function_exists('random_bytes')) {
-            return random_bytes($length);
-        }
-
-        if (function_exists('openssl_random_pseudo_bytes')) {
-            return openssl_random_pseudo_bytes($length);
-        }
-
-        $random = '';
-
-        for ($i = 0; $i < $length; $i++) {
-            $random .= chr(mt_rand(0, 255));
-        }
-
-        return $random;
     }
 }
