@@ -9,6 +9,13 @@
 
 defined('_JEXEC') or die;
 
+// Security Headers
+$app = JFactory::getApplication();
+$app->setHeader('X-Frame-Options', 'SAMEORIGIN');
+$app->setHeader('X-Content-Type-Options', 'nosniff');
+$app->setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+$app->setHeader('X-XSS-Protection', '1; mode=block');
+
 $controller = JControllerLegacy::getInstance('Crm');
 $controller->execute(JFactory::getApplication()->input->get('task'));
 $controller->redirect();
