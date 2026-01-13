@@ -5,7 +5,7 @@ defined('_JEXEC') or die;
 $previewData = $this->previewData;
 ?>
 
-<form action="<?php echo JRoute::_('index.php?option=com_crm&task=importarquivo.doImport&id=' . (int) $this->item->id); ?>" method="post" name="adminForm" id="item-form" class="form-validate">
+<form action="<?php echo JRoute::_('index.php?option=com_crm&task=importarquivo.doImport&id=' . $this->escape($this->item->id)); ?>" method="post" name="adminForm" id="item-form" class="form-validate">
     <h3><?php echo JText::_('COM_CRM_IMPORTARQUIVO_MAPPING_TITLE'); ?></h3>
     <p><?php echo JText::_('COM_CRM_IMPORTARQUIVO_MAPPING_DESC'); ?></p>
 

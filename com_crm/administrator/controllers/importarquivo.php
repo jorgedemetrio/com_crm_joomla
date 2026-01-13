@@ -22,8 +22,17 @@ class CrmControllerImportArquivo extends JControllerForm
              return;
         }
 
+        $id = $cid[0];
+
+        // Security: Check ACL
+        if (!JFactory::getUser()->authorise('core.edit', 'com_crm.importacao.' . $id)) {
+            $this->app->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'error');
+            $this->setRedirect(JRoute::_('index.php?option=com_crm&view=importarquivos', false));
+            return;
+        }
+
         // We are editing that record
-        $this->input->set('id', (int) $cid[0]);
+        $this->input->set('id', $id);
 
         // Set the layout and display the view
         $this->view->setLayout('process');
@@ -39,11 +48,18 @@ class CrmControllerImportArquivo extends JControllerForm
     {
         $this->checkToken();
 
-        $id = $this->input->getInt('id');
+        $id = $this->input->getString('id');
         $map = $this->input->get('map', [], 'array');
 
         if (empty($id) || empty($map)) {
             $this->app->enqueueMessage('Invalid import request.', 'error');
+            $this->setRedirect(JRoute::_('index.php?option=com_crm&view=importarquivos', false));
+            return;
+        }
+
+        // Security: Check ACL
+        if (!JFactory::getUser()->authorise('core.edit', 'com_crm.importacao.' . $id)) {
+            $this->app->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'error');
             $this->setRedirect(JRoute::_('index.php?option=com_crm&view=importarquivos', false));
             return;
         }
