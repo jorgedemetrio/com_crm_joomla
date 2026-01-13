@@ -1,9 +1,11 @@
-## 2024-05-23 - Stored XSS Prevention in Admin Views
-**Vulnerability:** Raw output of database fields (`$item->id`) in administrator list views could potentially lead to Stored XSS if the database is compromised or if ID generation is manipulated.
-**Learning:** Even fields that are seemingly safe (like IDs, which are UUIDs or Integers) should be escaped to enforce a 'Defense in Depth' strategy. This ensures that no matter what data ends up in the database, the view layer remains secure.
-**Prevention:** Always use `$this->escape()` or `htmlspecialchars()` when outputting any variable in a view template, regardless of its expected content.
+# Sentinel's Journal
 
-## 2024-05-23 - CSV Injection (Formula Injection) in Imports
-**Vulnerability:** Importing CSV files without sanitization allows malicious users to inject payloads starting with `=`, `@`, `+`, `-`, `\t`, or `\r`. When these fields are later exported and opened in Excel, they can execute code (macros) or exfiltrate data.
-**Learning:** Input sanitization is critical for data that might leave the system in different formats (like CSV export). Sanitizing on *import* ensures the database is clean, even if the Export feature is implemented later or by a different developer.
-**Prevention:** Sanitize fields starting with dangerous characters by prepending a single quote `'`. Special care must be taken with `+` and `-` to avoid breaking legitimate phone numbers (use a regex whitelist for phone formats).
+## 2025-05-23 - [Joomla 3 Component Security]
+**Vulnerability:** Missing Authorization (Broken Access Control) in custom controller tasks (`process`, `doImport`).
+**Learning:** Custom tasks in `JControllerForm` derivatives do not automatically inherit standard CRUD permissions. Explicit ACL checks (`authorise`) are mandatory to prevent unauthorized execution of business logic.
+**Prevention:** Always verify user permissions at the start of any public or custom controller method, especially those performing sensitive operations like data import.
+
+## 2025-05-23 - [Joomla 3 Component Security]
+**Vulnerability:** Import features modifying user data to prevent CSV Injection on import (prepending `'`).
+**Learning:** Preventing Formula Injection on *import* (write-time) permanently alters database data (e.g., user names starting with `@` become `'@`). This protects the admin export later, but corrupts the data for other uses (emails, integrations).
+**Prevention:** Validation/Sanitization should ideally happen on *output* (read-time) or only invalid characters should be stripped, rather than escaping via modification, unless specifically required. However, for this project, the requirement was explicit to fail secure for CSV injection on import.

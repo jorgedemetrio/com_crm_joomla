@@ -5,7 +5,7 @@ defined('_JEXEC') or die;
 JHtml::_('behavior.formvalidator');
 ?>
 
-<form action="<?php echo JRoute::_('index.php?option=com_crm&layout=edit&id=' . (int) $this->item->id); ?>" method="post" name="adminForm" id="item-form" class="form-validate" enctype="multipart/form-data">
+<form action="<?php echo JRoute::_('index.php?option=com_crm&layout=edit&id=' . $this->escape($this->item->id)); ?>" method="post" name="adminForm" id="item-form" class="form-validate" enctype="multipart/form-data">
     <div class="form-horizontal">
         <fieldset class="adminform">
             <legend><?php echo JText::_('COM_CRM_IMPORTARQUIVO_DETAILS'); ?></legend>
