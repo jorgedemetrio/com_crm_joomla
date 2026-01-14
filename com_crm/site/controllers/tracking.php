@@ -32,8 +32,19 @@ class CrmControllerTracking extends JControllerLegacy
         $envioId    = $input->getInt('eid');
         $campanhaId = $input->getString('cid');
         $now        = $db->quote(JFactory::getDate()->toSql());
-        // Security: Truncate to database limits to prevent errors/DoS
-        $tracking   = substr($input->getString('tracking', $session->get('com_crm.tracking')), 0, 36);
+
+        // Security: Validate Campanha ID format (UUID) to prevent database pollution
+        if (!empty($campanhaId) && !preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $campanhaId)) {
+            $campanhaId = null;
+        }
+
+        // Security: Truncate to database limits and validate UUID to prevent errors/DoS
+        $tracking   = $input->getString('tracking', $session->get('com_crm.tracking'));
+        if (!empty($tracking) && !preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $tracking)) {
+            $tracking = '';
+        }
+        $tracking = substr($tracking, 0, 36);
+
         $sessionId  = $session->getId();
         $ip         = substr($input->server->getString('REMOTE_ADDR'), 0, 45);
         $ipProxy    = substr($input->server->getString('HTTP_X_FORWARDED_FOR'), 0, 45);
