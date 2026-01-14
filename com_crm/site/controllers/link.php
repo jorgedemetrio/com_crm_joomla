@@ -32,6 +32,11 @@ class CrmControllerLink extends JControllerLegacy
         $linkId = $input->getString('id');
         $leadId = $input->getString('lid');
 
+        // Security: Validate Link ID format (UUID) to prevent database pollution
+        if (!empty($linkId) && !preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $linkId)) {
+            $linkId = null;
+        }
+
         // Security: Validate Lead ID format (UUID) to prevent database pollution
         if (!empty($leadId) && !preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $leadId)) {
             $leadId = null;
@@ -52,8 +57,14 @@ class CrmControllerLink extends JControllerLegacy
         }
 
         $itemid = $input->getInt('Itemid', $this->getDefaultItemid());
-        // Security: Truncate to database limits to prevent errors/DoS
-        $tracking = substr($input->getString('tracking', $session->get('com_crm.tracking')), 0, 36);
+
+        // Security: Truncate to database limits and validate UUID to prevent errors/DoS
+        $tracking   = $input->getString('tracking', $session->get('com_crm.tracking'));
+        if (!empty($tracking) && !preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $tracking)) {
+            $tracking = '';
+        }
+        $tracking = substr($tracking, 0, 36);
+
         $sessionId = $session->getId();
         $ip = substr($input->server->getString('REMOTE_ADDR'), 0, 45);
         $ipProxy = substr($input->server->getString('HTTP_X_FORWARDED_FOR'), 0, 45);
