@@ -21,7 +21,7 @@ $tracking = isset($this->tracking) ? $this->tracking : '';
         <div class="control-group">
             <label class="control-label" for="crm-message"><?php echo JText::_('COM_CRM_LEADS_MESSAGE_LABEL'); ?></label>
             <div class="controls">
-                <textarea id="crm-message" name="message" class="required" rows="5"></textarea>
+                <textarea id="crm-message" name="message" class="required" rows="5" maxlength="2000"></textarea>
             </div>
         </div>
 
