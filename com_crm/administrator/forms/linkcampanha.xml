@@ -12,6 +12,8 @@
             description="COM_CRM_LINKCAMPANHA_NOME_DESC"
             required="true"
             size="40"
+            maxlength="200"
+            filter="string"
         />
         <field
             name="campanha_id"
@@ -22,6 +24,7 @@
             key_field="id"
             value_field="nome"
             required="true"
+            filter="string"
             >
             <option value="">COM_CRM_SELECT_CAMPANHA</option>
         </field>
@@ -32,6 +35,7 @@
             description="COM_CRM_LINKCAMPANHA_URL_DESTINO_DESC"
             required="true"
             size="50"
+            filter="url"
         />
          <field
             name="state"

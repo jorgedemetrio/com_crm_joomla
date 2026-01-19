@@ -12,6 +12,8 @@
             description="COM_CRM_IMPORTARQUIVO_NOME_DESC"
             required="true"
             size="40"
+            maxlength="150"
+            filter="string"
             class="inputbox"
         />
         <field
