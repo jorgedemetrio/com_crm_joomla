@@ -9,3 +9,8 @@
 **Vulnerability:** Import features modifying user data to prevent CSV Injection on import (prepending `'`).
 **Learning:** Preventing Formula Injection on *import* (write-time) permanently alters database data (e.g., user names starting with `@` become `'@`). This protects the admin export later, but corrupts the data for other uses (emails, integrations).
 **Prevention:** Validation/Sanitization should ideally happen on *output* (read-time) or only invalid characters should be stripped, rather than escaping via modification, unless specifically required. However, for this project, the requirement was explicit to fail secure for CSV injection on import.
+
+## 2025-05-23 - [Joomla 3 Form Security]
+**Vulnerability:** Missing Input Sanitization and Length Validation in XML Forms (`com_crm/administrator/forms`).
+**Learning:** Joomla XML forms define validation rules but default to raw input if `filter` is omitted. Explicitly adding `filter="string"` prevents Stored XSS by stripping HTML tags at the controller level before model binding.
+**Prevention:** Audit all `<field type="text">` elements in XML forms to ensure they have `filter="string"` (or appropriate filter) and `maxlength` attributes matching the database schema.
