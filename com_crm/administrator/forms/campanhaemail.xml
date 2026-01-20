@@ -8,6 +8,8 @@
             <option value="2">JARCHIVED</option>
             <option value="-2">JTRASHED</option>
         </field>
-        <field name="titulo" type="text" label="COM_CRM_TITLE" description="" size="40" />\n<field name="campanha_id" type="text" label="COM_CRM_CAMPANHA_ID" description="" size="40" />\n<field name="html" type="editor" label="COM_CRM_HTML" description="" size="40" />\n
+        <field name="titulo" type="text" label="COM_CRM_TITLE" description="" size="40" maxlength="200" filter="string" />
+        <field name="campanha_id" type="text" label="COM_CRM_CAMPANHA_ID" description="" size="40" maxlength="36" filter="string" />
+        <field name="html" type="editor" label="COM_CRM_HTML" description="" size="40" />
     </fieldset>
 </form>

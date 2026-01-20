@@ -8,6 +8,12 @@
             <option value="2">JARCHIVED</option>
             <option value="-2">JTRASHED</option>
         </field>
-        <field name="campanha_id" type="text" label="COM_CRM_CAMPANHA_ID" description="" size="40" />\n<field name="tipo" type="list" label="COM_CRM_TYPE" description="" size="40" />\n<field name="inicio_em" type="calendar" label="COM_CRM_START_DATE" description="" size="40" />\n<field name="status_job" type="text" label="COM_CRM_STATUS" description="" size="40" />\n
+        <field name="campanha_id" type="text" label="COM_CRM_CAMPANHA_ID" description="" size="40" maxlength="36" filter="string" />
+        <field name="tipo" type="list" label="COM_CRM_TYPE" description="" size="40">
+            <option value="email">Email</option>
+            <option value="sms">SMS</option>
+        </field>
+        <field name="inicio_em" type="calendar" label="COM_CRM_START_DATE" description="" size="40" />
+        <field name="status_job" type="text" label="COM_CRM_STATUS" description="" size="40" maxlength="20" filter="string" />
     </fieldset>
 </form>

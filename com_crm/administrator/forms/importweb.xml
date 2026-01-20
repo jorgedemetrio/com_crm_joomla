@@ -8,6 +8,13 @@
             <option value="2">JARCHIVED</option>
             <option value="-2">JTRASHED</option>
         </field>
-        <field name="nome" type="text" label="COM_CRM_NAME" description="" size="40" />\n<field name="origem" type="list" label="COM_CRM_SOURCE" description="" size="40" />\n<field name="palavras_chave" type="text" label="COM_CRM_KEYWORDS" description="" size="40" />\n
+        <field name="nome" type="text" label="COM_CRM_NAME" description="" size="40" maxlength="150" filter="string" />
+        <field name="origem" type="list" label="COM_CRM_SOURCE" description="" size="40">
+            <option value="Google">Google</option>
+            <option value="LinkedIn">LinkedIn</option>
+            <option value="Facebook">Facebook</option>
+            <option value="Instagram">Instagram</option>
+        </field>
+        <field name="palavras_chave" type="text" label="COM_CRM_KEYWORDS" description="" size="40" maxlength="500" filter="string" />
     </fieldset>
 </form>

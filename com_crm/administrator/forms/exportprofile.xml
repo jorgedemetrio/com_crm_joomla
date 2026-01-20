@@ -8,6 +8,7 @@
             <option value="2">JARCHIVED</option>
             <option value="-2">JTRASHED</option>
         </field>
-        <field name="nome" type="text" label="COM_CRM_NAME" description="" size="40" />\n<field name="descricao" type="textarea" label="COM_CRM_DESCRIPTION" description="" size="40" />\n
+        <field name="nome" type="text" label="COM_CRM_NAME" description="" size="40" maxlength="150" filter="string" />
+        <field name="descricao" type="textarea" label="COM_CRM_DESCRIPTION" description="" size="40" maxlength="500" filter="string" />
     </fieldset>
 </form>

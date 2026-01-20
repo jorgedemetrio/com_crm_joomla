@@ -8,6 +8,11 @@
             <option value="2">JARCHIVED</option>
             <option value="-2">JTRASHED</option>
         </field>
-        <field name="provider" type="text" label="COM_CRM_PROVIDER" description="" size="40" />\n<field name="ativo" type="radio" label="COM_CRM_ACTIVE" description="" size="40" />\n<field name="params_json" type="textarea" label="COM_CRM_PARAMS" description="" size="40" />\n
+        <field name="provider" type="text" label="COM_CRM_PROVIDER" description="" size="40" maxlength="50" filter="string" />
+        <field name="ativo" type="radio" label="COM_CRM_ACTIVE" description="" size="40" default="1">
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
+        <field name="params_json" type="textarea" label="COM_CRM_PARAMS" description="" size="40" filter="raw" />
     </fieldset>
 </form>
