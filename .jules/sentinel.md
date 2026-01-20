@@ -14,3 +14,8 @@
 **Vulnerability:** Missing Input Sanitization and Length Validation in XML Forms (`com_crm/administrator/forms`).
 **Learning:** Joomla XML forms define validation rules but default to raw input if `filter` is omitted. Explicitly adding `filter="string"` prevents Stored XSS by stripping HTML tags at the controller level before model binding.
 **Prevention:** Audit all `<field type="text">` elements in XML forms to ensure they have `filter="string"` (or appropriate filter) and `maxlength` attributes matching the database schema.
+
+## 2025-05-23 - [Input Validation - Allow-listing]
+**Vulnerability:** Loose type definition in XML forms allowing invalid ENUM values.
+**Learning:** Fields defined as `ENUM` in the database were exposed as free-text `<field type="text">` in Joomla XML forms. This allowed users to submit invalid state strings (e.g., for `status_job`), potentially causing application logic errors or bypassing validation flows.
+**Prevention:** Always map Database `ENUM` fields to `<field type="list">` with explicit `<option>` values in the XML form definition to enforce strict allow-listing at the input layer.
