@@ -1,4 +1,11 @@
 <?php
+/**
+ * @package     Joomla.Administrator
+ * @subpackage  com_crm
+ *
+ * @copyright   Copyright (C) 2024 Sobieski Produções. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
 
 defined('_JEXEC') or die;
 
@@ -123,7 +130,10 @@ class CrmModelImportArquivo extends JModelAdmin
             JFile::write($destFolder . '/.htaccess', "Order Deny,Allow\nDeny from all");
         }
 
-        $safeFileName = time() . '_' . JPath::makeSafe($file['name']);
+        // Security: Use a cryptographically secure random filename to prevent IDOR/Enumeration attacks
+        // instead of predictable time().
+        $randomPrefix = bin2hex(random_bytes(12));
+        $safeFileName = $randomPrefix . '_' . JPath::makeSafe($file['name']);
         $destPath = $destFolder . '/' . $safeFileName;
 
         // Move the file
