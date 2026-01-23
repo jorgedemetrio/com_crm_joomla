@@ -21,6 +21,8 @@ $app->setHeader('X-Frame-Options', 'SAMEORIGIN');
 $app->setHeader('X-Content-Type-Options', 'nosniff');
 $app->setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
 $app->setHeader('X-XSS-Protection', '1; mode=block');
+// HSTS: Enforce HTTPS for 1 year, including subdomains. This prevents SSL Stripping attacks.
+$app->setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
 
 $controller = JControllerLegacy::getInstance('Crm');
 $controller->execute(JFactory::getApplication()->input->get('task'));
