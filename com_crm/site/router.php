@@ -16,7 +16,7 @@ function CrmBuildRoute(&$query)
     }
 
     if (isset($query['id'])) {
-        $segments[] = (int) $query['id'];
+        $segments[] = $query['id'];
         unset($query['id']);
     }
 
@@ -35,7 +35,11 @@ function CrmParseRoute($segments)
         $vars['view'] = array_shift($segments);
 
         if (!empty($segments)) {
-            $vars['id'] = (int) array_shift($segments);
+            $id = array_shift($segments);
+            // Sentinel: Allow Integers or UUIDs only
+            if (is_numeric($id) || preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $id)) {
+                $vars['id'] = $id;
+            }
         }
     }
 
