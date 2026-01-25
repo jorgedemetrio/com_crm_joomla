@@ -19,3 +19,8 @@
 **Vulnerability:** Loose type definition in XML forms allowing invalid ENUM values.
 **Learning:** Fields defined as `ENUM` in the database were exposed as free-text `<field type="text">` in Joomla XML forms. This allowed users to submit invalid state strings (e.g., for `status_job`), potentially causing application logic errors or bypassing validation flows.
 **Prevention:** Always map Database `ENUM` fields to `<field type="list">` with explicit `<option>` values in the XML form definition to enforce strict allow-listing at the input layer.
+
+## 2025-05-23 - Router ID Validation
+**Vulnerability:** Insecure Direct Object Reference / ID Truncation
+**Learning:** Joomla's legacy `(int)` casting in routers silently corrupts UUIDs (truncating them to 0) and potentially allows "dirty" IDs (e.g., `123-junk`).
+**Prevention:** Use strict validation (Numeric OR UUID Regex) instead of casting to `(int)` when handling IDs in `ParseRoute`, especially for components supporting UUIDs.

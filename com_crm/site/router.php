@@ -16,7 +16,7 @@ function CrmBuildRoute(&$query)
     }
 
     if (isset($query['id'])) {
-        $segments[] = (int) $query['id'];
+        $segments[] = $query['id'];
         unset($query['id']);
     }
 
@@ -35,7 +35,12 @@ function CrmParseRoute($segments)
         $vars['view'] = array_shift($segments);
 
         if (!empty($segments)) {
-            $vars['id'] = (int) array_shift($segments);
+            $segment = array_shift($segments);
+
+            // Security: Validate ID segment (Integer OR UUID)
+            if (is_numeric($segment) || preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $segment)) {
+                $vars['id'] = $segment;
+            }
         }
     }
 
