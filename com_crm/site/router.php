@@ -35,11 +35,10 @@ function CrmParseRoute($segments)
         $vars['view'] = array_shift($segments);
 
         if (!empty($segments)) {
-            $idSegment = array_shift($segments);
-
-            // Security: Validate ID format (Integer OR UUID) to prevent injection/errors
-            if (preg_match('/^\d+$/', (string) $idSegment) || preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', (string) $idSegment)) {
-                $vars['id'] = $idSegment;
+            $id = array_shift($segments);
+            // Sentinel: Allow Integers or UUIDs only
+            if (is_numeric($id) || preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $id)) {
+                $vars['id'] = $id;
             }
         }
     }
