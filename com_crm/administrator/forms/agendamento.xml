@@ -14,6 +14,12 @@
             <option value="sms">SMS</option>
         </field>
         <field name="inicio_em" type="calendar" label="COM_CRM_START_DATE" description="" size="40" />
-        <field name="status_job" type="text" label="COM_CRM_STATUS" description="" size="40" maxlength="20" filter="string" />
+        <field name="status_job" type="list" label="COM_CRM_STATUS" description="" default="agendado">
+            <option value="agendado">COM_CRM_STATUS_JOB_AGENDADO</option>
+            <option value="em_execucao">COM_CRM_STATUS_JOB_EM_EXECUCAO</option>
+            <option value="finalizado">COM_CRM_STATUS_JOB_FINALIZADO</option>
+            <option value="pausado">COM_CRM_STATUS_JOB_PAUSADO</option>
+            <option value="erro">COM_CRM_STATUS_JOB_ERRO</option>
+        </field>
     </fieldset>
 </form>
