@@ -7,7 +7,7 @@
         <field name="cnpj" type="text" label="COM_CRM_LEAD_CNPJ_LABEL" size="20" maxlength="14" filter="string" />
         <field name="email" type="email" label="COM_CRM_LEAD_EMAIL_LABEL" required="true" size="40" maxlength="255" filter="string" />
         <field name="telefone1" type="text" label="COM_CRM_LEAD_TELEFONE1_LABEL" size="20" maxlength="30" filter="string" />
-        <field name="site" type="url" label="COM_CRM_LEAD_SITE_LABEL" size="40" maxlength="255" filter="string" />
+        <field name="site" type="url" label="COM_CRM_LEAD_SITE_LABEL" size="40" maxlength="255" filter="url" />
         <field name="state" type="list" label="JSTATUS" default="1">
             <option value="1">JPUBLISHED</option>
             <option value="0">JUNPUBLISHED</option>
