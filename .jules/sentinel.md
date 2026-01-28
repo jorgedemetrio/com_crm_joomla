@@ -24,3 +24,8 @@
 **Vulnerability:** Insecure Direct Object Reference / ID Truncation
 **Learning:** Joomla's legacy `(int)` casting in routers silently corrupts UUIDs (truncating them to 0) and potentially allows "dirty" IDs (e.g., `123-junk`).
 **Prevention:** Use strict validation (Numeric OR UUID Regex) instead of casting to `(int)` when handling IDs in `ParseRoute`, especially for components supporting UUIDs.
+
+## 2026-01-28 - [Joomla 3 Form Security - URL]
+**Vulnerability:** `type="url"` fields in XML forms using `filter="string"` allows Javascript URI schemes (`javascript:alert(1)`).
+**Learning:** `filter="string"` only strips HTML tags but preserves the content. It does not validate or sanitize the protocol. `filter="url"` is required to sanitize the URL (checking protocol, escaping).
+**Prevention:** Always pair `type="url"` with `filter="url"` in Joomla XML forms to prevent Stored XSS via dangerous protocols.
