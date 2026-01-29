@@ -61,6 +61,15 @@ class CrmControllerOptout extends JControllerLegacy
             jexit(JText::_('JINVALID_TOKEN'));
         }
 
+        $ip     = substr($input->server->getString('REMOTE_ADDR'), 0, 45);
+        $itemid = $input->getInt('Itemid', $this->getDefaultItemid());
+
+        // Security: Rate Limit check (10 requests / hour)
+        if (!$this->checkRateLimit($ip)) {
+            $this->redirectWithMessage(JText::_('COM_CRM_OPTOUT_TOO_MANY_REQUESTS'), 'error', $itemid);
+            return;
+        }
+
         $email      = trim($input->getString('email'));
         $scope      = $input->getWord('scope', 'global');
         $campanhaId = $input->getString('campanha_id');
@@ -179,5 +188,32 @@ class CrmControllerOptout extends JControllerLegacy
         $app = JFactory::getApplication();
         $app->enqueueMessage($message, $type);
         $app->redirect(JRoute::_('index.php?Itemid=' . (int) $itemid, false));
+    }
+
+    /**
+     * Check rate limit for Opt-out requests.
+     * Limit: 10 requests per hour per IP.
+     *
+     * @param   string  $ip  The IP address.
+     *
+     * @return  boolean  True if allowed, False if limit exceeded.
+     */
+    protected function checkRateLimit($ip)
+    {
+        $db = JFactory::getDbo();
+        $date = JFactory::getDate();
+        $date->modify('-1 hour');
+        $dbDate = $db->quote($date->toSql());
+
+        $query = $db->getQuery(true)
+            ->select('COUNT(id)')
+            ->from($db->quoteName('#__crm_email_optout'))
+            ->where($db->quoteName('ip') . ' = ' . $db->quote($ip))
+            ->where($db->quoteName('created') . ' > ' . $dbDate);
+
+        $db->setQuery($query);
+        $count = (int) $db->loadResult();
+
+        return $count < 10;
     }
 }
