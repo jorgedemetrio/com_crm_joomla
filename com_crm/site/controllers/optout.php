@@ -82,7 +82,7 @@ class CrmControllerOptout extends JControllerLegacy
         $tracking   = substr($tracking, 0, 36);
         $sessionId  = $session->getId();
         $ip         = substr($input->server->getString('REMOTE_ADDR'), 0, 45);
-        $ipProxy    = substr($input->server->getString('HTTP_X_FORWARDED_FOR'), 0, 45);
+        $ipProxy    = $this->getValidProxyIp($input->server->getString('HTTP_X_FORWARDED_FOR'));
         $userId     = (int) JFactory::getUser()->id;
 
         if (empty($email)) {
@@ -179,5 +179,32 @@ class CrmControllerOptout extends JControllerLegacy
         $app = JFactory::getApplication();
         $app->enqueueMessage($message, $type);
         $app->redirect(JRoute::_('index.php?Itemid=' . (int) $itemid, false));
+    }
+
+    /**
+     * Parse and validate HTTP_X_FORWARDED_FOR header.
+     *
+     * @param   string  $header  The HTTP header value.
+     *
+     * @return  string  The first valid IP address found, or empty string.
+     */
+    private function getValidProxyIp($header)
+    {
+        $ipProxy = '';
+
+        if (!empty($header)) {
+            $parts = explode(',', $header);
+
+            foreach ($parts as $part) {
+                $part = trim($part);
+
+                if (filter_var($part, FILTER_VALIDATE_IP)) {
+                    $ipProxy = $part;
+                    break;
+                }
+            }
+        }
+
+        return substr($ipProxy, 0, 45);
     }
 }
