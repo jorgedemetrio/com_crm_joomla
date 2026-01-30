@@ -91,7 +91,7 @@ class CrmControllerOptout extends JControllerLegacy
         $tracking   = substr($tracking, 0, 36);
         $sessionId  = $session->getId();
         $ip         = substr($input->server->getString('REMOTE_ADDR'), 0, 45);
-        $ipProxy    = substr($input->server->getString('HTTP_X_FORWARDED_FOR'), 0, 45);
+        $ipProxy    = $this->getValidProxyIp($input->server->getString('HTTP_X_FORWARDED_FOR'));
         $userId     = (int) JFactory::getUser()->id;
 
         if (empty($email)) {

@@ -1,0 +1,98 @@
+<?php
+/**
+ * Test script for IP Proxy validation logic.
+ *
+ * This script isolates the logic intended for the controller method `getValidProxyIp`
+ * and verifies it against various input scenarios.
+ */
+
+function getValidProxyIp($header)
+{
+    $ipProxy = '';
+    if (!empty($header)) {
+        // Explode by comma to handle multiple proxies
+        $parts = explode(',', $header);
+        foreach ($parts as $part) {
+            $part = trim($part);
+            // Validate that it is a valid IP address
+            if (filter_var($part, FILTER_VALIDATE_IP)) {
+                $ipProxy = $part;
+                break; // Use the first valid IP found
+            }
+        }
+    }
+    // Truncate to database limits (45 chars) to prevent errors/DoS
+    return substr($ipProxy, 0, 45);
+}
+
+$tests = [
+    'Single IPv4' => [
+        'input' => '192.168.1.1',
+        'expected' => '192.168.1.1'
+    ],
+    'Multiple IPv4' => [
+        'input' => '10.0.0.1, 192.168.1.1',
+        'expected' => '10.0.0.1'
+    ],
+    'Multiple IPv4 with spaces' => [
+        'input' => ' 10.0.0.1 , 192.168.1.1 ',
+        'expected' => '10.0.0.1'
+    ],
+    'IPv6' => [
+        'input' => '2001:0db8:85a3:0000:0000:8a2e:0370:7334',
+        'expected' => '2001:0db8:85a3:0000:0000:8a2e:0370:7334'
+    ],
+    'Invalid first, valid second' => [
+        'input' => 'unknown, 192.168.1.1',
+        'expected' => '192.168.1.1'
+    ],
+    'All invalid' => [
+        'input' => 'unknown, invalid',
+        'expected' => ''
+    ],
+    'Empty' => [
+        'input' => '',
+        'expected' => ''
+    ],
+    'XSS Attempt' => [
+        'input' => '<script>alert(1)</script>',
+        'expected' => ''
+    ],
+    'Long Garbage' => [
+        'input' => str_repeat('a', 100),
+        'expected' => ''
+    ],
+    'Valid but too long (impossible for valid IP but good for truncation test)' => [
+        // IPs max out at 45 chars (IPv6 mapped), so truncation shouldn't really cut a valid IP
+        // But if we simulate a weird case where logic fails to validate but we want to ensure truncation
+        // Wait, logic validates IP, so it shouldn't return a long string unless it's a valid IP.
+        // Let's just test that the output is always <= 45 chars even if validation was skipped (hypothetically)
+        // Actually, let's test a valid IP that is exactly 45 chars (IPv4-mapped IPv6 can be long)
+        // 0000:0000:0000:0000:0000:ffff:192.168.100.228 is 45 chars
+        'input' => '0000:0000:0000:0000:0000:ffff:192.168.100.228',
+        'expected' => '0000:0000:0000:0000:0000:ffff:192.168.100.228'
+    ]
+];
+
+$failed = 0;
+
+foreach ($tests as $name => $data) {
+    $result = getValidProxyIp($data['input']);
+    if ($result !== $data['expected']) {
+        echo "FAILED: $name\n";
+        echo "  Input: '{$data['input']}'\n";
+        echo "  Expected: '{$data['expected']}'\n";
+        echo "  Got: '$result'\n";
+        $failed++;
+    } else {
+        echo "PASSED: $name\n";
+    }
+}
+
+if ($failed > 0) {
+    echo "\n$failed tests failed.\n";
+    exit(1);
+}
+
+echo "\nAll tests passed.\n";
+exit(0);
