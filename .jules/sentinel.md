@@ -29,3 +29,8 @@
 **Vulnerability:** `type="url"` fields in XML forms using `filter="string"` allows Javascript URI schemes (`javascript:alert(1)`).
 **Learning:** `filter="string"` only strips HTML tags but preserves the content. It does not validate or sanitize the protocol. `filter="url"` is required to sanitize the URL (checking protocol, escaping).
 **Prevention:** Always pair `type="url"` with `filter="url"` in Joomla XML forms to prevent Stored XSS via dangerous protocols.
+
+## 2025-05-23 - [Rate Limiting Pattern]
+**Vulnerability:** Missing rate limiting on sensitive public endpoints (e.g. Opt-out).
+**Learning:** Without dedicated infrastructure (Redis), rate limiting can be effectively implemented using existing log tables (like `#__crm_email_optout`) by counting recent entries by IP.
+**Prevention:** Use `checkRateLimit($ip)` pattern in controllers for public forms, querying the log table for `COUNT(id)` where `ip = :ip` and `created > NOW - interval`.

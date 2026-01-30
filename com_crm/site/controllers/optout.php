@@ -61,6 +61,15 @@ class CrmControllerOptout extends JControllerLegacy
             jexit(JText::_('JINVALID_TOKEN'));
         }
 
+        $ip     = substr($input->server->getString('REMOTE_ADDR'), 0, 45);
+        $itemid = $input->getInt('Itemid', $this->getDefaultItemid());
+
+        // Security: Rate Limit check (10 requests / hour)
+        if (!$this->checkRateLimit($ip)) {
+            $this->redirectWithMessage(JText::_('COM_CRM_OPTOUT_TOO_MANY_REQUESTS'), 'error', $itemid);
+            return;
+        }
+
         $email      = trim($input->getString('email'));
         $scope      = $input->getWord('scope', 'global');
         $campanhaId = $input->getString('campanha_id');
@@ -182,29 +191,29 @@ class CrmControllerOptout extends JControllerLegacy
     }
 
     /**
-     * Parse and validate HTTP_X_FORWARDED_FOR header.
+     * Check rate limit for Opt-out requests.
+     * Limit: 10 requests per hour per IP.
      *
-     * @param   string  $header  The HTTP header value.
+     * @param   string  $ip  The IP address.
      *
-     * @return  string  The first valid IP address found, or empty string.
+     * @return  boolean  True if allowed, False if limit exceeded.
      */
-    private function getValidProxyIp($header)
+    protected function checkRateLimit($ip)
     {
-        $ipProxy = '';
+        $db = JFactory::getDbo();
+        $date = JFactory::getDate();
+        $date->modify('-1 hour');
+        $dbDate = $db->quote($date->toSql());
 
-        if (!empty($header)) {
-            $parts = explode(',', $header);
+        $query = $db->getQuery(true)
+            ->select('COUNT(id)')
+            ->from($db->quoteName('#__crm_email_optout'))
+            ->where($db->quoteName('ip') . ' = ' . $db->quote($ip))
+            ->where($db->quoteName('created') . ' > ' . $dbDate);
 
-            foreach ($parts as $part) {
-                $part = trim($part);
+        $db->setQuery($query);
+        $count = (int) $db->loadResult();
 
-                if (filter_var($part, FILTER_VALIDATE_IP)) {
-                    $ipProxy = $part;
-                    break;
-                }
-            }
-        }
-
-        return substr($ipProxy, 0, 45);
+        return $count < 10;
     }
 }
