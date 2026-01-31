@@ -216,4 +216,31 @@ class CrmControllerOptout extends JControllerLegacy
 
         return $count < 10;
     }
+
+    /**
+     * Parse and validate HTTP_X_FORWARDED_FOR header.
+     *
+     * @param   string  $header  The HTTP header value.
+     *
+     * @return  string  The first valid IP address found, or empty string.
+     */
+    private function getValidProxyIp($header)
+    {
+        $ipProxy = '';
+
+        if (!empty($header)) {
+            $parts = explode(',', $header);
+
+            foreach ($parts as $part) {
+                $part = trim($part);
+
+                if (filter_var($part, FILTER_VALIDATE_IP)) {
+                    $ipProxy = $part;
+                    break;
+                }
+            }
+        }
+
+        return substr($ipProxy, 0, 45);
+    }
 }
