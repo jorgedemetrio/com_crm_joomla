@@ -10,6 +10,26 @@ class CrmTableIntegracao extends CrmTable
         parent::__construct('#__crm_integracoes', 'id', $db);
     }
 
+    /**
+     * Overloaded check method to ensure data integrity.
+     *
+     * @return  boolean  True on success.
+     */
+    public function check()
+    {
+        // Security: Validate JSON format to prevent injection/errors
+        if (!empty($this->params_json)) {
+            json_decode($this->params_json);
+
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                $this->setError(JText::_('COM_CRM_INTEGRACAO_ERROR_INVALID_JSON'));
+                return false;
+            }
+        }
+
+        return parent::check();
+    }
+
     public function store($updateNulls = false)
     {
         $k = $this->_tbl_key;
