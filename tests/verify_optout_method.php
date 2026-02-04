@@ -10,6 +10,16 @@ if (!file_exists($controllerFile)) {
 
 $content = file_get_contents($controllerFile);
 
+// Check if getValidProxyIp method definition exists
+// We use a regex to look for "function getValidProxyIp" with any visibility modifier
+if (!preg_match('/function\s+getValidProxyIp\s*\(/', $content)) {
+    echo "FAILURE: Method getValidProxyIp is NOT defined in optout.php\n";
+    echo "This will cause a fatal error when 'unsubscribe' is called.\n";
+    exit(1);
+}
+
+echo "SUCCESS: Method getValidProxyIp is defined in optout.php.\n";
+exit(0);
 // Check if it is called
 $isCalled = strpos($content, '$this->getValidProxyIp') !== false;
 
