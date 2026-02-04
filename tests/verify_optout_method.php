@@ -20,3 +20,23 @@ if (!preg_match('/function\s+getValidProxyIp\s*\(/', $content)) {
 
 echo "SUCCESS: Method getValidProxyIp is defined in optout.php.\n";
 exit(0);
+// Check if it is called
+$isCalled = strpos($content, '$this->getValidProxyIp') !== false;
+
+// Check if it is defined
+$isDefined = strpos($content, 'function getValidProxyIp') !== false;
+
+if ($isCalled && !$isDefined) {
+    echo "FAILURE: getValidProxyIp is called but NOT defined in optout.php (Fatal Error Vulnerability).\n";
+    exit(1);
+}
+
+if (!$isCalled) {
+     echo "WARNING: getValidProxyIp is not called. Is this intentional?\n";
+     exit(0);
+}
+
+if ($isDefined) {
+    echo "SUCCESS: getValidProxyIp is defined.\n";
+    exit(0);
+}
