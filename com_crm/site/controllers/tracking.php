@@ -9,6 +9,9 @@
 
 defined('_JEXEC') or die;
 
+// Include Security Helper
+require_once JPATH_COMPONENT_SITE . '/helpers/security.php';
+
 jimport('joomla.application.component.controller');
 
 /**
@@ -47,7 +50,7 @@ class CrmControllerTracking extends JControllerLegacy
 
         $sessionId  = $session->getId();
         $ip         = substr($input->server->getString('REMOTE_ADDR'), 0, 45);
-        $ipProxy    = $this->getValidProxyIp($input->server->getString('HTTP_X_FORWARDED_FOR'));
+        $ipProxy    = CrmSecurityHelper::getValidProxyIp($input->server->getString('HTTP_X_FORWARDED_FOR'));
         $userAgent  = substr($input->server->getString('HTTP_USER_AGENT'), 0, 255);
 
         try {
@@ -122,32 +125,5 @@ class CrmControllerTracking extends JControllerLegacy
         $app->setHeader('Content-Type', 'image/gif');
         echo base64_decode('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
         $app->close();
-    }
-
-    /**
-     * Parse and validate HTTP_X_FORWARDED_FOR header.
-     *
-     * @param   string  $header  The HTTP header value.
-     *
-     * @return  string  The first valid IP address found, or empty string.
-     */
-    private function getValidProxyIp($header)
-    {
-        $ipProxy = '';
-
-        if (!empty($header)) {
-            $parts = explode(',', $header);
-
-            foreach ($parts as $part) {
-                $part = trim($part);
-
-                if (filter_var($part, FILTER_VALIDATE_IP)) {
-                    $ipProxy = $part;
-                    break;
-                }
-            }
-        }
-
-        return substr($ipProxy, 0, 45);
     }
 }
