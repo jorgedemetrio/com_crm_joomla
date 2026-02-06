@@ -6,24 +6,11 @@
  * and verifies it against various input scenarios.
  */
 
-function getValidProxyIp($header)
-{
-    $ipProxy = '';
-    if (!empty($header)) {
-        // Explode by comma to handle multiple proxies
-        $parts = explode(',', $header);
-        foreach ($parts as $part) {
-            $part = trim($part);
-            // Validate that it is a valid IP address
-            if (filter_var($part, FILTER_VALIDATE_IP)) {
-                $ipProxy = $part;
-                break; // Use the first valid IP found
-            }
-        }
-    }
-    // Truncate to database limits (45 chars) to prevent errors/DoS
-    return substr($ipProxy, 0, 45);
-}
+// Define JEXEC to allow inclusion of the helper
+define('_JEXEC', 1);
+
+// Include the helper
+require_once dirname(__DIR__) . '/com_crm/site/helpers/security.php';
 
 $tests = [
     'Single IPv4' => [
@@ -77,7 +64,8 @@ $tests = [
 $failed = 0;
 
 foreach ($tests as $name => $data) {
-    $result = getValidProxyIp($data['input']);
+    // Use the helper method
+    $result = CrmSecurityHelper::getValidProxyIp($data['input']);
     if ($result !== $data['expected']) {
         echo "FAILED: $name\n";
         echo "  Input: '{$data['input']}'\n";
