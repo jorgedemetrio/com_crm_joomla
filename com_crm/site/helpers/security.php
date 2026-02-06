@@ -43,4 +43,34 @@ class CrmSecurityHelper
 
         return substr($ipProxy, 0, 45);
     }
+
+    /**
+     * Check rate limit for a specific action/table.
+     *
+     * @param   string   $table           Table name (e.g. #__crm_email_opens).
+     * @param   string   $dateColumn      Column name for timestamp (e.g. opened_at).
+     * @param   string   $ip              IP address to check.
+     * @param   integer  $limit           Max allowed requests.
+     * @param   integer  $intervalMinutes Time interval in minutes.
+     *
+     * @return  boolean  True if allowed, False if limit exceeded.
+     */
+    public static function checkRateLimit($table, $dateColumn, $ip, $limit = 60, $intervalMinutes = 1)
+    {
+        $db = JFactory::getDbo();
+        $date = JFactory::getDate();
+        $date->modify("-{$intervalMinutes} minutes");
+        $dbDate = $db->quote($date->toSql());
+
+        $query = $db->getQuery(true)
+            ->select('COUNT(id)')
+            ->from($db->quoteName($table))
+            ->where($db->quoteName('ip') . ' = ' . $db->quote($ip))
+            ->where($db->quoteName($dateColumn) . ' > ' . $dbDate);
+
+        $db->setQuery($query);
+        $count = (int) $db->loadResult();
+
+        return $count < $limit;
+    }
 }

@@ -73,6 +73,12 @@ class CrmControllerLink extends JControllerLegacy
         $ipProxy = CrmSecurityHelper::getValidProxyIp($input->server->getString('HTTP_X_FORWARDED_FOR'));
         $userAgent = substr($input->server->getString('HTTP_USER_AGENT'), 0, 255);
 
+        // Security: Rate Limit check (20 clicks/min)
+        if (!CrmSecurityHelper::checkRateLimit('#__crm_campanha_link_clicks', 'clicked_at', $ip, 20, 1)) {
+            $this->redirectWithMessage(JText::_('COM_CRM_LINK_TOO_MANY_REQUESTS'), 'error', $itemid);
+            return;
+        }
+
         if (empty($linkId)) {
             $this->redirectWithMessage(JText::_('COM_CRM_LINK_MISSING'), 'error', $itemid);
             return;
