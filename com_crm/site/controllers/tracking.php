@@ -53,6 +53,14 @@ class CrmControllerTracking extends JControllerLegacy
         $ipProxy    = CrmSecurityHelper::getValidProxyIp($input->server->getString('HTTP_X_FORWARDED_FOR'));
         $userAgent  = substr($input->server->getString('HTTP_USER_AGENT'), 0, 255);
 
+        // Security: Rate Limit check to prevent database exhaustion (60 opens/min)
+        if (!CrmSecurityHelper::checkRateLimit('#__crm_email_opens', 'opened_at', $ip, 60, 1)) {
+            // Rate limit exceeded. Return 1x1 GIF immediately to fail silently.
+            $app->setHeader('Content-Type', 'image/gif');
+            echo base64_decode('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
+            $app->close();
+        }
+
         try {
             // Security: Prevent IDOR by requiring validation that envio_id belongs to campanha_id.
             // If campanha_id is not provided, we DO NOT look it up automatically, to force the attacker to know the UUID.

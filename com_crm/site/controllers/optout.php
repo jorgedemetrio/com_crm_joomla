@@ -68,7 +68,7 @@ class CrmControllerOptout extends JControllerLegacy
         $itemid = $input->getInt('Itemid', $this->getDefaultItemid());
 
         // Security: Rate Limit check (10 requests / hour)
-        if (!$this->checkRateLimit($ip)) {
+        if (!CrmSecurityHelper::checkRateLimit('#__crm_email_optout', 'created', $ip, 10, 60)) {
             $this->redirectWithMessage(JText::_('COM_CRM_OPTOUT_TOO_MANY_REQUESTS'), 'error', $itemid);
             return;
         }
@@ -193,30 +193,4 @@ class CrmControllerOptout extends JControllerLegacy
         $app->redirect(JRoute::_('index.php?Itemid=' . (int) $itemid, false));
     }
 
-    /**
-     * Check rate limit for Opt-out requests.
-     * Limit: 10 requests per hour per IP.
-     *
-     * @param   string  $ip  The IP address.
-     *
-     * @return  boolean  True if allowed, False if limit exceeded.
-     */
-    protected function checkRateLimit($ip)
-    {
-        $db = JFactory::getDbo();
-        $date = JFactory::getDate();
-        $date->modify('-1 hour');
-        $dbDate = $db->quote($date->toSql());
-
-        $query = $db->getQuery(true)
-            ->select('COUNT(id)')
-            ->from($db->quoteName('#__crm_email_optout'))
-            ->where($db->quoteName('ip') . ' = ' . $db->quote($ip))
-            ->where($db->quoteName('created') . ' > ' . $dbDate);
-
-        $db->setQuery($query);
-        $count = (int) $db->loadResult();
-
-        return $count < 10;
-    }
 }
